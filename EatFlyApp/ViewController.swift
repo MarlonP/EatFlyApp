@@ -48,7 +48,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: BarcodeScannerCodeDelegate {
+extension ViewController: BarcodeScannerCodeDelegate, BarcodeScannerErrorDelegate, BarcodeScannerDismissalDelegate {
     
     func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
         print(code)
@@ -59,16 +59,12 @@ extension ViewController: BarcodeScannerCodeDelegate {
             controller.resetWithError()
         }
     }
-}
 
-extension ViewController: BarcodeScannerErrorDelegate {
     
     func barcodeScanner(_ controller: BarcodeScannerController, didReceiveError error: Error) {
         print(error)
     }
-}
 
-extension ViewController: BarcodeScannerDismissalDelegate {
     
     func barcodeScannerDidDismiss(_ controller: BarcodeScannerController) {
         controller.dismiss(animated: true, completion: nil)

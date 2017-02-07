@@ -15,6 +15,9 @@
 		F46F93C01E43A96100334F68 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F46F93BE1E43A96100334F68 /* LaunchScreen.storyboard */; };
 		F46F93CB1E43A96100334F68 /* EatFlyAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93CA1E43A96100334F68 /* EatFlyAppTests.swift */; };
 		F46F93D61E43A96100334F68 /* EatFlyAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93D51E43A96100334F68 /* EatFlyAppUITests.swift */; };
+		F46F93E41E44D2E300334F68 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93E31E44D2E300334F68 /* LogInViewController.swift */; };
+		F46F93E61E44D30400334F68 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93E51E44D30400334F68 /* ShoppingListViewController.swift */; };
+		F46F93E81E44D34E00334F68 /* SocialFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93E71E44D34E00334F68 /* SocialFeedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,9 @@
 		F46F93D11E43A96100334F68 /* EatFlyAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EatFlyAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F46F93D51E43A96100334F68 /* EatFlyAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatFlyAppUITests.swift; sourceTree = "<group>"; };
 		F46F93D71E43A96100334F68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F46F93E31E44D2E300334F68 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		F46F93E51E44D30400334F68 /* ShoppingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingListViewController.swift; sourceTree = "<group>"; };
+		F46F93E71E44D34E00334F68 /* SocialFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialFeedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,8 +129,11 @@
 			children = (
 				F46F93B51E43A96100334F68 /* AppDelegate.swift */,
 				F46F93B71E43A96100334F68 /* ViewController.swift */,
-				F46F93B91E43A96100334F68 /* Main.storyboard */,
+				F46F93E31E44D2E300334F68 /* LogInViewController.swift */,
+				F46F93E51E44D30400334F68 /* ShoppingListViewController.swift */,
+				F46F93E71E44D34E00334F68 /* SocialFeedViewController.swift */,
 				F46F93BC1E43A96100334F68 /* Assets.xcassets */,
+				F46F93B91E43A96100334F68 /* Main.storyboard */,
 				F46F93BE1E43A96100334F68 /* LaunchScreen.storyboard */,
 				F46F93C11E43A96100334F68 /* Info.plist */,
 			);
@@ -337,8 +346,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F46F93E61E44D30400334F68 /* ShoppingListViewController.swift in Sources */,
 				F46F93B81E43A96100334F68 /* ViewController.swift in Sources */,
+				F46F93E81E44D34E00334F68 /* SocialFeedViewController.swift in Sources */,
 				F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */,
+				F46F93E41E44D2E300334F68 /* LogInViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,6 +603,7 @@
 				F46F93DC1E43A96100334F68 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F46F93DD1E43A96100334F68 /* Build configuration list for PBXNativeTarget "EatFlyAppTests" */ = {
 			isa = XCConfigurationList;
@@ -599,6 +612,7 @@
 				F46F93DF1E43A96100334F68 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F46F93E01E43A96100334F68 /* Build configuration list for PBXNativeTarget "EatFlyAppUITests" */ = {
 			isa = XCConfigurationList;
@@ -607,6 +621,7 @@
 				F46F93E21E43A96100334F68 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
