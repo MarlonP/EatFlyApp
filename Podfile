@@ -8,5 +8,9 @@ target ‘EatFlyApp’ do
   pod 'Alamofire'
   pod 'SwiftyJSON’
   pod 'BarcodeScanner'
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
 
 end

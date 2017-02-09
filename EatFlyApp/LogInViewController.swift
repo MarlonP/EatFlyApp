@@ -7,29 +7,35 @@
 //
 
 import UIKit
+import Firebase
 
 class LogInViewController: UIViewController {
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var pwField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func loginPressed(_ sender: Any) {
+        //can put notification for error before return in else method same in sign up
+        guard emailField.text != "", pwField.text != "" else { return}
+        
+        FIRAuth.auth()?.signIn(withEmail: emailField.text!, password: pwField.text!, completion: { (user, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            
+            if let user = user {
+                
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "usersVC")
+                
+                self.present(vc, animated: true, completion: nil)
+                
+            }
+        })
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
