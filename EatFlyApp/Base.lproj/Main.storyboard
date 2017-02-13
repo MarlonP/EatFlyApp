@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item 1-->
+        <!--Scanner-->
         <scene sceneID="onE-Ce-9vv">
             <objects>
                 <viewController id="ZbX-6M-HiC" customClass="ViewController" customModule="EatFlyApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -23,22 +23,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="OmH-hx-1GU"/>
+                    <tabBarItem key="tabBarItem" title="Scanner" id="OmH-hx-1GU"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vKX-9k-qiX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-365" y="-466"/>
+            <point key="canvasLocation" x="-418" y="-81"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Qqt-5g-VeV">
             <objects>
-                <tabBarController id="4Di-uO-Xxz" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="usersVC" id="4Di-uO-Xxz" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="PkO-bj-iFi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <segue destination="PDL-8f-URq" kind="relationship" relationship="viewControllers" id="GaX-Bb-wn9"/>
                         <segue destination="ZbX-6M-HiC" kind="relationship" relationship="viewControllers" id="sNh-lj-tRZ"/>
                         <segue destination="dRp-RL-qw3" kind="relationship" relationship="viewControllers" id="qqx-02-iFc"/>
                     </connections>
@@ -47,7 +48,7 @@
             </objects>
             <point key="canvasLocation" x="-1238" y="-87"/>
         </scene>
-        <!--Item-->
+        <!--Shopping List-->
         <scene sceneID="STu-Ey-hS1">
             <objects>
                 <viewController id="dRp-RL-qw3" customClass="ShoppingListViewController" customModule="EatFlyApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -92,7 +93,7 @@
                                         <rect key="frame" x="0.0" y="22" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e4M-5P-gcE" id="gOp-bX-YWy">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -105,7 +106,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.40000000600000002" green="0.43610686189999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="eZQ-u4-Kf0"/>
+                    <tabBarItem key="tabBarItem" title="Shopping List" id="eZQ-u4-Kf0"/>
                     <connections>
                         <outlet property="tableView" destination="hFN-RB-Ocg" id="fWw-Dh-N08"/>
                         <outlet property="textField" destination="HHN-jY-FGA" id="kGJ-hp-dk5"/>
@@ -113,7 +114,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SUc-tv-5rL" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-366" y="182"/>
+            <point key="canvasLocation" x="-417" y="565"/>
         </scene>
         <!--Log In View Controller-->
         <scene sceneID="md9-ae-MM6">
@@ -175,7 +176,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h2R-ju-gGo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1314.4000000000001" y="1011.544227886057"/>
+            <point key="canvasLocation" x="-2716" y="-88"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="oIm-xs-Yeg">
@@ -268,12 +269,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ms3-Cb-MXQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-628" y="1011.544227886057"/>
+            <point key="canvasLocation" x="-1932" y="-88"/>
         </scene>
-        <!--View Controller-->
+        <!--Social Feed-->
         <scene sceneID="fyQ-m7-OKW">
             <objects>
-                <viewController storyboardIdentifier="usersVC" id="PDL-8f-URq" sceneMemberID="viewController">
+                <viewController id="PDL-8f-URq" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JI2-kw-g6u"/>
                         <viewControllerLayoutGuide type="bottom" id="OP6-E8-NmT"/>
@@ -281,12 +282,29 @@
                     <view key="view" contentMode="scaleToFill" id="8Aa-xo-baq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Page" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dic-44-Q2f">
+                                <rect key="frame" x="129" y="20" width="117" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="117" id="Ksg-jC-XTT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="0.36224361762080171" blue="0.59213681862811396" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="OP6-E8-NmT" firstAttribute="top" secondItem="Dic-44-Q2f" secondAttribute="bottom" constant="554" id="C40-iu-aVp"/>
+                            <constraint firstItem="Dic-44-Q2f" firstAttribute="top" secondItem="JI2-kw-g6u" secondAttribute="bottom" id="ECE-WZ-9fu"/>
+                            <constraint firstItem="Dic-44-Q2f" firstAttribute="centerX" secondItem="8Aa-xo-baq" secondAttribute="centerX" id="Or5-Et-HAv"/>
+                        </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Social Feed" id="Ljg-Vi-GZ0"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qBk-qb-Mvv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="25" y="1012"/>
+            <point key="canvasLocation" x="-418.39999999999998" y="-743.47826086956525"/>
         </scene>
     </scenes>
 </document>

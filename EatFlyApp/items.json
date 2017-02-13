@@ -1,0 +1,30 @@
+{
+
+    "data": {
+        "items": [
+                   
+                   {                  
+                   "name":"Donut",
+                   "description":"Pink Icing, Sprinkles doghnut",
+                   "itemType":"Drink",
+                   "price":"£0.80",
+                   "barcodeNum":"0036000291452",
+                   "img":"donut.jpg"
+                  
+                   },
+                  
+                  {
+                  "name":"Volvicwe",
+                  "description":"330ml pure volcanic water",
+                  "itemType":"Drink",
+                  "price":"£0.80",
+                  "barcodeNum":"12232",
+                  "img":"1.jpg"
+                  },
+                  
+              
+
+                ]
+            }
+    
+}

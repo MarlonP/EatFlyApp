@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D04BE9A234D9421140553C3F /* Pods_EatFlyApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2408D2A84B400C442D8E4F62 /* Pods_EatFlyApp.framework */; };
+		F44C5C761E50B0AF00B52336 /* items.json in Resources */ = {isa = PBXBuildFile; fileRef = F44C5C751E50B0AF00B52336 /* items.json */; };
+		F44C5C781E50B0EF00B52336 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44C5C771E50B0EF00B52336 /* Item.swift */; };
 		F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93B51E43A96100334F68 /* AppDelegate.swift */; };
 		F46F93B81E43A96100334F68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93B71E43A96100334F68 /* ViewController.swift */; };
 		F46F93BB1E43A96100334F68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F46F93B91E43A96100334F68 /* Main.storyboard */; };
@@ -43,6 +45,8 @@
 		1D293336D49964AA44DF9E0E /* Pods-EatFlyApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EatFlyApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-EatFlyApp/Pods-EatFlyApp.release.xcconfig"; sourceTree = "<group>"; };
 		2408D2A84B400C442D8E4F62 /* Pods_EatFlyApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EatFlyApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25FB42E5190247A64E439EA2 /* Pods-EatFlyApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EatFlyApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EatFlyApp/Pods-EatFlyApp.debug.xcconfig"; sourceTree = "<group>"; };
+		F44C5C751E50B0AF00B52336 /* items.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = items.json; sourceTree = "<group>"; };
+		F44C5C771E50B0EF00B52336 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		F46F93B21E43A96100334F68 /* EatFlyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EatFlyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F46F93B51E43A96100334F68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F46F93B71E43A96100334F68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +146,8 @@
 				F4952D831E4CC36000BCF523 /* GoogleService-Info.plist */,
 				F4952D851E4CC84A00BCF523 /* SignUpViewController.swift */,
 				F46F93E31E44D2E300334F68 /* LogInViewController.swift */,
+				F44C5C771E50B0EF00B52336 /* Item.swift */,
+				F44C5C751E50B0AF00B52336 /* items.json */,
 			);
 			path = EatFlyApp;
 			sourceTree = "<group>";
@@ -279,6 +285,7 @@
 			files = (
 				F46F93C01E43A96100334F68 /* LaunchScreen.storyboard in Resources */,
 				F4952D841E4CC36000BCF523 /* GoogleService-Info.plist in Resources */,
+				F44C5C761E50B0AF00B52336 /* items.json in Resources */,
 				F46F93BD1E43A96100334F68 /* Assets.xcassets in Resources */,
 				F46F93BB1E43A96100334F68 /* Main.storyboard in Resources */,
 			);
@@ -357,6 +364,7 @@
 				F46F93E61E44D30400334F68 /* ShoppingListViewController.swift in Sources */,
 				F46F93B81E43A96100334F68 /* ViewController.swift in Sources */,
 				F46F93E81E44D34E00334F68 /* SocialFeedViewController.swift in Sources */,
+				F44C5C781E50B0EF00B52336 /* Item.swift in Sources */,
 				F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */,
 				F46F93E41E44D2E300334F68 /* LogInViewController.swift in Sources */,
 			);
