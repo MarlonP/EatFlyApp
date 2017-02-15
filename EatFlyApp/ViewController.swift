@@ -13,6 +13,8 @@ import BarcodeScanner
 
 class ViewController: UIViewController {
     
+    var items = [Item]()
+    
     lazy var button: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.black
@@ -29,7 +31,38 @@ class ViewController: UIViewController {
         
         view.backgroundColor = UIColor.white
         view.addSubview(button)
+        
+        
+        
+        Alamofire.request("http://178.62.90.238/items.json").response { response in
+            
+            if let error = response.error {
+                print(error)
+                return
+            }
+            
+            guard let data = response.data else { return }
+            
+            let json = JSON(data: data)
+            
+            for item in json["data"]["items"].arrayValue {
+                
+                let newItem = Item(json: item)
+                self.items.append(newItem)
+            }
+            
+            
+            
+            for item in self.items {
+                print(item.name)
+            }
+            
+            
+        }
+        
     }
+    
+    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -59,12 +92,12 @@ extension ViewController: BarcodeScannerCodeDelegate, BarcodeScannerErrorDelegat
             controller.resetWithError()
         }
     }
-
+    
     
     func barcodeScanner(_ controller: BarcodeScannerController, didReceiveError error: Error) {
         print(error)
     }
-
+    
     
     func barcodeScannerDidDismiss(_ controller: BarcodeScannerController) {
         controller.dismiss(animated: true, completion: nil)
