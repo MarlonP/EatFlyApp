@@ -11,13 +11,13 @@ import SwiftyJSON
 
 class Item {
     
-    var name: String!
+    var itemName: String!
     var barcode: String!
     var price: String!
     var imgPath: String!
     
     init(json: JSON) {
-        name = json["name"].stringValue
+        itemName = json["itemName"].stringValue
         barcode = json["barcodeNum"].stringValue
         price = json["price"].stringValue
         imgPath = json["img"].stringValue

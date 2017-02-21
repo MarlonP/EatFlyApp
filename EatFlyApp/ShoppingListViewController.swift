@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ShoppingListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var items = [String]()
+    var listItems = [String]()
+    var items = [Item]()
     
     
     @IBOutlet var textField: UITextField!
@@ -21,7 +24,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     @IBAction func addButton(_ sender: UIButton) {
         
         let newItem = textField.text
-        items.append(newItem!)
+        listItems.append(newItem!)
         textField.resignFirstResponder()
         textField.text = ""
         tableView.reloadData()
@@ -32,6 +35,33 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        Alamofire.request("http://178.62.90.238/items.json").response { response in
+            
+            if let error = response.error {
+                print(error)
+                return
+            }
+            
+            guard let data = response.data else { return }
+            
+            let json = JSON(data: data)
+            
+            for item in json["data"]["items"].arrayValue {
+                
+                let newItem = Item(json: item)
+                self.items.append(newItem)
+            }
+            
+            print(self.items)
+            
+            for item in self.items {
+                print(item.barcode)
+            }
+            
+            
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,7 +71,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         
-        return items.count
+        return listItems.count
         
     }
     
@@ -49,7 +79,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        cell.textLabel?.text = items[indexPath.row]
+        cell.textLabel?.text = listItems[indexPath.row]
         cell.textLabel?.textColor = UIColor.red
         
         return cell
@@ -78,7 +108,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         let deletedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
         
         if editingStyle == UITableViewCellEditingStyle.delete {
-            items.remove(at: indexPath.row)
+            listItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
             deletedRow.accessoryType = UITableViewCellAccessoryType.none
             

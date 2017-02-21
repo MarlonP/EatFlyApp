@@ -2,24 +2,45 @@
 
     "data": {
         "items": [
-                   
-                   {                  
-                   "name":"Donut",
-                   "description":"Pink Icing, Sprinkles doghnut",
-                   "itemType":"Drink",
-                   "price":"£0.80",
-                   "barcodeNum":"0036000291452",
-                   "img":"donut.jpg"
-                  
-                   },
-                  
+
                   {
-                  "name":"Volvicwe",
-                  "description":"330ml pure volcanic water",
+                  "store":"Tesco"
+                  "barcodeNum":"0036000291452",
+                  "itemName":"Donut",
+                  "description":"Pink Icing, Sprinkles doghnut",
                   "itemType":"Drink",
                   "price":"£0.80",
-                  "barcodeNum":"12232",
-                  "img":"1.jpg"
+                  "img":"donut.jpg"
+                  },
+                  
+                  {
+                  "store":"Tesco"
+                  "barcodeNum":"0036000291452",
+                  "itemName":"Apple",
+                  "description":"Red crunchy apple",
+                  "itemType":"Fruit",
+                  "price":"£0.20",
+                  "img":"apple.jpg"
+                  },
+                  
+                  {
+                  "store":"Tesco"
+                  "barcodeNum":"0036000291452",
+                  "itemName":"Chicken",
+                  "description":"300g of chicken breast",
+                  "itemType":"Meat",
+                  "price":"£5.20",
+                  "img":"chicken.jpg"
+                  },
+                  
+                  {
+                  "store":"Tesco"
+                  "barcodeNum":"0036000291452",
+                  "itemName":"Steak Pie",
+                  "description":"Steak & Kidney pie",
+                  "itemType":"Meat",
+                  "price":"£2.50",
+                  "img":"pie.jpg"
                   },
                   
               
