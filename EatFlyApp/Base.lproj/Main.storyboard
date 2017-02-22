@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4Di-uO-Xxz">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BQ5-9F-bkq">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -29,7 +29,51 @@
             </objects>
             <point key="canvasLocation" x="-418" y="-81"/>
         </scene>
-        <!--List Table View Controller-->
+        <!--Shopping List-->
+        <scene sceneID="fJc-sG-Vgh">
+            <objects>
+                <tableViewController id="3Ul-Wo-Xal" customClass="ShoppingListTableViewController" customModule="EatFlyApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="B5K-pZ-0Np">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="tzc-5e-oT6" style="IBUITableViewCellStyleDefault" id="1eI-R7-Vva">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1eI-R7-Vva" id="gu4-GB-5th">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tzc-5e-oT6">
+                                            <rect key="frame" x="15" y="0.0" width="345" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3Ul-Wo-Xal" id="756-OV-kKD"/>
+                            <outlet property="delegate" destination="3Ul-Wo-Xal" id="fB5-DX-AL6"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Shopping List" id="yqk-ZT-vo0">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="M0s-yF-aIf">
+                            <connections>
+                                <segue destination="EfP-kA-9rI" kind="show" id="2MT-cn-ypr"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hTM-hr-2b0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="622" y="638"/>
+        </scene>
+        <!--Search-->
         <scene sceneID="N4J-HA-Ohe">
             <objects>
                 <tableViewController id="EfP-kA-9rI" customClass="SListTableViewController" customModule="EatFlyApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -61,11 +105,11 @@
                             <outlet property="delegate" destination="EfP-kA-9rI" id="wsf-rc-IcK"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="7zc-22-gdP"/>
+                    <navigationItem key="navigationItem" title="Search" id="7zc-22-gdP"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yfF-9b-bhZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="520.79999999999995" y="673.31334332833592"/>
+            <point key="canvasLocation" x="1410" y="638"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Qqt-5g-VeV">
@@ -288,12 +332,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="EfP-kA-9rI" kind="relationship" relationship="rootViewController" id="N3W-VD-aCY"/>
+                        <segue destination="3Ul-Wo-Xal" kind="relationship" relationship="rootViewController" id="mtK-21-fjq"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vMz-bk-2dh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-418.39999999999998" y="672.41379310344837"/>
+            <point key="canvasLocation" x="-418" y="639"/>
         </scene>
     </scenes>
 </document>

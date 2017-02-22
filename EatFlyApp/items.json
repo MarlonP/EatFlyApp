@@ -1,51 +1,50 @@
 {
-
+    
     "data": {
         "items": [
-
+                  
                   {
-                  "store":"Tesco"
+                  "store":"Tesco",
                   "barcodeNum":"0036000291452",
                   "itemName":"Donut",
                   "description":"Pink Icing, Sprinkles doghnut",
                   "itemType":"Drink",
-                  "price":"£0.80",
+                  "price":"Â£0.80",
                   "img":"donut.jpg"
                   },
                   
                   {
-                  "store":"Tesco"
+                  "store":"Tesco",
                   "barcodeNum":"0036000291452",
                   "itemName":"Apple",
                   "description":"Red crunchy apple",
                   "itemType":"Fruit",
-                  "price":"£0.20",
+                  "price":"Â£0.20",
                   "img":"apple.jpg"
                   },
                   
                   {
-                  "store":"Tesco"
+                  "store":"Tesco",
                   "barcodeNum":"0036000291452",
                   "itemName":"Chicken",
                   "description":"300g of chicken breast",
                   "itemType":"Meat",
-                  "price":"£5.20",
+                  "price":"Â£5.20",
                   "img":"chicken.jpg"
                   },
                   
                   {
-                  "store":"Tesco"
+                  "store":"Tesco",
                   "barcodeNum":"0036000291452",
                   "itemName":"Steak Pie",
                   "description":"Steak & Kidney pie",
                   "itemType":"Meat",
-                  "price":"£2.50",
+                  "price":"Â£2.50",
                   "img":"pie.jpg"
-                  },
+                  }
                   
-              
-
-                ]
-            }
+                  
+                  ]
+    }
     
 }

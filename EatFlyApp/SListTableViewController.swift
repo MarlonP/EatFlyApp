@@ -12,14 +12,16 @@ import SwiftyJSON
 
 class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     
-    var testData = ["apple","orange","chicken","cereal","pie","rice"]
+    var itemNames = [String]()
     var filteredData = [String]()
-     var items = [Item]()
+    var items = [Item]()
+    var shoppingList = [String]()
     var resultSearchController = UISearchController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        URLCache.shared.removeAllCachedResponses()
         Alamofire.request("http://178.62.90.238/items.json").response { response in
             
             if let error = response.error {
@@ -31,7 +33,6 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
             
             let json = JSON(data: data)
             
-            print(json)
             
             for item in json["data"]["items"].arrayValue {
                 
@@ -39,10 +40,9 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
                 self.items.append(newItem)
             }
             
-            print(self.items)
-            
             for item in self.items {
-                print(item.barcode)
+                print(item.itemName)
+                self.itemNames.append(item.itemName)
             }
             
             
@@ -79,7 +79,8 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         }
         else
         {
-            return self.testData.count
+            
+            return 0
         }
     }
 
@@ -92,7 +93,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         }
         else
         {
-            cell!.textLabel?.text = self.testData[indexPath.row]
+            //cell!.textLabel?.text = self.shoppingList[indexPath.row]
         }
 
        
@@ -106,13 +107,33 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
         
-        let array = (self.testData as NSArray).filtered(using: searchPredicate)
+        let array = (self.itemNames as NSArray).filtered(using: searchPredicate)
         
         self.filteredData = array as! [String]
         
         self.tableView.reloadData()
         
         
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
+        
+        self.shoppingList.append((selectedRow.textLabel?.text)!)
+
+        resultSearchController.searchBar.endEditing(true)
+        searchBarCancelButtonClicked(searchBar: resultSearchController.searchBar)
+        
+        resultSearchController.dismiss(animated: true, completion: nil)
+        
+        navigationController?.popViewController(animated: true)
+        
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        
+        self.searchDisplayController?.setActive(false, animated: true)
     }
   
 
