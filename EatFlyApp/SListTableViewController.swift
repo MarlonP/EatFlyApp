@@ -123,7 +123,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         self.shoppingList.append((selectedRow.textLabel?.text)!)
 
         resultSearchController.searchBar.endEditing(true)
-        searchBarCancelButtonClicked(searchBar: resultSearchController.searchBar)
+        
         
         resultSearchController.dismiss(animated: true, completion: nil)
         
@@ -131,10 +131,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        
-        self.searchDisplayController?.setActive(false, animated: true)
-    }
+   
   
 
    
