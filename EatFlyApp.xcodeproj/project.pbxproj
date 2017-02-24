@@ -13,6 +13,9 @@
 		F28B14831E5F4D7A009ED6A9 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14821E5F4D7A009ED6A9 /* UserCell.swift */; };
 		F28B14851E5F4E4B009ED6A9 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */; };
 		F28B148A1E5F50EC009ED6A9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14891E5F50EC009ED6A9 /* User.swift */; };
+		F2C214AD1E60853F00A1D565 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214AC1E60853E00A1D565 /* UploadViewController.swift */; };
+		F2C214B11E60981200A1D565 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214B01E60981200A1D565 /* PostCell.swift */; };
+		F2C214B31E60995200A1D565 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214B21E60995200A1D565 /* Post.swift */; };
 		F44C5C761E50B0AF00B52336 /* items.json in Resources */ = {isa = PBXBuildFile; fileRef = F44C5C751E50B0AF00B52336 /* items.json */; };
 		F44C5C781E50B0EF00B52336 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44C5C771E50B0EF00B52336 /* Item.swift */; };
 		F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93B51E43A96100334F68 /* AppDelegate.swift */; };
@@ -54,6 +57,9 @@
 		F28B14821E5F4D7A009ED6A9 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		F28B14891E5F50EC009ED6A9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F2C214AC1E60853E00A1D565 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		F2C214B01E60981200A1D565 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		F2C214B21E60995200A1D565 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		F44C5C751E50B0AF00B52336 /* items.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = items.json; sourceTree = "<group>"; };
 		F44C5C771E50B0EF00B52336 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		F46F93B21E43A96100334F68 /* EatFlyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EatFlyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,10 +130,11 @@
 				F46F93B71E43A96100334F68 /* ViewController.swift */,
 				0EF13A851E5DA82800D131CF /* ShoppingListTableViewController.swift */,
 				F22870681E5CA554001C7262 /* SListTableViewController.swift */,
-				F46F93E71E44D34E00334F68 /* SocialFeedViewController.swift */,
 				F4952D851E4CC84A00BCF523 /* SignUpViewController.swift */,
 				F46F93E31E44D2E300334F68 /* LogInViewController.swift */,
 				F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */,
+				F2C214AC1E60853E00A1D565 /* UploadViewController.swift */,
+				F46F93E71E44D34E00334F68 /* SocialFeedViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -136,16 +143,19 @@
 			isa = PBXGroup;
 			children = (
 				F28B14821E5F4D7A009ED6A9 /* UserCell.swift */,
+				F2C214B01E60981200A1D565 /* PostCell.swift */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
 		};
-		F28B14881E5F50D0009ED6A9 /* Objects */ = {
+		F28B14881E5F50D0009ED6A9 /* Objects/ Classes */ = {
 			isa = PBXGroup;
 			children = (
 				F28B14891E5F50EC009ED6A9 /* User.swift */,
+				F44C5C771E50B0EF00B52336 /* Item.swift */,
+				F2C214B21E60995200A1D565 /* Post.swift */,
 			);
-			name = Objects;
+			name = "Objects/ Classes";
 			sourceTree = "<group>";
 		};
 		F46F93A91E43A96100334F68 = {
@@ -173,7 +183,7 @@
 		F46F93B41E43A96100334F68 /* EatFlyApp */ = {
 			isa = PBXGroup;
 			children = (
-				F28B14881E5F50D0009ED6A9 /* Objects */,
+				F28B14881E5F50D0009ED6A9 /* Objects/ Classes */,
 				F28B14871E5F50BF009ED6A9 /* Custom Cell */,
 				F28B14861E5F5096009ED6A9 /* View Controllers */,
 				F46F93B51E43A96100334F68 /* AppDelegate.swift */,
@@ -182,7 +192,6 @@
 				F46F93BE1E43A96100334F68 /* LaunchScreen.storyboard */,
 				F46F93C11E43A96100334F68 /* Info.plist */,
 				F4952D831E4CC36000BCF523 /* GoogleService-Info.plist */,
-				F44C5C771E50B0EF00B52336 /* Item.swift */,
 				F44C5C751E50B0AF00B52336 /* items.json */,
 			);
 			path = EatFlyApp;
@@ -397,8 +406,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4952D861E4CC84A00BCF523 /* SignUpViewController.swift in Sources */,
+				F2C214AD1E60853F00A1D565 /* UploadViewController.swift in Sources */,
+				F2C214B11E60981200A1D565 /* PostCell.swift in Sources */,
 				F46F93B81E43A96100334F68 /* ViewController.swift in Sources */,
 				F46F93E81E44D34E00334F68 /* SocialFeedViewController.swift in Sources */,
+				F2C214B31E60995200A1D565 /* Post.swift in Sources */,
 				0EF13A861E5DA82800D131CF /* ShoppingListTableViewController.swift in Sources */,
 				F44C5C781E50B0EF00B52336 /* Item.swift in Sources */,
 				F28B14831E5F4D7A009ED6A9 /* UserCell.swift in Sources */,
