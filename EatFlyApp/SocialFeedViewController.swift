@@ -109,4 +109,8 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //Code for when cell is selected
+    }
+    
 }

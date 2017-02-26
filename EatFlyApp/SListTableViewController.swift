@@ -120,7 +120,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         let selectedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
         
-        self.shoppingList.append((selectedRow.textLabel?.text)!)
+        list.append((selectedRow.textLabel?.text)!)
 
         resultSearchController.searchBar.endEditing(true)
         

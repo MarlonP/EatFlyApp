@@ -8,7 +8,10 @@
 
 import UIKit
 
+var list = [String]()
+
 class ShoppingListTableViewController: UITableViewController {
+    @IBOutlet weak var input: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,26 +31,76 @@ class ShoppingListTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        
+        
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        
+        return list.count
     }
     
     
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
-        // Configure the cell...
+        cell.textLabel?.text = list[indexPath.row]
 
         return cell
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    
+        let deletedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
+    
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            list.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+            deletedRow.accessoryType = UITableViewCellAccessoryType.none
+            tableView.reloadData()
+    
+        }
+    }
+    
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+        let selectedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
+    
+        if selectedRow.accessoryType == UITableViewCellAccessoryType.none{
+            selectedRow.accessoryType = UITableViewCellAccessoryType.checkmark
+            selectedRow.tintColor = UIColor.green
+        }
+    
+        else{
+            selectedRow.accessoryType = UITableViewCellAccessoryType.none
+    
+        }//end if/else statement
+    }// end didSelectRow function
+    
+    
+    @IBAction func addPressed(_ sender: Any) {
+        
+        if (input.text != ""){
+            let newItem = input.text
+            list.append(newItem!)
+            input.resignFirstResponder()
+            input.text = ""
+            tableView.reloadData()
+        }
+        
+        
+    }
+    
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -69,37 +122,11 @@ class ShoppingListTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+   
 
  
     
-        
-        
-        
-        
+    
         //    @IBAction func addButton(_ sender: UIButton) {
         //
         //        let newItem = textField.text
@@ -114,36 +141,8 @@ class ShoppingListTableViewController: UITableViewController {
     
    
         
-        
-        //
-        //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //
-        //        let selectedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
-        //
-        //        if selectedRow.accessoryType == UITableViewCellAccessoryType.none{
-        //            selectedRow.accessoryType = UITableViewCellAccessoryType.checkmark
-        //            selectedRow.tintColor = UIColor.green
-        //        }
-        //
-        //        else{
-        //            selectedRow.accessoryType = UITableViewCellAccessoryType.none
-        //
-        //        }//end if/else statement
-        //
-        //
-        //    }// end didSelectRow function
-        //
-        //
-        //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        //
-        //        let deletedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
-        //        
-        //        if editingStyle == UITableViewCellEditingStyle.delete {
-        //            listItems.remove(at: indexPath.row)
-        //            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-        //            deletedRow.accessoryType = UITableViewCellAccessoryType.none
-        //            
-        //        }
+ 
+    
         
         
   
