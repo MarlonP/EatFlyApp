@@ -135,16 +135,16 @@
         <!--Tab Bar Controller-->
         <scene sceneID="Qqt-5g-VeV">
             <objects>
-                <tabBarController storyboardIdentifier="usersVC" id="4Di-uO-Xxz" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="feedVC" id="4Di-uO-Xxz" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="PkO-bj-iFi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <segue destination="lOn-m7-M86" kind="relationship" relationship="viewControllers" id="DWd-sF-FDf"/>
                         <segue destination="ZbX-6M-HiC" kind="relationship" relationship="viewControllers" id="sNh-lj-tRZ"/>
                         <segue destination="hZE-dY-vO4" kind="relationship" relationship="viewControllers" id="0Nv-OG-Y55"/>
-                        <segue destination="lOn-m7-M86" kind="relationship" relationship="viewControllers" id="DWd-sF-FDf"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WsE-t4-3XB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -564,7 +564,7 @@
         <!--Social Feed-->
         <scene sceneID="prn-VG-k0B">
             <objects>
-                <viewController storyboardIdentifier="feedVC" id="lOn-m7-M86" customClass="SocialFeedViewController" customModule="EatFlyApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="lOn-m7-M86" customClass="SocialFeedViewController" customModule="EatFlyApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="doT-yu-2nA"/>
                         <viewControllerLayoutGuide type="bottom" id="8VA-1l-jsZ"/>
@@ -602,7 +602,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="mcj-Tc-nzK">
-                                <rect key="frame" x="0.0" y="72" width="375" height="595"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="546"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fcB-q9-cQa">
                                     <size key="itemSize" width="375" height="230"/>
@@ -762,7 +762,7 @@
                                     <navigationItem title="Post Title" id="pKb-1L-Nc5">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="2sR-fP-HYc">
                                             <connections>
-                                                <segue destination="lOn-m7-M86" kind="show" id="nZ9-JU-NUI"/>
+                                                <segue destination="lOn-m7-M86" kind="show" id="OLr-dj-SbB"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -813,6 +813,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="0Oh-ZS-m9H"/>
-        <segue reference="nZ9-JU-NUI"/>
+        <segue reference="OLr-dj-SbB"/>
     </inferredMetricsTieBreakers>
 </document>
