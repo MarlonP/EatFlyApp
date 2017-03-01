@@ -9,44 +9,61 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import Firebase
 
 class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     
     var itemNames = [String]()
     var filteredData = [String]()
     var items = [Item]()
+    var ref: FIRDatabaseReference!
+    var refHandle: UInt!
+    
     var shoppingList = [String]()
     var resultSearchController = UISearchController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        URLCache.shared.removeAllCachedResponses()
-        Alamofire.request("http://178.62.90.238/items.json").response { response in
-            
-            if let error = response.error {
-                print(error)
-                return
-            }
-            
-            guard let data = response.data else { return }
-            
-            let json = JSON(data: data)
-            
-            
-            for item in json["data"]["items"].arrayValue {
-                
-                let newItem = Item(json: item)
-                self.items.append(newItem)
-            }
-            
-            for item in self.items {
-                print(item.itemName)
-                self.itemNames.append(item.itemName)
-            }
-            
-            
-        }
+        
+        ref = FIRDatabase.database().reference()
+
+//        refHandle = ref.observe(FIRDataEventType.value, with: { (snapshot) in
+//            let dataDict = snapshot.value as! [String: AnyObject]
+//            
+//            print(dataDict)
+//        })
+        
+        //let userID: String = (FIRAuth.auth()?.currentUser?.uid)!
+        ref.child("items").observe(.value, with: { snapshot in
+            print(snapshot)
+        })
+//        URLCache.shared.removeAllCachedResponses()
+//        Alamofire.request("http://178.62.90.238/items.json").response { response in
+//            
+//            if let error = response.error {
+//                print(error)
+//                return
+//            }
+//            
+//            guard let data = response.data else { return }
+//            
+//            let json = JSON(data: data)
+//            
+//            
+//            for item in json["data"]["items"].arrayValue {
+//                
+//                let newItem = Item(json: item)
+//                self.items.append(newItem)
+//            }
+//            
+//            for item in self.items {
+//                print(item.itemName)
+//                self.itemNames.append(item.itemName)
+//            }
+//            
+//            
+//        }
 
         self.resultSearchController = UISearchController(searchResultsController: nil)
         self.resultSearchController.searchResultsUpdater = self
@@ -58,12 +75,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         self.tableView.reloadData()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+   
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
