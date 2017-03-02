@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Alamofire
-import SwiftyJSON
 import Firebase
 
 class SListTableViewController: UITableViewController, UISearchResultsUpdating {
@@ -16,6 +14,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     var itemNames = [String]()
     var filteredData = [String]()
     var items = [Item]()
+    var filteredItems = [Item]()
     var ref: FIRDatabaseReference!
     var refHandle: UInt!
     
@@ -25,45 +24,10 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getItems()
+     
         
-        ref = FIRDatabase.database().reference()
-
-//        refHandle = ref.observe(FIRDataEventType.value, with: { (snapshot) in
-//            let dataDict = snapshot.value as! [String: AnyObject]
-//            
-//            print(dataDict)
-//        })
         
-        //let userID: String = (FIRAuth.auth()?.currentUser?.uid)!
-        ref.child("items").observe(.value, with: { snapshot in
-            print(snapshot)
-        })
-//        URLCache.shared.removeAllCachedResponses()
-//        Alamofire.request("http://178.62.90.238/items.json").response { response in
-//            
-//            if let error = response.error {
-//                print(error)
-//                return
-//            }
-//            
-//            guard let data = response.data else { return }
-//            
-//            let json = JSON(data: data)
-//            
-//            
-//            for item in json["data"]["items"].arrayValue {
-//                
-//                let newItem = Item(json: item)
-//                self.items.append(newItem)
-//            }
-//            
-//            for item in self.items {
-//                print(item.itemName)
-//                self.itemNames.append(item.itemName)
-//            }
-//            
-//            
-//        }
 
         self.resultSearchController = UISearchController(searchResultsController: nil)
         self.resultSearchController.searchResultsUpdater = self
@@ -75,6 +39,67 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         self.tableView.reloadData()
     }
+    
+    
+    
+    func getItems() {
+        ref = FIRDatabase.database().reference()
+        
+        ref.child("items").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
+            let itemsSnap = snapshot.value as! [String : AnyObject]
+            self.items.removeAll()
+            
+            
+            for (_,value) in itemsSnap {
+                
+               
+                
+                        let itemData = Item()
+                        if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String {
+                            itemData.itemName = itemName
+                            itemData.barcode = barcode
+                            itemData.price = price
+                            
+                            //Start From Here
+                            
+                            
+                            self.items.append(itemData)
+                            self.itemNames.append(itemData.itemName)
+                            
+                            print(itemData.itemName)
+                        }
+                
+                    
+                
+            }
+            
+        })
+        ref.removeAllObservers()
+    }
+    
+    
+  
+    
+    func checkItemsList(indexPath: IndexPath) {
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        let ref = FIRDatabase.database().reference()
+        
+        ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+            if let following = snapshot.value as? [String : AnyObject] {
+                for (_, value) in following {
+                    if value as! String == self.items[indexPath.row].barcode {
+                        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                    }
+                    
+                }
+            }
+        })
+        ref.removeAllObservers()
+    }
+    
+    
+
    
     // MARK: - Table view data source
 
@@ -102,13 +127,24 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         if self.resultSearchController.isActive
         {
             cell!.textLabel?.text = self.filteredData[indexPath.row]
+            
+            //compares string filteredData array to the items array and appends all the filteredData into filteredItems
+            filteredItems.removeAll()
+            for i in 0...items.count-1{
+                if self.filteredData[indexPath.row]  == items[i].itemName{
+                    filteredItems.append(items[i])
+                }
+                
+            }
         }
         else
         {
             //cell!.textLabel?.text = self.shoppingList[indexPath.row]
         }
 
-       
+        checkItemsList(indexPath: indexPath)
+        
+        
         
         return cell!
     }
@@ -130,9 +166,51 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        let ref = FIRDatabase.database().reference()
+        let key = ref.child("users").child("barcode").key
+        
+        ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+//            if let hasItem = snapshot.value as? [String : AnyObject] {
+//                for (ke, value) in hasItem {
+//                    if value as! String == self.items[indexPath.row].barcode {
+//                        isItem = true
+//                        
+//                        ref.child("users").child(uid).child("itemsList/\(ke)").removeValue()
+//                        
+//                        
+//
+//                    }
+//                }
+//                
+//            }
+            // cant be index.row because they are all at 1 so going to always give back the first barcode.
+            
+                let itemsList = ["itemsList/\(key)" : self.filteredItems[indexPath.row].barcode]
+                
+                
+                ref.child("users").child(uid).updateChildValues(itemsList)
+                
+                
+               
+                
+                
+            
+        })
+        
+        ref.removeAllObservers()
+        
         let selectedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
         
-        list.append((selectedRow.textLabel?.text)!)
+      
+        
+        for i in 0...items.count-1{
+            if selectedRow.textLabel?.text == items[i].itemName{
+                listDetail.append(items[i])
+            }
+            
+        }
 
         resultSearchController.searchBar.endEditing(true)
         

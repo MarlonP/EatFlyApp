@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
-var list = [String]()
+var listDetail = [Item]()
 
 class ShoppingListTableViewController: UITableViewController {
     @IBOutlet weak var input: UITextField!
+    var userAddedItems = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +40,7 @@ class ShoppingListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return list.count
+        return listDetail.count
     }
     
     
@@ -46,8 +48,10 @@ class ShoppingListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        
 
-        cell.textLabel?.text = list[indexPath.row]
+        cell.textLabel?.text = listDetail[indexPath.row].itemName
 
         return cell
     }
@@ -57,9 +61,41 @@ class ShoppingListTableViewController: UITableViewController {
         let deletedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
     
         if editingStyle == UITableViewCellEditingStyle.delete {
-            list.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-            deletedRow.accessoryType = UITableViewCellAccessoryType.none
+            
+            let uid = FIRAuth.auth()!.currentUser!.uid
+            let ref = FIRDatabase.database().reference()
+            //let key = ref.child("users").child("barcode").key
+            
+            
+            ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+                
+                
+                                
+                            if let hasItem = snapshot.value as? [String : AnyObject] {
+                                for (key, value) in hasItem {
+                                    
+                                    print(listDetail.count)
+                                    print(listDetail[indexPath.row].barcode)
+                                    print(value)
+                                    if value as! String == listDetail[indexPath.row].barcode {
+                                        
+                
+                                        ref.child("users").child(uid).child("itemsList/\(key)").removeValue()
+                                        listDetail.remove(at: indexPath.row)
+                                        tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                                        deletedRow.accessoryType = UITableViewCellAccessoryType.none
+                
+                
+                
+                                    }
+                                }
+                
+                            }
+                            
+                })
+            
+            
+            
             tableView.reloadData()
     
         }
@@ -87,7 +123,7 @@ class ShoppingListTableViewController: UITableViewController {
         
         if (input.text != ""){
             let newItem = input.text
-            list.append(newItem!)
+            userAddedItems.append(newItem!)
             input.resignFirstResponder()
             input.text = ""
             tableView.reloadData()
@@ -102,43 +138,11 @@ class ShoppingListTableViewController: UITableViewController {
         tableView.reloadData()
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-   
 
  
     
-    
-        //    @IBAction func addButton(_ sender: UIButton) {
-        //
-        //        let newItem = textField.text
-        //        listItems.append(newItem!)
-        //        textField.resignFirstResponder()
-        //        textField.text = ""
-        //        tableView.reloadData()
-        //
-        //
-        //    }
-        
-    
+ 
    
         
  

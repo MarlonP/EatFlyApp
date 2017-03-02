@@ -16,6 +16,7 @@
 		F2C214AD1E60853F00A1D565 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214AC1E60853E00A1D565 /* UploadViewController.swift */; };
 		F2C214B11E60981200A1D565 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214B01E60981200A1D565 /* PostCell.swift */; };
 		F2C214B31E60995200A1D565 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214B21E60995200A1D565 /* Post.swift */; };
+		F2C214F51E68733A00A1D565 /* UserPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214F41E68733A00A1D565 /* UserPageViewController.swift */; };
 		F44C5C761E50B0AF00B52336 /* items.json in Resources */ = {isa = PBXBuildFile; fileRef = F44C5C751E50B0AF00B52336 /* items.json */; };
 		F44C5C781E50B0EF00B52336 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44C5C771E50B0EF00B52336 /* Item.swift */; };
 		F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93B51E43A96100334F68 /* AppDelegate.swift */; };
@@ -60,6 +61,7 @@
 		F2C214AC1E60853E00A1D565 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		F2C214B01E60981200A1D565 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		F2C214B21E60995200A1D565 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		F2C214F41E68733A00A1D565 /* UserPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPageViewController.swift; sourceTree = "<group>"; };
 		F44C5C751E50B0AF00B52336 /* items.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = items.json; sourceTree = "<group>"; };
 		F44C5C771E50B0EF00B52336 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		F46F93B21E43A96100334F68 /* EatFlyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EatFlyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +137,7 @@
 				F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */,
 				F2C214AC1E60853E00A1D565 /* UploadViewController.swift */,
 				F46F93E71E44D34E00334F68 /* SocialFeedViewController.swift */,
+				F2C214F41E68733A00A1D565 /* UserPageViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				F44C5C781E50B0EF00B52336 /* Item.swift in Sources */,
 				F28B14831E5F4D7A009ED6A9 /* UserCell.swift in Sources */,
 				F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */,
+				F2C214F51E68733A00A1D565 /* UserPageViewController.swift in Sources */,
 				F28B14851E5F4E4B009ED6A9 /* UsersViewController.swift in Sources */,
 				F46F93E41E44D2E300334F68 /* LogInViewController.swift in Sources */,
 				F22870691E5CA554001C7262 /* SListTableViewController.swift in Sources */,

@@ -37,6 +37,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
                             userToShow.fullName = fullName
                             userToShow.imgPath = imagePath
                             userToShow.userID = uid
+                                                        
                             self.user.append(userToShow)
                         }
                     }
@@ -126,8 +127,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         ref.removeAllObservers()
     }
 
-    @IBAction func logOutPressed(_ sender: Any) {
-    }
+    
     
 
 }
