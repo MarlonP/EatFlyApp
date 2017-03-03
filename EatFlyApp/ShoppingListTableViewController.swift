@@ -14,21 +14,16 @@ var listDetail = [Item]()
 class ShoppingListTableViewController: UITableViewController {
     @IBOutlet weak var input: UITextField!
     var userAddedItems = [String]()
+    var BCfromDB = [String]()
+    var shoppingList = [Item]()
+    var ref: FIRDatabaseReference!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
 
@@ -40,7 +35,7 @@ class ShoppingListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return listDetail.count
+        return shoppingList.count
     }
     
     
@@ -51,7 +46,7 @@ class ShoppingListTableViewController: UITableViewController {
         
         
 
-        cell.textLabel?.text = listDetail[indexPath.row].itemName
+        cell.textLabel?.text = shoppingList[indexPath.row].itemName
 
         return cell
     }
@@ -63,7 +58,7 @@ class ShoppingListTableViewController: UITableViewController {
         if editingStyle == UITableViewCellEditingStyle.delete {
             
             let uid = FIRAuth.auth()!.currentUser!.uid
-            let ref = FIRDatabase.database().reference()
+            ref = FIRDatabase.database().reference()
             //let key = ref.child("users").child("barcode").key
             
             
@@ -80,7 +75,7 @@ class ShoppingListTableViewController: UITableViewController {
                                     if value as! String == listDetail[indexPath.row].barcode {
                                         
                 
-                                        ref.child("users").child(uid).child("itemsList/\(key)").removeValue()
+                                        self.ref.child("users").child(uid).child("itemsList/\(key)").removeValue()
                                         listDetail.remove(at: indexPath.row)
                                         tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
                                         deletedRow.accessoryType = UITableViewCellAccessoryType.none
@@ -135,20 +130,94 @@ class ShoppingListTableViewController: UITableViewController {
     
     
     override func viewDidAppear(_ animated: Bool) {
+        getItemDetails()
+        tableView.reloadData()
+        print(shoppingList)
+    }
+    
+    
+    func getItemDetails() {
+        
+        getUsersItems()
+        
+        ref = FIRDatabase.database().reference()
+        
+        ref.child("items").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
+            let itemsSnap = snapshot.value as! [String : AnyObject]
+            
+            
+            
+            for (_,value) in itemsSnap {
+                
+                
+                
+                let itemData = Item()
+                if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String {
+                    itemData.itemName = itemName
+                    itemData.barcode = barcode
+                    itemData.price = price
+                    if self.BCfromDB.count != 0 {
+                        for i in 0...self.BCfromDB.count-1 {
+                            if (itemData.barcode == self.BCfromDB[i]){
+                                
+                                self.shoppingList.append(itemData)
+                            }
+                        }
+                    
+                    }
+                    
+                }
+                
+                
+                
+            }
+            
+        })
+        ref.removeAllObservers()
         tableView.reloadData()
     }
 
-
+    //let itemsList = ["itemsList/\(key)" : self.filteredItems[indexPath.row].barcode]
+    
+    //ref.child("users").child(uid).updateChildValues(itemsList)
 
  
-    
+    func getUsersItems() {
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        ref = FIRDatabase.database().reference()
+        let key = ref.child("users").child("barcode").key
+        
+        ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+            print(snapshot.value as Any)
+            if let itemsSnap = snapshot.value as? [String : AnyObject] {
+            self.BCfromDB.removeAll()
+            
+            
+            for (_,value) in itemsSnap {
+                
+                // Error here: fatal error: unexpectedly found nil while unwrapping an Optional value
+                let barcode = value["barcode"] as! String
+                
+                self.BCfromDB.append(barcode)
+                
+                    
+                
+                }
+                
+                
+            }
+            
+        })
+        ref.removeAllObservers()
+    }
  
    
-        
+    
  
     
-        
-        
+    
+    
   
     
     
