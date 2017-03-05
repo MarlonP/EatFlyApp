@@ -20,6 +20,9 @@ class ShoppingListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        getItemDetails()
+        tableView.reloadData()
+        print(shoppingList)
 
         
     }
@@ -144,12 +147,9 @@ class ShoppingListTableViewController: UITableViewController {
         
         ref.child("items").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
             let itemsSnap = snapshot.value as! [String : AnyObject]
-            
-            
+            self.shoppingList.removeAll()
             
             for (_,value) in itemsSnap {
-                
-                
                 
                 let itemData = Item()
                 if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String {
@@ -185,21 +185,22 @@ class ShoppingListTableViewController: UITableViewController {
     func getUsersItems() {
         let uid = FIRAuth.auth()!.currentUser!.uid
         ref = FIRDatabase.database().reference()
-        let key = ref.child("users").child("barcode").key
+        //let key = ref.child("users").child("barcode").key
         
         ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
-            print(snapshot.value as Any)
+            
             if let itemsSnap = snapshot.value as? [String : AnyObject] {
+
             self.BCfromDB.removeAll()
             
             
             for (_,value) in itemsSnap {
                 
                 // Error here: fatal error: unexpectedly found nil while unwrapping an Optional value
-                let barcode = value["barcode"] as! String
+                let barcode = value as? String
                 
-                self.BCfromDB.append(barcode)
+                self.BCfromDB.append(barcode!)
                 
                     
                 
