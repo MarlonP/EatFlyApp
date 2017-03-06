@@ -164,37 +164,22 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
     }
     
+    
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let uid = FIRAuth.auth()!.currentUser!.uid
         let ref = FIRDatabase.database().reference()
         let key = ref.child("users").child("barcode").key
         
+        
+        let itemsList: [String : Any] = ["barcode" : self.filteredItems[indexPath.row].barcode]
+        
+        
+        ref.child("users").child(uid).child("itemsList").setValue(itemsList)
+        
         ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
-//            if let hasItem = snapshot.value as? [String : AnyObject] {
-//                for (ke, value) in hasItem {
-//                    if value as! String == self.items[indexPath.row].barcode {
-//                        isItem = true
-//                        
-//                        ref.child("users").child(uid).child("itemsList/\(ke)").removeValue()
-//                        
-//                        
-//
-//                    }
-//                }
-//                
-//            }
-            // cant be index.row because they are all at 1 so going to always give back the first barcode.
-            
-                let itemsList = ["itemsList/\(key)" : self.filteredItems[indexPath.row].barcode]
-                
-                
-                ref.child("users").child(uid).updateChildValues(itemsList)
-                
-                
-               
-                
                 
             
         })

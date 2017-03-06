@@ -21,8 +21,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     let picker = UIImagePickerController()
     var userStorage: FIRStorageReference!
     var ref: FIRDatabaseReference!
- 
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,9 +31,10 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         ref = FIRDatabase.database().reference()
         userStorage = storage.child("users")
-
+        
     }
-
+    
+    
     @IBAction func selectImagePressed(_ sender: Any) {
         
         picker.allowsEditing = true
@@ -49,7 +49,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             nextBtn.isHidden = false
         }
         self.dismiss(animated: true, completion: nil)
-        
     }
     
     @IBAction func nextPressed(_ sender: Any) {
@@ -57,8 +56,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         guard nameField.text != "", emailField.text != "", passwordField.text != "", comPasswordField.text != "" else { return}
         
         if passwordField.text == comPasswordField.text {
-            
             FIRAuth.auth()?.createUser(withEmail: emailField.text!, password: passwordField.text!, completion: { (user, error) in
+                
                 
                 if let error = error {
                     print(error.localizedDescription)
@@ -75,7 +74,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                     let data = UIImageJPEGRepresentation(self.imageView.image!, 0.5)
                     
                     let uploadTask = imageRef.put(data!, metadata: nil, completion: { (metadata, err) in
-                        if  err != nil {
+                        if err != nil {
                             print(err!.localizedDescription)
                         }
                         
@@ -83,6 +82,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                             if er != nil {
                                 print(er!.localizedDescription)
                             }
+                            
                             
                             if let url = url {
                                 
@@ -92,7 +92,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 
                                 self.ref.child("users").child(user.uid).setValue(userInfo)
                                 
-                                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "usersVC")
+                                
+                                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "feedVC")
                                 
                                 self.present(vc, animated: true, completion: nil)
                                 
@@ -104,17 +105,25 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                     
                     uploadTask.resume()
                     
-                    
                 }
+                
+                
             })
+            
+            
             
         } else {
             print("Password does not match")
         }
         
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
-
-
-
 }
