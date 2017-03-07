@@ -21,10 +21,11 @@ class ShoppingListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getItemDetails()
-        tableView.reloadData()
-        print(shoppingList)
 
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        getItemDetails()
     }
 
 
@@ -53,7 +54,7 @@ class ShoppingListTableViewController: UITableViewController {
 
         return cell
     }
-    
+    //Delete cell function
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     
         let deletedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
@@ -72,14 +73,16 @@ class ShoppingListTableViewController: UITableViewController {
                             if let hasItem = snapshot.value as? [String : AnyObject] {
                                 for (key, value) in hasItem {
                                     
-                                    print(listDetail.count)
-                                    print(listDetail[indexPath.row].barcode)
+                                    print(self.shoppingList.count)
+                                    print(self.shoppingList[indexPath.row].barcode)
                                     print(value)
-                                    if value as! String == listDetail[indexPath.row].barcode {
+                                    let BC = value["barcode"]
+                                    
+                                    if BC as! String == self.shoppingList[indexPath.row].barcode {
                                         
                 
                                         self.ref.child("users").child(uid).child("itemsList/\(key)").removeValue()
-                                        listDetail.remove(at: indexPath.row)
+                                        self.shoppingList.remove(at: indexPath.row)
                                         tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
                                         deletedRow.accessoryType = UITableViewCellAccessoryType.none
                 
@@ -132,11 +135,7 @@ class ShoppingListTableViewController: UITableViewController {
     
     
     
-    override func viewDidAppear(_ animated: Bool) {
-        getItemDetails()
-        tableView.reloadData()
-        print(shoppingList)
-    }
+
     
     
     func getItemDetails() {
@@ -163,7 +162,8 @@ class ShoppingListTableViewController: UITableViewController {
                                 self.shoppingList.append(itemData)
                             }
                         }
-                    
+                        
+                        self.tableView.reloadData()
                     }
                     
                 }
@@ -174,7 +174,7 @@ class ShoppingListTableViewController: UITableViewController {
             
         })
         ref.removeAllObservers()
-        tableView.reloadData()
+        
     }
 
     //let itemsList = ["itemsList/\(key)" : self.filteredItems[indexPath.row].barcode]
@@ -198,7 +198,7 @@ class ShoppingListTableViewController: UITableViewController {
             for (_,value) in itemsSnap {
                 
                 // Error here: fatal error: unexpectedly found nil while unwrapping an Optional value
-                let barcode = value as? String
+                let barcode = value["barcode"] as? String
                 
                 self.BCfromDB.append(barcode!)
                 
