@@ -17,6 +17,7 @@ class ShoppingListTableViewController: UITableViewController {
     var BCfromDB = [String]()
     var shoppingList = [Item]()
     var ref: FIRDatabaseReference!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +52,8 @@ class ShoppingListTableViewController: UITableViewController {
         
 
         cell.textLabel?.text = shoppingList[indexPath.row].itemName
+        
+        checkCompletion(indexPath: indexPath)
 
         return cell
     }
@@ -105,20 +108,94 @@ class ShoppingListTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        let ref = FIRDatabase.database().reference()
+        let key = ref.child("itemsList").childByAutoId().key
+        
+      
+        
+        ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+            
+            if let completed = snapshot.value as? [String : AnyObject] {
+                for (_, value) in completed {
+                    let BC = value["barcode"]
+                    if BC as! String == self.shoppingList[indexPath.row].barcode {
+                    
+                        let completion = value["completion"] as! Bool
+                        let id = value["listID"] as! String
+                    
+                        if completion == true {
+                            
+                            let completionVal: [String : Any] = ["completion" : false]
+                            ref.child("users").child(uid).child("itemsList").child(id).updateChildValues(completionVal)
+                            self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
+                            
+                        }else if completion == false{
+                            
+                            let completionVal: [String : Any] = ["completion" : true]
+                            ref.child("users").child(uid).child("itemsList").child(id).updateChildValues(completionVal)
+                            self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                        }
+                    
+                    }
+                }
+            }
+            
+//            if let completed = snapshot.value as? [String : AnyObject] {
+//                for (ke, value) in completed {
+//                    let BC = value["barcode"]
+//                    print(value)
+//                    
+//                    if BC as! String == self.shoppingList[indexPath.row].barcode {
+//                        isCompleted = true
+//                        let completion: [String : Any] = ["completion" : isCompleted]
+//                        
+//                        //ref.child("users").child(uid).childByAutoId().child("itemsList").setValue(completion)
+//                        
+//                        
+//                        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+//                    }
+//                }
+//            }
+//            if isCompleted == true {
+//                isCompleted = false
+//                let completion: [String : Any] = ["completion" : isCompleted]
+//                
+//                //ref.child("users").child(uid).child("itemsList").setValue(completion)
+//                
+//                self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
+//            }
+        })
+        ref.removeAllObservers()
     
-        let selectedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
-    
-        if selectedRow.accessoryType == UITableViewCellAccessoryType.none{
-            selectedRow.accessoryType = UITableViewCellAccessoryType.checkmark
-            selectedRow.tintColor = UIColor.green
-        }
-    
-        else{
-            selectedRow.accessoryType = UITableViewCellAccessoryType.none
-    
-        }//end if/else statement
     }// end didSelectRow function
     
+    
+    func checkCompletion(indexPath: IndexPath) {
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        let ref = FIRDatabase.database().reference()
+        
+        ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+            if let completed = snapshot.value as? [String : AnyObject] {
+                for (_, value) in completed {
+                    let completion = value["completion"] as! Bool
+                    
+                    if completion == true {
+                        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                    }else{
+                        
+                        self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
+                    }
+                    
+                }
+            }
+        })
+        ref.removeAllObservers()
+        
+    }
     
     @IBAction func addPressed(_ sender: Any) {
         

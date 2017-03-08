@@ -170,13 +170,15 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         let uid = FIRAuth.auth()!.currentUser!.uid
         let ref = FIRDatabase.database().reference()
-        let key = ref.child("users").child("barcode").key
+        let key = ref.child("users").child(uid).child("itemsList").childByAutoId().key
         
         
-        let itemsList: [String : Any] = ["barcode" : self.filteredItems[indexPath.row].barcode, "completion" : false]
         
         
-        ref.child("users").child(uid).child("itemsList").childByAutoId().setValue(itemsList)
+        let item: [String : Any] = ["barcode" : self.filteredItems[indexPath.row].barcode, "completion" : false, "listID" : key]
+        let itemsList = ["\(key)" : item]
+        
+        ref.child("users").child(uid).child("itemsList").updateChildValues(itemsList)
         
         ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
