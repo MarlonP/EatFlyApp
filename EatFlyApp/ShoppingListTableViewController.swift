@@ -143,30 +143,6 @@ class ShoppingListTableViewController: UITableViewController {
                 }
             }
             
-//            if let completed = snapshot.value as? [String : AnyObject] {
-//                for (ke, value) in completed {
-//                    let BC = value["barcode"]
-//                    print(value)
-//                    
-//                    if BC as! String == self.shoppingList[indexPath.row].barcode {
-//                        isCompleted = true
-//                        let completion: [String : Any] = ["completion" : isCompleted]
-//                        
-//                        //ref.child("users").child(uid).childByAutoId().child("itemsList").setValue(completion)
-//                        
-//                        
-//                        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-//                    }
-//                }
-//            }
-//            if isCompleted == true {
-//                isCompleted = false
-//                let completion: [String : Any] = ["completion" : isCompleted]
-//                
-//                //ref.child("users").child(uid).child("itemsList").setValue(completion)
-//                
-//                self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
-//            }
         })
         ref.removeAllObservers()
     
