@@ -60,8 +60,6 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
                             itemData.barcode = barcode
                             itemData.price = price
                             
-                            //Start From Here
-                            
                             
                             self.items.append(itemData)
                             self.itemNames.append(itemData.itemName)
