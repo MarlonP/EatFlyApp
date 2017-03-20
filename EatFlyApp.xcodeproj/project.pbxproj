@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E90DBBB1E801AFF00516435 /* userPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E90DBBA1E801AFF00516435 /* userPostCell.swift */; };
 		0EF13A861E5DA82800D131CF /* ShoppingListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF13A851E5DA82800D131CF /* ShoppingListTableViewController.swift */; };
 		D04BE9A234D9421140553C3F /* Pods_EatFlyApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2408D2A84B400C442D8E4F62 /* Pods_EatFlyApp.framework */; };
 		F22870691E5CA554001C7262 /* SListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22870681E5CA554001C7262 /* SListTableViewController.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E90DBBA1E801AFF00516435 /* userPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userPostCell.swift; sourceTree = "<group>"; };
 		0EF13A851E5DA82800D131CF /* ShoppingListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingListTableViewController.swift; sourceTree = "<group>"; };
 		1D293336D49964AA44DF9E0E /* Pods-EatFlyApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EatFlyApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-EatFlyApp/Pods-EatFlyApp.release.xcconfig"; sourceTree = "<group>"; };
 		2408D2A84B400C442D8E4F62 /* Pods_EatFlyApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EatFlyApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +152,7 @@
 				F28B14821E5F4D7A009ED6A9 /* UserCell.swift */,
 				F2C214B01E60981200A1D565 /* PostCell.swift */,
 				F2C214F61E799B6C00A1D565 /* PayTableViewCell.swift */,
+				0E90DBBA1E801AFF00516435 /* userPostCell.swift */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				F46F93E41E44D2E300334F68 /* LogInViewController.swift in Sources */,
 				F22870691E5CA554001C7262 /* SListTableViewController.swift in Sources */,
 				F2C214F71E799B6C00A1D565 /* PayTableViewCell.swift in Sources */,
+				0E90DBBB1E801AFF00516435 /* userPostCell.swift in Sources */,
 				F28B148A1E5F50EC009ED6A9 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

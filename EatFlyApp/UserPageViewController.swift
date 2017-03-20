@@ -18,6 +18,7 @@ class UserPageViewController: UIViewController {
     @IBOutlet weak var followingLbl: UILabel!
     @IBOutlet weak var followersLbl: UILabel!
     @IBOutlet weak var postsLbl: UILabel!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     let ref = FIRDatabase.database().reference()
     
@@ -162,7 +163,7 @@ class UserPageViewController: UIViewController {
                         }
                     
                     
-                    //self.FeedCollectionView.reloadData()
+                    self.collectionView.reloadData()
                 }
             }
         })
@@ -178,6 +179,30 @@ class UserPageViewController: UIViewController {
 
     @IBAction func followPressed(_ sender: Any) {
     }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.posts.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postCell", for: indexPath) as! userPostCell
+        
+        print(cell.imageView.downloadImage(from: self.posts[indexPath.row].pathToImage))
+        
+        cell.imageView.downloadImage(from: self.posts[indexPath.row].pathToImage)
+   
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //Code for when cell is selected
+    }
+    
 }
 
 extension UIImageView {
