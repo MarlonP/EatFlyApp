@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class PayTableViewCell: UITableViewCell {
+class PayTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var itemNameLbl: UILabel!
     @IBOutlet weak var priceLbl: UILabel!
@@ -20,15 +20,19 @@ class PayTableViewCell: UITableViewCell {
     var itemID: String!
     var itemPrice: Double = 0
     var amount: Int = 1
-    var price: Double = 0
+    
     
     @IBAction func pressPlusBtn(_ sender: Any) {
+       
+        var price: Double = 0
         
         amount = amount + 1
         
         amountTextField.text = "\(amount)"
+        
         price = itemPrice * Double(amount)
-        priceLbl.text = String(format: "%.2f", price)
+        let priceText = String(format: "%.2f", price)
+        priceLbl.text = "£\(priceText)"
         
         let uid = FIRAuth.auth()!.currentUser!.uid
         let ref = FIRDatabase.database().reference()
@@ -43,12 +47,17 @@ class PayTableViewCell: UITableViewCell {
     }
 
     @IBAction func pressMinusBtn(_ sender: Any) {
+        
+        var price: Double = 0
+        
         if amount > 0 {
             amount = amount - 1
         }
         amountTextField.text = "\(amount)"
+        
         price = itemPrice * Double(amount)
-        priceLbl.text = String(format: "%.2f", price)
+        let priceText = String(format: "%.2f", price)
+        priceLbl.text = "£\(priceText)"
         
         let uid = FIRAuth.auth()!.currentUser!.uid
         let ref = FIRDatabase.database().reference()
@@ -59,6 +68,12 @@ class PayTableViewCell: UITableViewCell {
         
         
         ref.removeAllObservers()
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        amountTextField.resignFirstResponder()
+        return (true)
     }
 
 }

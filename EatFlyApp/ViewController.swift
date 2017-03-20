@@ -26,14 +26,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.hideKeyboardWhenTappedAround()
+        //tableView.reloadData()
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         getItemDetails()
         
-        
+        tableView.reloadData()
 
     }
     
@@ -54,15 +55,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PayTableViewCell
-        var itemPrice: Double = 0
+        
+        
+        
         cell.amount = Amounts[indexPath.row]
         cell.itemPrice = Double(currentShop[indexPath.row].price)!
-        let amount = cell.amount
+        
         cell.itemID = self.currentShop[indexPath.row].barcode
-        cell.amountTextField.text = "1"
+        
+        cell.amountTextField.keyboardType = UIKeyboardType.numberPad
+        
+        cell.amountTextField.text = "\(cell.amount)"
         
         
-        itemPrice = Double(self.currentShop[indexPath.row].price)! * Double(amount)
+        let initialPrice = cell.itemPrice * Double(cell.amount)
+        let priceText = String(format: "%.2f", initialPrice)
+        cell.priceLbl.text = "£\(priceText)"
+        
+        
+
         
         cell.itemNameLbl.text = self.currentShop[indexPath.row].itemName
         
@@ -73,7 +84,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         for i in 0...currentShop.count-1 {
             
-            let itemPrice = (self.currentShop[i].price as NSString).doubleValue
+            let itemPrice = Double(self.currentShop[i].price)! * Double(cell.amount)
             totalPrice = totalPrice + itemPrice
         }
         let price = String(format: "%.2f", totalPrice)
@@ -250,7 +261,7 @@ extension ViewController: BarcodeScannerCodeDelegate, BarcodeScannerErrorDelegat
         
         
         
-        let item: [String : Any] = ["barcode" : barcode, "amount" : "1"]
+        let item: [String : Any] = ["barcode" : barcode, "amount" : 1]
         let itemsList = ["\(barcode)" : item]
         
         ref.child("users").child(uid).child("currentShop").updateChildValues(itemsList)
@@ -266,5 +277,16 @@ extension ViewController: BarcodeScannerCodeDelegate, BarcodeScannerErrorDelegat
     
     func barcodeScannerDidDismiss(_ controller: BarcodeScannerController) {
         controller.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
