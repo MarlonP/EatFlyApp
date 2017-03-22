@@ -9,6 +9,10 @@
 import UIKit
 import Firebase
 
+protocol PayTableViewCellDelegate {
+    func buttonPressed()
+}
+
 class PayTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var itemNameLbl: UILabel!
@@ -21,9 +25,11 @@ class PayTableViewCell: UITableViewCell, UITextFieldDelegate {
     var itemPrice: Double = 0
     var amount: Int = 1
     
+    var delegate: PayTableViewCellDelegate?
     
     @IBAction func pressPlusBtn(_ sender: Any) {
        
+        delegate?.buttonPressed()
         var price: Double = 0
         
         amount = amount + 1
@@ -47,7 +53,7 @@ class PayTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     @IBAction func pressMinusBtn(_ sender: Any) {
-        
+        delegate?.buttonPressed()
         var price: Double = 0
         
         if amount > 0 {

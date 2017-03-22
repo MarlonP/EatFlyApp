@@ -173,6 +173,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     @IBAction func logOutPressed(_ sender: Any) {
         
         try! FIRAuth.auth()?.signOut()
+        
     }
 
     @IBAction func followPressed(_ sender: Any) {

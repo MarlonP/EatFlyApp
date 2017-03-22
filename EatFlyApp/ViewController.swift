@@ -29,12 +29,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.hideKeyboardWhenTappedAround()
         //tableView.reloadData()
         
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
         getItemDetails()
         
         tableView.reloadData()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+       getItemDetails()
+//        
+//        tableView.reloadData()
 
     }
     
@@ -57,7 +61,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PayTableViewCell
         
         
-        
+        cell.delegate = self
         cell.amount = Amounts[indexPath.row]
         cell.itemPrice = Double(currentShop[indexPath.row].price)!
         
@@ -289,4 +293,23 @@ extension UIViewController {
     func dismissKeyboard() {
         view.endEditing(true)
     }
+}
+
+extension ViewController: PayTableViewCellDelegate {
+    
+    func buttonPressed() {
+        //need to update Amounts array
+        
+        print("something changed")
+        var totalPrice: Double = 0
+        
+        for i in 0...currentShop.count-1 {
+        
+            let itemPrice = Double(self.currentShop[i].price)! * Double(Amounts[i])
+            totalPrice = totalPrice + itemPrice
+        }
+        let price = String(format: "%.2f", totalPrice)
+        totalPriceLbl.text = "Total: £\(price)"
+    }
+    
 }

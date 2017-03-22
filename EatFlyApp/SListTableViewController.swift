@@ -158,7 +158,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         self.filteredData = array as! [String]
         
         self.tableView.reloadData()
-        
+        // array has changed but this has maybe...
         
     }
     
@@ -172,6 +172,8 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         
         
+        // out of range
+        print( self.filteredItems[indexPath.row])
         
         let item: [String : Any] = ["barcode" : self.filteredItems[indexPath.row].barcode, "completion" : false, "listID" : key]
         let itemsList = ["\(key)" : item]
