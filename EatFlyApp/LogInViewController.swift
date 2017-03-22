@@ -16,10 +16,20 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         emailField.text = "t@t.com"
         pwField.text = "123456"
         
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if FIRAuth.auth()?.currentUser?.uid != nil {
+            
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "feedVC")
+            self.present(vc, animated: true, completion: nil)
+            
+        }
     }
 
     @IBAction func loginPressed(_ sender: Any) {

@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class UserPageViewController: UIViewController {
+class UserPageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLbl: UILabel!
@@ -47,8 +47,6 @@ class UserPageViewController: UIViewController {
         getFollowers()
         getFollowing()
         fetchPosts()
-        print(following.count)
-        print(followers.count)
         
         nameLbl.text = self.user[0].fullName
         profileImageView.downloadImage(from: self.user[0].imgPath!)
@@ -191,7 +189,8 @@ class UserPageViewController: UIViewController {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postCell", for: indexPath) as! userPostCell
         
-        print(cell.imageView.downloadImage(from: self.posts[indexPath.row].pathToImage))
+    
+        print(self.posts[indexPath.row].pathToImage)
         
         cell.imageView.downloadImage(from: self.posts[indexPath.row].pathToImage)
    
