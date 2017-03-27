@@ -30,13 +30,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //tableView.reloadData()
         
         getItemDetails()
+        getAmounts()
         
         tableView.reloadData()
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
-       getItemDetails()
+//     getItemDetails()
 //        
 //        tableView.reloadData()
 
@@ -88,7 +89,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         for i in 0...currentShop.count-1 {
             
-            let itemPrice = Double(self.currentShop[i].price)! * Double(cell.amount)
+            let itemPrice = Double(self.currentShop[i].price)! * Double(Amounts[i])
             totalPrice = totalPrice + itemPrice
         }
         let price = String(format: "%.2f", totalPrice)
@@ -104,7 +105,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        tableView.deselectRow(at: indexPath, animated: true)
        
     }
     
@@ -146,9 +147,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    //let itemsList = ["itemsList/\(key)" : self.filteredItems[indexPath.row].barcode]
-    
-    //ref.child("users").child(uid).updateChildValues(itemsList)
     
     
     func getCurrentShop() {
@@ -161,19 +159,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 self.BCfromDB.removeAll()
                 
-                
                 for (_,value) in itemsSnap {
                     
                     
-                    let currentAmount = value["amount"] as? Int
                     let barcode = value["barcode"] as? String
-                    
-                    
-                    self.Amounts.append(currentAmount!)
+        
                     self.BCfromDB.append(barcode!)
-                    
-                    
-                    
                     
                 }
                 
@@ -182,6 +173,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
         })
         ref.removeAllObservers()
+    }
+    
+    func getAmounts(){
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        
+        ref.child("users").child(uid).child("currentShop").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+            
+            if let itemsSnap = snapshot.value as? [String : AnyObject] {
+                
+                
+                self.Amounts.removeAll()
+                
+                
+                for (_,value) in itemsSnap {
+                    
+                    let currentAmount = value["amount"] as? Int
+                    
+                    self.Amounts.append(currentAmount!)
+                    
+                }
+                self.tableView.reloadData()
+                
+            }
+            
+        })
+        ref.removeAllObservers()
+        
     }
     
     
@@ -299,6 +318,7 @@ extension ViewController: PayTableViewCellDelegate {
     
     func buttonPressed() {
         //need to update Amounts array
+        getAmounts()
         
         print("something changed")
         var totalPrice: Double = 0
