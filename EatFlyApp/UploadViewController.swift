@@ -9,43 +9,48 @@
 import UIKit
 import Firebase
 
-class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     
-    @IBOutlet weak var postBtn: UIButton!
+    @IBOutlet weak var postBtn: UIBarButtonItem!
+    @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var previewImage: UIImageView!
-    @IBOutlet weak var selectBtn: UIButton!
+    //@IBOutlet weak var selectBtn: UIButton!
     
     var picker = UIImagePickerController()
+    var array = ["Description", "Photo/Video", "Recipe", "Instructions"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.tableView.tableFooterView = UIView()
         picker.delegate = self
+        
+        
 
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             self.previewImage.image = image
-            selectBtn.isHidden = true
-            postBtn.isHidden = false
+            //selectBtn.isHidden = true
+            //postBtn.isHidden = false
         }
         
         self.dismiss(animated: true, completion: nil)
         
     }
 
-    @IBAction func selectPressed(_ sender: Any) {
+    //@IBAction func selectPressed(_ sender: Any) {
         
-        picker.allowsEditing = true
-        picker.sourceType = .photoLibrary
-        self.present(picker, animated: true, completion: nil)
-    }
+        //picker.allowsEditing = true
+        //picker.sourceType = .photoLibrary
+        //self.present(picker, animated: true, completion: nil)
+    //}
 
     @IBAction func postPressed(_ sender: Any) {
         AppDelegate.instance().showActivityIndicator()
-
+        
         
         let uid = FIRAuth.auth()!.currentUser!.uid
         let ref = FIRDatabase.database().reference()
@@ -84,4 +89,58 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         uploadTask.resume()
         
     }
+    
+     func numberOfSections(in tableView: UITableView) -> Int {
+        
+        
+        return 1
+    }
+    
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return array.count
+    }
+    
+    
+    
+    
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        
+        
+        cell.textLabel?.text = array[indexPath.row]
+        
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        if indexPath.row == 1 {
+            picker.allowsEditing = true
+            picker.sourceType = .photoLibrary
+            self.present(picker, animated: true, completion: nil)
+            
+            
+            let containerView = UIView(frame: CGRect(x:0,y:0,width:320,height:500))
+            let imageView = UIImageView()
+            
+            if let image = UIImage(named: "a_image") {
+                let ratio = image.size.width / image.size.height
+                if containerView.frame.width > containerView.frame.height {
+                    let newHeight = containerView.frame.width / ratio
+                    imageView.frame.size = CGSize(width: containerView.frame.width, height: newHeight)
+                }
+                else{
+                    let newWidth = containerView.frame.height * ratio
+                    imageView.frame.size = CGSize(width: newWidth, height: containerView.frame.height)
+                }
+            }
+        }
+    }
+
+    
+    
 }

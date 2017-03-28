@@ -24,7 +24,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getItems()
+        
      
         
         self.resultSearchController = UISearchController(searchResultsController: nil)
@@ -36,6 +36,9 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         self.tableView.tableHeaderView = self.resultSearchController.searchBar
         
         self.tableView.reloadData()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        getItems()
     }
     
     
@@ -127,10 +130,14 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
             cell!.textLabel?.text = self.filteredData[indexPath.row]
             
             //compares string filteredData array to the items array and appends all the filteredData into filteredItems
-            filteredItems.removeAll()
+            //THIS IS THE PROBLEM ONLY HAS 1 ITEM WHEN THERE IS 2
+            filteredItems.removeAll(keepingCapacity: false)
             for i in 0...items.count-1{
                 if self.filteredData[indexPath.row]  == items[i].itemName{
+                    print(filteredData[indexPath.row])
                     filteredItems.append(items[i])
+                    print(filteredItems.count)
+                    print(filteredItems)
                 }
                 
             }
@@ -154,6 +161,8 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
         
         let array = (self.itemNames as NSArray).filtered(using: searchPredicate)
+        
+        print(array)
         
         self.filteredData = array as! [String]
         
