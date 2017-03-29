@@ -15,6 +15,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var postBtn: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var previewImage: UIImageView!
     //@IBOutlet weak var selectBtn: UIButton!
     
@@ -25,7 +26,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
         picker.delegate = self
-        
+        self.hideKeyboardWhenTappedAround()
         
 
     }
@@ -74,6 +75,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 "pathToImage" : url.absoluteString,
                                 "likes" : 0,
                                 "author" : FIRAuth.auth()!.currentUser!.displayName!,
+                                "title" : self.titleTextField.text as String!,
                                 "postID" : key] as [String : Any]
                     
                     let postFeed = ["\(key)" : feed]
@@ -143,4 +145,16 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
 
     
     
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

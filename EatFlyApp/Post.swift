@@ -11,6 +11,7 @@ import UIKit
 class Post: NSObject {
     
     var author: String!
+    var title: String!
     var likes: Int!
     var pathToImage: String!
     var userID: String!

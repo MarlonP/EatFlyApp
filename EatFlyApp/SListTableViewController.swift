@@ -131,7 +131,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
             
             //compares string filteredData array to the items array and appends all the filteredData into filteredItems
             //THIS IS THE PROBLEM ONLY HAS 1 ITEM WHEN THERE IS 2
-            filteredItems.removeAll(keepingCapacity: false)
+            
             for i in 0...items.count-1{
                 if self.filteredData[indexPath.row]  == items[i].itemName{
                     print(filteredData[indexPath.row])
@@ -166,6 +166,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         self.filteredData = array as! [String]
         
+        filteredItems.removeAll(keepingCapacity: false)
         self.tableView.reloadData()
         // array has changed but this has maybe...
         

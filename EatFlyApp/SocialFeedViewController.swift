@@ -14,6 +14,7 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var FeedCollectionView: UICollectionView!
     
     var posts = [Post]()
+    var user = [User]()
     var following = [String]()
     
     override func viewDidLoad() {
@@ -21,7 +22,16 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
         
         
         fetchPosts()
+        retrieveUsers()
+        print(user)
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        fetchPosts()
+//        retrieveUsers()
+//        print(user)
+//    }
+ 
     
     
     func fetchPosts(){
@@ -52,9 +62,10 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
                                     for each in self.following {
                                         if each == userID {
                                             let posst = Post()
-                                            if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
+                                            if let author = post["author"] as? String, let title = post["title"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
                                                 
                                                 posst.author = author
+                                                posst.title = title
                                                 posst.likes = likes
                                                 posst.pathToImage = pathToImage
                                                 posst.postID = postID
@@ -82,6 +93,36 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
         ref.removeAllObservers()
     }
     
+    func retrieveUsers(){
+        let ref = FIRDatabase.database().reference()
+        
+        ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
+            let users = snapshot.value as! [String : AnyObject]
+            self.user.removeAll()
+            
+            for (_, value) in users {
+                print(value)
+                if let uid = value["uid"] as? String {
+                    
+                        let userToShow = User()
+                        if let fullName = value["full name"] as? String, let imagePath = value["urlToImage"] as? String {
+                            userToShow.fullName = fullName
+                            userToShow.imgPath = imagePath
+                            userToShow.userID = uid
+                            
+                            self.user.append(userToShow)
+                        }
+                    
+                }
+                
+            }
+            self.FeedCollectionView.reloadData()
+            
+        })
+        
+        ref.removeAllObservers()
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -97,12 +138,21 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
         cell.authorLabel.text = self.posts[indexPath.row].author
         cell.likeLabel.text = "\(self.posts[indexPath.row].likes!) Likes"
         cell.postID = self.posts[indexPath.row].postID
+        cell.titleLabel.text = self.posts[indexPath.row].title
         
         for person in self.posts[indexPath.row].peopleWhoLike {
             if person == FIRAuth.auth()!.currentUser!.uid {
                 cell.likeBtn.isHidden = true
                 cell.unlikeBtn.isHidden = false
                 break
+            }
+        }
+        
+        for i in 0...user.count-1 {
+            print(i)
+            if posts[indexPath.row].userID == user[i].userID {
+                print(user[i].imgPath)
+                cell.imageView.downloadImage(from: user[i].imgPath)
             }
         }
         
