@@ -16,6 +16,7 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
     var posts = [Post]()
     var user = [User]()
     var following = [String]()
+    var selectedPostID : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,7 +161,25 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //Code for when cell is selected
+        
+        print("Row \(indexPath.row)selected")
+        selectedPostID = self.posts[indexPath.row].postID
+        
+        print(self.posts[indexPath.row].postID)
+        
+        //performSegue(withIdentifier: "postPage", sender: self)
+        
+        
+        
+    }
+    
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        
+        if(segue.identifier == "postPage") {
+            let vc = segue.destination as! PostPageViewController
+            vc.postID = selectedPostID
+        }
     }
     
 }

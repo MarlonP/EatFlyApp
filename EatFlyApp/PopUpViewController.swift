@@ -38,9 +38,9 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: Selector(("donePressed")))
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PopUpViewController.amountDone))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: Selector(("donePressed")))
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PopUpViewController.amountDone))
         
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
@@ -48,10 +48,25 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         amountTxtField.inputView = picker
         amountTxtField.inputAccessoryView = toolBar
     }
+    
+    func amountDone() {
+        
+        print("Done")
+        amountTxtField.resignFirstResponder()
+        pickerView.isHidden = true
+    }
+    
+    func amountCancel() {
+        
+        print("Done")
+        amountTxtField.resignFirstResponder()
+        amountTxtField.text = ""
+        pickerView.isHidden = true
+    }
 
 
     @IBAction func donePressed(_ sender: Any) {
-        pickerView.isHidden = true
+        dismiss(animated: true, completion: nil)
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -85,24 +100,9 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        var number = String()
-        var fraction = String()
-        var measurement = String()
+
         
-        if component == 0 {
-            number = wholeNumbers[row]
-            print(number)
-        }
-        if component == 1 {
-            fraction = fractions[row]
-            print(fraction)
-        }
-        if component == 2 {
-            measurement = measurments[row]
-            print(measurement)
-        }
-        
-        amountTxtField.text = "\(number) \(fraction), \(measurement)"
+        amountTxtField.text = "\(wholeNumbers[pickerView.selectedRow(inComponent: 0)]) |  \(fractions[pickerView.selectedRow(inComponent: 1)]) | \(measurments[pickerView.selectedRow(inComponent: 2)])"
       
        
     }
@@ -110,7 +110,7 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if (textField == self.amountTxtField){
-            self.amountTxtField.text = "\(wholeNumbers[0]) \(fractions[0]), \(measurments[0])"
+            self.amountTxtField.text = "\(wholeNumbers[pickerView.selectedRow(inComponent: 0)]) |  \(fractions[pickerView.selectedRow(inComponent: 1)]) | \(measurments[pickerView.selectedRow(inComponent: 2)])"
         }
     }
  
