@@ -9,18 +9,18 @@
 import UIKit
 import Firebase
 
-class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate{
     
     
     @IBOutlet weak var postBtn: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var previewImage: UIImageView!
     //@IBOutlet weak var selectBtn: UIButton!
     
     var picker = UIImagePickerController()
-    var array = ["Description", "Photo/Video", "Recipe", "Instructions"]
+    var array = ["Photo/Video", "Recipe", "Instructions"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,25 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         picker.delegate = self
         self.hideKeyboardWhenTappedAround()
         
+        
+        
 
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if (descriptionTextView.text == "Description..."){
+            descriptionTextView.textColor = .black
+            descriptionTextView.text = ""
+        }
+        //descriptionTextView.resignFirstResponder()
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if (descriptionTextView.text == ""){
+            descriptionTextView.text = "Description..."
+            descriptionTextView.textColor = .lightGray
+        }
+        //descriptionTextView.resignFirstResponder()
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -76,6 +94,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 "likes" : 0,
                                 "author" : FIRAuth.auth()!.currentUser!.displayName!,
                                 "title" : self.titleTextField.text as String!,
+                                "description" : self.descriptionTextView.text as String!,
                                 "postID" : key] as [String : Any]
                     
                     let postFeed = ["\(key)" : feed]
@@ -120,7 +139,9 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
-        if indexPath.row == 1 {
+        
+        
+        if indexPath.row == 0 {
             picker.allowsEditing = true
             picker.sourceType = .photoLibrary
             self.present(picker, animated: true, completion: nil)
@@ -141,6 +162,12 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                 }
             }
         }
+        
+        if indexPath.row == 1 {
+            performSegue(withIdentifier: "recipeView", sender: nil)
+        }
+        
+        
     }
 
     
