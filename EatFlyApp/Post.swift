@@ -12,6 +12,8 @@ class Post: NSObject {
     
     var author: String!
     var title: String!
+    var desc: String!
+    var date: String!
     var likes: Int!
     var pathToImage: String!
     var userID: String!

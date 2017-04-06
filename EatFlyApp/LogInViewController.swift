@@ -24,12 +24,12 @@ class LogInViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if FIRAuth.auth()?.currentUser?.uid != nil {
-            
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "feedVC")
-            self.present(vc, animated: true, completion: nil)
-            
-        }
+//        if FIRAuth.auth()?.currentUser?.uid != nil {
+//            
+//            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "feedVC")
+//            self.present(vc, animated: true, completion: nil)
+//            
+//        }
     }
 
     @IBAction func loginPressed(_ sender: Any) {

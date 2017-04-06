@@ -80,6 +80,16 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         let data = UIImageJPEGRepresentation(self.previewImage.image!, 0.6)
         
+        let date = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day], from: date)
+        
+        let year =  components.year
+        let month = components.month
+        let day = components.day
+        
+        let dateToday = "\(day!).\(month!).\(year!)"
+   
         let uploadTask = imageRef.put(data!, metadata: nil) { (metadata, error) in
             if error != nil {
                 print(error!.localizedDescription)
@@ -95,6 +105,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 "author" : FIRAuth.auth()!.currentUser!.displayName!,
                                 "title" : self.titleTextField.text as String!,
                                 "description" : self.descriptionTextView.text as String!,
+                                "date" : dateToday,
                                 "postID" : key] as [String : Any]
                     
                     let postFeed = ["\(key)" : feed]
@@ -102,7 +113,11 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                     ref.child("posts").updateChildValues(postFeed)
                     AppDelegate.instance().dismissActivityIndicator()
                     
+                    
+                    //This is the problem of going back to the log out
                     self.dismiss(animated: true, completion: nil)
+                    
+                    
                 }
             })
         }

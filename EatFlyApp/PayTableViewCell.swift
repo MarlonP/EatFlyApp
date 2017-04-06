@@ -56,7 +56,7 @@ class PayTableViewCell: UITableViewCell, UITextFieldDelegate {
         delegate?.buttonPressed()
         var price: Double = 0
         
-        if amount > 0 {
+        if amount > 1 {
             amount = amount - 1
         }
         amountTextField.text = "\(amount)"

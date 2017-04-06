@@ -27,19 +27,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        self.tableView.tableFooterView = UIView()
         //tableView.reloadData()
         
-        getItemDetails()
-        getAmounts()
-        
-        tableView.reloadData()
+//        getItemDetails()
+//        getAmounts()
+//        
+//        tableView.reloadData()
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//     getItemDetails()
+        getItemDetails()
+        getAmounts()
 //        
-//        tableView.reloadData()
+       tableView.reloadData()
 
     }
     
@@ -265,7 +267,28 @@ extension ViewController: BarcodeScannerCodeDelegate, BarcodeScannerErrorDelegat
             }
             
         })
+        
+        ref.child("users").child(uid).child("currentShop").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+            
+            if let itemss = snapshot.value as? [String : AnyObject] {
+                for (_, value) in itemss {
+                    let BC = value["barcode"]
+                    if BC as! String == code {
+                        
+                        let alert = UIAlertController(title: "Item is already in your basket.", message: "Please Continue with you shop.", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+        
+                        
+                    }
+                }
+            }
+            
+        })
         ref.removeAllObservers()
+        
+        
         
         print(code)
         

@@ -63,10 +63,11 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
                                     for each in self.following {
                                         if each == userID {
                                             let posst = Post()
-                                            if let author = post["author"] as? String, let title = post["title"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
+                                            if let author = post["author"] as? String, let title = post["title"] as? String, let date = post["date"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
                                                 
                                                 posst.author = author
                                                 posst.title = title
+                                                posst.date = date
                                                 posst.likes = likes
                                                 posst.pathToImage = pathToImage
                                                 posst.postID = postID
@@ -140,6 +141,7 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
         cell.likeLabel.text = "\(self.posts[indexPath.row].likes!) Likes"
         cell.postID = self.posts[indexPath.row].postID
         cell.titleLabel.text = self.posts[indexPath.row].title
+        cell.dateLabel.text = self.posts[indexPath.row].date
         
         for person in self.posts[indexPath.row].peopleWhoLike {
             if person == FIRAuth.auth()!.currentUser!.uid {
@@ -167,15 +169,14 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
         
         print(self.posts[indexPath.row].postID)
         
-        //performSegue(withIdentifier: "postPage", sender: self)
+        performSegue(withIdentifier: "postPage", sender: self)
         
         
         
     }
     
-    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
         if(segue.identifier == "postPage") {
             let vc = segue.destination as! PostPageViewController
             vc.postID = selectedPostID

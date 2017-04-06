@@ -10,7 +10,7 @@ import UIKit
 
 class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
-    var wholeNumbers = ["0", "1", "2", "3", "4", "5"]
+    var wholeNumbers = ["", "1", "2", "3", "4", "5"]
     var fractions = ["1/4", "1/3", "1/2"]
     var measurments = ["tablespoons","teaspoons" , "cups", "lbs"]
     
@@ -102,15 +102,31 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     {
 
         
-        amountTxtField.text = "\(wholeNumbers[pickerView.selectedRow(inComponent: 0)]) |  \(fractions[pickerView.selectedRow(inComponent: 1)]) | \(measurments[pickerView.selectedRow(inComponent: 2)])"
+        amountTxtField.text = "\(wholeNumbers[pickerView.selectedRow(inComponent: 0)])   \(fractions[pickerView.selectedRow(inComponent: 1)]) | \(measurments[pickerView.selectedRow(inComponent: 2)])"
       
        
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        
+        if (component == 1){
+            return CGFloat(85.0)
+
+        }
+        
+        if (component == 2){
+            return CGFloat(200.0)
+
+        }
+        
+        return CGFloat(70.0)
+
     }
     
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if (textField == self.amountTxtField){
-            self.amountTxtField.text = "\(wholeNumbers[pickerView.selectedRow(inComponent: 0)]) |  \(fractions[pickerView.selectedRow(inComponent: 1)]) | \(measurments[pickerView.selectedRow(inComponent: 2)])"
+            self.amountTxtField.text = "\(wholeNumbers[pickerView.selectedRow(inComponent: 0)])   \(fractions[pickerView.selectedRow(inComponent: 1)]) | \(measurments[pickerView.selectedRow(inComponent: 2)])"
         }
     }
  
