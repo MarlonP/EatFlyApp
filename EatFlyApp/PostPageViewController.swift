@@ -27,6 +27,8 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         
         retrieveUser()
+        
+        
 
     }
     

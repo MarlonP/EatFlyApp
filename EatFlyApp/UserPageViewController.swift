@@ -48,7 +48,9 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         getFollowing()
         fetchPosts()
         
+    
         nameLbl.text = self.user[0].fullName
+        navigationItem.title = self.user[0].fullName
         profileImageView.downloadImage(from: self.user[0].imgPath!)
         followingLbl.text = "\(following.count)"
         followersLbl.text = "\(followers.count)"
@@ -170,11 +172,6 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
 
 
-    @IBAction func logOutPressed(_ sender: Any) {
-        
-        try! FIRAuth.auth()?.signOut()
-        
-    }
 
     @IBAction func followPressed(_ sender: Any) {
     }

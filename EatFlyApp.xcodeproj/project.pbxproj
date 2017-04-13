@@ -17,6 +17,9 @@
 		F28B14831E5F4D7A009ED6A9 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14821E5F4D7A009ED6A9 /* UserCell.swift */; };
 		F28B14851E5F4E4B009ED6A9 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */; };
 		F28B148A1E5F50EC009ED6A9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14891E5F50EC009ED6A9 /* User.swift */; };
+		F2B4656C1E9D3850001589D0 /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B4656B1E9D3850001589D0 /* EditUserViewController.swift */; };
+		F2B4656F1E9E54C6001589D0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B4656E1E9E54C6001589D0 /* SettingsTableViewController.swift */; };
+		F2B465711E9F9957001589D0 /* RecipeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B465701E9F9957001589D0 /* RecipeItem.swift */; };
 		F2C214AD1E60853F00A1D565 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214AC1E60853E00A1D565 /* UploadViewController.swift */; };
 		F2C214B11E60981200A1D565 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214B01E60981200A1D565 /* PostCell.swift */; };
 		F2C214B31E60995200A1D565 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214B21E60995200A1D565 /* Post.swift */; };
@@ -67,6 +70,9 @@
 		F28B14821E5F4D7A009ED6A9 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		F28B14891E5F50EC009ED6A9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F2B4656B1E9D3850001589D0 /* EditUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
+		F2B4656E1E9E54C6001589D0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		F2B465701E9F9957001589D0 /* RecipeItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeItem.swift; sourceTree = "<group>"; };
 		F2C214AC1E60853E00A1D565 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		F2C214B01E60981200A1D565 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		F2C214B21E60995200A1D565 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -139,18 +145,20 @@
 		F28B14861E5F5096009ED6A9 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F46F93B71E43A96100334F68 /* ViewController.swift */,
-				0EF13A851E5DA82800D131CF /* ShoppingListTableViewController.swift */,
-				F22870681E5CA554001C7262 /* SListTableViewController.swift */,
-				F4952D851E4CC84A00BCF523 /* SignUpViewController.swift */,
+				F2B4656B1E9D3850001589D0 /* EditUserViewController.swift */,
 				F46F93E31E44D2E300334F68 /* LogInViewController.swift */,
-				F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */,
-				F2C214AC1E60853E00A1D565 /* UploadViewController.swift */,
-				F46F93E71E44D34E00334F68 /* SocialFeedViewController.swift */,
-				F2C214F41E68733A00A1D565 /* UserPageViewController.swift */,
-				F216BB681E8D5B6300978D9A /* RecipeTableViewController.swift */,
 				F216BB711E8D71A100978D9A /* PopUpViewController.swift */,
 				0ED8D2E31E94DF6800A8C2CE /* PostPageViewController.swift */,
+				F216BB681E8D5B6300978D9A /* RecipeTableViewController.swift */,
+				F2B4656E1E9E54C6001589D0 /* SettingsTableViewController.swift */,
+				0EF13A851E5DA82800D131CF /* ShoppingListTableViewController.swift */,
+				F4952D851E4CC84A00BCF523 /* SignUpViewController.swift */,
+				F22870681E5CA554001C7262 /* SListTableViewController.swift */,
+				F46F93E71E44D34E00334F68 /* SocialFeedViewController.swift */,
+				F2C214AC1E60853E00A1D565 /* UploadViewController.swift */,
+				F2C214F41E68733A00A1D565 /* UserPageViewController.swift */,
+				F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */,
+				F46F93B71E43A96100334F68 /* ViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -172,6 +180,7 @@
 				F28B14891E5F50EC009ED6A9 /* User.swift */,
 				F44C5C771E50B0EF00B52336 /* Item.swift */,
 				F2C214B21E60995200A1D565 /* Post.swift */,
+				F2B465701E9F9957001589D0 /* RecipeItem.swift */,
 			);
 			name = "Objects/ Classes";
 			sourceTree = "<group>";
@@ -435,9 +444,12 @@
 				F216BB691E8D5B6300978D9A /* RecipeTableViewController.swift in Sources */,
 				F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */,
 				F2C214F51E68733A00A1D565 /* UserPageViewController.swift in Sources */,
+				F2B4656C1E9D3850001589D0 /* EditUserViewController.swift in Sources */,
 				F28B14851E5F4E4B009ED6A9 /* UsersViewController.swift in Sources */,
+				F2B4656F1E9E54C6001589D0 /* SettingsTableViewController.swift in Sources */,
 				0ED8D2E41E94DF6800A8C2CE /* PostPageViewController.swift in Sources */,
 				F46F93E41E44D2E300334F68 /* LogInViewController.swift in Sources */,
+				F2B465711E9F9957001589D0 /* RecipeItem.swift in Sources */,
 				F216BB721E8D71A100978D9A /* PopUpViewController.swift in Sources */,
 				F22870691E5CA554001C7262 /* SListTableViewController.swift in Sources */,
 				F2C214F71E799B6C00A1D565 /* PayTableViewCell.swift in Sources */,

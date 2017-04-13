@@ -8,11 +8,18 @@
 
 import UIKit
 
+let myNotificationKey = "com.mp.notificationKey"
+
 class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     var wholeNumbers = ["", "1", "2", "3", "4", "5"]
-    var fractions = ["1/4", "1/3", "1/2"]
-    var measurments = ["tablespoons","teaspoons" , "cups", "lbs"]
+    var fractions = ["", "1/4", "1/3", "1/2"]
+    var measurments = ["", "tablespoons","teaspoons" , "cups", "lbs"]
+    var measurmentsText = ["", "tablespoons of","teaspoons of" , "cups of", "lbs of"]
+    
+    var amountTxt: String!
+    var fraction: String!
+    
     
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var nameTxtField: UITextField!
@@ -21,7 +28,7 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotify), name: NSNotification.Name(rawValue: myNotificationKey), object: nil)
         
         let picker: UIPickerView
         picker = UIPickerView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 300))
@@ -47,6 +54,11 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         
         amountTxtField.inputView = picker
         amountTxtField.inputAccessoryView = toolBar
+        
+    }
+    
+    func doThisWhenNotify() {
+        
     }
     
     func amountDone() {
@@ -66,7 +78,23 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
 
     @IBAction func donePressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        
+        let item = RecipeItem()
+        
+        if nameTxtField.text != "" && amountTxtField.text != "" {
+            item.itemName = nameTxtField.text
+            item.amount = amountTxt
+            
+            recipe.append(item)
+            fractions1.append(fraction)
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: myNotificationKey), object: nil)
+            
+            dismiss(animated: true, completion: nil)
+        } else {
+            print("Error")
+        }
+        
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -100,9 +128,17 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-
+        fraction = fractions[pickerView.selectedRow(inComponent: 1)]
         
-        amountTxtField.text = "\(wholeNumbers[pickerView.selectedRow(inComponent: 0)])   \(fractions[pickerView.selectedRow(inComponent: 1)]) | \(measurments[pickerView.selectedRow(inComponent: 2)])"
+        let pointSize: CGFloat = 14.0
+        let string = "\(wholeNumbers[pickerView.selectedRow(inComponent: 0)]) \(fractions[pickerView.selectedRow(inComponent: 1)]) \(measurments[pickerView.selectedRow(inComponent: 2)])"
+        
+        let attribString = NSMutableAttributedString(string: string, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: pointSize), NSForegroundColorAttributeName: UIColor.black])
+        attribString.addAttributes([NSFontAttributeName: UIFont.fractionFont(ofSize: pointSize)], range: (string as NSString).range(of: fraction))
+        amountTxtField?.attributedText = attribString
+        
+        amountTxt = "\(wholeNumbers[pickerView.selectedRow(inComponent: 0)]) \(fractions[pickerView.selectedRow(inComponent: 1)]) \(measurmentsText[pickerView.selectedRow(inComponent: 2)])"
+        
       
        
     }
@@ -126,7 +162,7 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if (textField == self.amountTxtField){
-            self.amountTxtField.text = "\(wholeNumbers[pickerView.selectedRow(inComponent: 0)])   \(fractions[pickerView.selectedRow(inComponent: 1)]) | \(measurments[pickerView.selectedRow(inComponent: 2)])"
+            self.amountTxtField.text = ""
         }
     }
  

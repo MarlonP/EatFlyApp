@@ -8,17 +8,36 @@
 
 import UIKit
 
+var recipe = [RecipeItem]()
+var fractions1 = [String]()
+
+
 class RecipeTableViewController: UITableViewController {
     
-    var recipe = ["action 1", "action 2", "action 3", "action 4"]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.tableFooterView = UIView()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(doSomethingAfterNotified),
+                                               name: NSNotification.Name(rawValue: myNotificationKey),
+                                               object: nil)
+        
+      
+       
+
 
     }
+   
 
    
     @IBAction func donePressed(_ sender: Any) {
+    }
+    
+    func doSomethingAfterNotified() {
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -37,7 +56,17 @@ class RecipeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
-        cell.textLabel?.text = recipe[indexPath.row]
+        let pointSize: CGFloat = 14.0
+        let string = "\(recipe[indexPath.row].amount!) \(recipe[indexPath.row].itemName!)"
+
+        let attribString = NSMutableAttributedString(string: string, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: pointSize), NSForegroundColorAttributeName: UIColor.black])
+        attribString.addAttributes([NSFontAttributeName: UIFont.fractionFont(ofSize: pointSize)], range: (string as NSString).range(of: fractions1[indexPath.row]))
+        cell.textLabel?.attributedText = attribString
+        cell.textLabel?.sizeToFit()
+        
+        //let ItemString = "\(recipe[indexPath.row].amount!) \(recipe[indexPath.row].itemName!)"
+        
+        //cell.textLabel?.text = ItemString
 
         return cell
     }
@@ -60,3 +89,21 @@ class RecipeTableViewController: UITableViewController {
 
  
 }
+
+extension UIFont
+{
+    static func fractionFont(ofSize pointSize: CGFloat) -> UIFont
+    {
+        let systemFontDesc = UIFont.systemFont(ofSize: pointSize).fontDescriptor
+        let fractionFontDesc = systemFontDesc.addingAttributes(
+            [
+                UIFontDescriptorFeatureSettingsAttribute: [
+                    [
+                        UIFontFeatureTypeIdentifierKey: kFractionsType,
+                        UIFontFeatureSelectorIdentifierKey: kDiagonalFractionsSelector,
+                        ], ]
+            ] )
+        return UIFont(descriptor: fractionFontDesc, size:pointSize)
+    }
+}
+
