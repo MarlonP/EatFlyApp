@@ -16,11 +16,13 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var postImageView: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
     
     var postID : String?
     let ref = FIRDatabase.database().reference()
     var posts = [Post]()
     var user = [User]()
+    var postRecipe = [RecipeItem]()
     let testRecipe = ["1 (9 5/8 ounce) package pork sausage","8 eggs", "1⁄4 cup parmesan cheese, grated", "1⁄4 teaspoon salt", "2 green onions, thinly sliced"]
 
     override func viewDidLoad() {
@@ -78,6 +80,30 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                             
                             self.posts.append(posst)
                         }
+                        
+                        self.ref.child("posts").child(postsID).child("recipe").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snap) in
+                            let recipeSnap = snap.value as! [String : AnyObject]
+                            self.postRecipe.removeAll()
+                            
+                             for (_,recipe1) in recipeSnap {
+                                let rec = RecipeItem()
+                                
+                                if let itemName = recipe1["itemName"] as? String, let amount = recipe1["amount"] as? String, let fraction = recipe1["fraction"] as? String {
+                                    
+                                    rec.itemName = itemName
+                                    rec.amount = amount
+                                    rec.fraction = fraction
+                                    
+                                    self.postRecipe.append(rec)
+                                    
+                                }
+                               self.tableView.reloadData()
+                            }
+
+                            
+                            
+                        })
+                        
                     }
                     
                     
@@ -86,9 +112,10 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
             }
         })
         
-        
+        ref.removeAllObservers()
     }
     
+
     func retrieveUser(){
        
         fetchPost()
@@ -131,7 +158,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return testRecipe.count
+        return postRecipe.count
     }
     
     
@@ -140,9 +167,14 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
+        let pointSize: CGFloat = 14.0
+        let string = "\(postRecipe[indexPath.row].amount!) \(postRecipe[indexPath.row].itemName!)"
         
-        
-        cell.textLabel?.text = testRecipe[indexPath.row]
+        let attribString = NSMutableAttributedString(string: string, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: pointSize), NSForegroundColorAttributeName: UIColor.black])
+        attribString.addAttributes([NSFontAttributeName: UIFont.fractionFont(ofSize: pointSize)], range: (string as NSString).range(of: postRecipe[indexPath.row].fraction!))
+        cell.textLabel?.attributedText = attribString
+        cell.textLabel?.sizeToFit()
+
         
        
         

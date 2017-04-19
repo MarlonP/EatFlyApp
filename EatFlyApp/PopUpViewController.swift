@@ -84,9 +84,9 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         if nameTxtField.text != "" && amountTxtField.text != "" {
             item.itemName = nameTxtField.text
             item.amount = amountTxt
+            item.fraction = fraction
             
             recipe.append(item)
-            fractions1.append(fraction)
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: myNotificationKey), object: nil)
             

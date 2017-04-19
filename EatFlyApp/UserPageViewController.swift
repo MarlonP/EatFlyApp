@@ -191,6 +191,10 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         print(self.posts[indexPath.row].pathToImage)
         
         cell.imageView.downloadImage(from: self.posts[indexPath.row].pathToImage)
+        
+        let imageView2 = UIImageView()
+        
+        imageView2.downloadImage(from: self.posts[indexPath.row].pathToImage)
    
         
         return cell

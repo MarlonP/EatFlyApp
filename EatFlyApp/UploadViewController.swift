@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+var uploadRecipe = [RecipeItem]()
+
 class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate{
     
     
@@ -21,6 +23,8 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     var picker = UIImagePickerController()
     var array = ["Photo/Video", "Recipe", "Instructions"]
+    
+    var recipeDone = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +32,28 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         picker.delegate = self
         self.hideKeyboardWhenTappedAround()
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(doSomethingAfterNotified1),
+                                               name: NSNotification.Name(rawValue: myNotificationKey1),
+                                               object: nil)
+        
         
         
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print(uploadRecipe)
+    }
+    
+    func doSomethingAfterNotified1() {
+        if recipeDone == false {
+            recipeDone = true
+        }
+        
+        tableView.reloadData()
+        
+        
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -111,6 +134,21 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                     let postFeed = ["\(key)" : feed]
                     
                     ref.child("posts").updateChildValues(postFeed)
+                    
+                    
+                    
+                    for i in 0...uploadRecipe.count-1{
+                        let key1 = ref.child("posts").childByAutoId().key
+                        let recipe = ["itemName" : uploadRecipe[i].itemName, "amount" : uploadRecipe[i].amount, "fraction" : uploadRecipe[i].fraction, "RID" : key1] as [String : Any]
+                        
+                        let recipeFeed = ["\(key1)" : recipe]
+                        
+                        ref.child("posts").child(key).child("recipe").updateChildValues(recipeFeed)
+                    }
+                    
+                    
+                    uploadRecipe.removeAll()
+                    recipe.removeAll()
                     AppDelegate.instance().dismissActivityIndicator()
                     
                     
@@ -146,7 +184,11 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         
         cell.textLabel?.text = array[indexPath.row]
-        
+        if indexPath.row == 1 {
+            if recipeDone == true{
+                self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            }
+        }
         
         return cell
     }

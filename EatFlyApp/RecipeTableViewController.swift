@@ -9,8 +9,9 @@
 import UIKit
 
 var recipe = [RecipeItem]()
-var fractions1 = [String]()
+//var fractions1 = [String]()
 
+let myNotificationKey1 = "com.mcp.notificationKey"
 
 class RecipeTableViewController: UITableViewController {
     
@@ -26,14 +27,31 @@ class RecipeTableViewController: UITableViewController {
                                                object: nil)
         
       
-       
+       NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotify1), name: NSNotification.Name(rawValue: myNotificationKey1), object: nil)
 
 
     }
-   
+    
+    func doThisWhenNotify1() {
+        uploadRecipe = recipe
+        
+    }
 
    
     @IBAction func donePressed(_ sender: Any) {
+        
+        if recipe.count != 0 {
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: myNotificationKey1), object: nil)
+            
+            
+            
+            _ = navigationController?.popViewController(animated: true)
+            
+        } else {
+            print("No items in recipe")
+        }
+        
     }
     
     func doSomethingAfterNotified() {
@@ -60,7 +78,7 @@ class RecipeTableViewController: UITableViewController {
         let string = "\(recipe[indexPath.row].amount!) \(recipe[indexPath.row].itemName!)"
 
         let attribString = NSMutableAttributedString(string: string, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: pointSize), NSForegroundColorAttributeName: UIColor.black])
-        attribString.addAttributes([NSFontAttributeName: UIFont.fractionFont(ofSize: pointSize)], range: (string as NSString).range(of: fractions1[indexPath.row]))
+        attribString.addAttributes([NSFontAttributeName: UIFont.fractionFont(ofSize: pointSize)], range: (string as NSString).range(of: recipe[indexPath.row].fraction!))
         cell.textLabel?.attributedText = attribString
         cell.textLabel?.sizeToFit()
         

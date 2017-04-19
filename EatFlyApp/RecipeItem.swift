@@ -12,6 +12,7 @@ class RecipeItem: NSObject {
     
     var itemName: String!
     var amount: String!
+    var fraction: String!
     
 
 }
