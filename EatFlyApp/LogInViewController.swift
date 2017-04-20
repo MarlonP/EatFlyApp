@@ -18,7 +18,7 @@ class LogInViewController: UIViewController {
         
         
         emailField.text = "t@t.com"
-        pwField.text = "123456"
+        pwField.text = "qwerty"
         
 
     }

@@ -88,6 +88,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 
                                 let userInfo: [String : Any] = ["uid" : user.uid,
                                                                 "full name" : self.nameField.text!,
+                                                                "bio" : "",
                                                                 "urlToImage" : url.absoluteString]
                                 
                                 self.ref.child("users").child(user.uid).setValue(userInfo)

@@ -16,6 +16,7 @@
 		F22870691E5CA554001C7262 /* SListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22870681E5CA554001C7262 /* SListTableViewController.swift */; };
 		F23C3C4C1EA7C42700BED5BD /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4B1EA7C42700BED5BD /* EditProfileViewController.swift */; };
 		F23C3C4E1EA7C44200BED5BD /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4D1EA7C44200BED5BD /* ChangePasswordViewController.swift */; };
+		F23C3C501EA908BA00BED5BD /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4F1EA908BA00BED5BD /* ForgotPasswordViewController.swift */; };
 		F28B14831E5F4D7A009ED6A9 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14821E5F4D7A009ED6A9 /* UserCell.swift */; };
 		F28B14851E5F4E4B009ED6A9 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */; };
 		F28B148A1E5F50EC009ED6A9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14891E5F50EC009ED6A9 /* User.swift */; };
@@ -71,6 +72,7 @@
 		F22870681E5CA554001C7262 /* SListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SListTableViewController.swift; sourceTree = "<group>"; };
 		F23C3C4B1EA7C42700BED5BD /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		F23C3C4D1EA7C44200BED5BD /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		F23C3C4F1EA908BA00BED5BD /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		F28B14821E5F4D7A009ED6A9 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		F28B14891E5F50EC009ED6A9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				F46F93B71E43A96100334F68 /* ViewController.swift */,
 				F23C3C4B1EA7C42700BED5BD /* EditProfileViewController.swift */,
 				F23C3C4D1EA7C44200BED5BD /* ChangePasswordViewController.swift */,
+				F23C3C4F1EA908BA00BED5BD /* ForgotPasswordViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 				F44C5C781E50B0EF00B52336 /* Item.swift in Sources */,
 				F23C3C4C1EA7C42700BED5BD /* EditProfileViewController.swift in Sources */,
 				F28B14831E5F4D7A009ED6A9 /* UserCell.swift in Sources */,
+				F23C3C501EA908BA00BED5BD /* ForgotPasswordViewController.swift in Sources */,
 				F216BB691E8D5B6300978D9A /* RecipeTableViewController.swift in Sources */,
 				F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */,
 				F2C214F51E68733A00A1D565 /* UserPageViewController.swift in Sources */,

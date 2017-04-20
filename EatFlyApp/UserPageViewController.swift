@@ -32,6 +32,11 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(doSomethingAfterNotified),
+                                               name: NSNotification.Name(rawValue: myNotificationKey),
+                                               object: nil)
+        
         retrieveUser()
         getFollowers()
         getFollowing()
@@ -55,6 +60,10 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         followingLbl.text = "\(following.count)"
         followersLbl.text = "\(followers.count)"
         postsLbl.text = "\(posts.count)"
+    }
+    
+    func doSomethingAfterNotified() {
+        
     }
     
     func retrieveUser(){

@@ -12,6 +12,7 @@ class User: NSObject {
     
     var userID: String!
     var fullName: String!
+    var bio: String!
     var imgPath: String!
     
     
