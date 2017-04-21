@@ -175,6 +175,7 @@
         <!--Confirm Items-->
         <scene sceneID="Ehg-Q7-M3d">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jli-5u-v8k" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="fnq-Vf-DwK" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aN6-o4-gJ1"/>
@@ -187,21 +188,20 @@
                     </view>
                     <navigationItem key="navigationItem" title="Confirm Items" id="EPZ-VB-7Im"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jli-5u-v8k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1900" y="-89"/>
+            <point key="canvasLocation" x="1900" y="-89.505247376311857"/>
         </scene>
         <!--Shopping List Table View Controller-->
         <scene sceneID="fJc-sG-Vgh">
             <objects>
                 <tableViewController id="3Ul-Wo-Xal" customClass="ShoppingListTableViewController" customModule="EatFlyApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="B5K-pZ-0Np">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="B5K-pZ-0Np">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="tzc-5e-oT6" style="IBUITableViewCellStyleDefault" id="1eI-R7-Vva">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1eI-R7-Vva" id="gu4-GB-5th">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -259,13 +259,13 @@
         <scene sceneID="N4J-HA-Ohe">
             <objects>
                 <tableViewController id="EfP-kA-9rI" customClass="SListTableViewController" customModule="EatFlyApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="uxG-If-wLe">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="uxG-If-wLe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="KZx-ph-Huv" style="IBUITableViewCellStyleDefault" id="dde-7M-EZX">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dde-7M-EZX" id="twS-wP-hW6">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -1693,19 +1693,22 @@
         <!--Choose Retailer-->
         <scene sceneID="jia-GT-Zth">
             <objects>
-                <tableViewController title="Choose Retailer" id="AVk-0e-uTO" sceneMemberID="viewController">
+                <tableViewController title="Choose Retailer" id="AVk-0e-uTO" customClass="ChooseRetailerTableViewController" customModule="EatFlyApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="etX-qM-o2v">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="A0x-dT-DYt">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="A0x-dT-DYt">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A0x-dT-DYt" id="tKR-mg-NtA">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="ZbX-6M-HiC" kind="show" id="chh-CE-yBM"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1713,10 +1716,7 @@
                             <outlet property="delegate" destination="AVk-0e-uTO" id="KdB-hs-rXb"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="vJb-Yd-HQ8"/>
-                    <connections>
-                        <segue destination="ZbX-6M-HiC" kind="show" id="gHK-7G-if2"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="Choose Retailer" id="pOJ-cP-cZQ"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1T1-Zi-avH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

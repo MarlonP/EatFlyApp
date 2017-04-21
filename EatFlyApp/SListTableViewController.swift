@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+
+
 class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     
     var itemNames = [String]()
@@ -20,12 +22,14 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     
     var shoppingList = [String]()
     var resultSearchController = UISearchController()
+    
+    var BCfromDB = [String]()
+    var recentSearches = [Item]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-     
+        getItemDetails()
         
         self.resultSearchController = UISearchController(searchResultsController: nil)
         self.resultSearchController.searchResultsUpdater = self
@@ -79,27 +83,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     
-  
-    
-    func checkItemsList(indexPath: IndexPath) {
-        let uid = FIRAuth.auth()!.currentUser!.uid
-        let ref = FIRDatabase.database().reference()
-        
-        ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-            
-            if let following = snapshot.value as? [String : AnyObject] {
-                for (_, value) in following {
-                    if value as! String == self.items[indexPath.row].barcode {
-                        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                    }
-                    
-                }
-            }
-        })
-        ref.removeAllObservers()
-    }
-    
-    
+
 
    
     // MARK: - Table view data source
@@ -118,7 +102,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         else
         {
             
-            return 0
+            return self.recentSearches.count
         }
     }
 
@@ -144,15 +128,22 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         }
         else
         {
-            //cell!.textLabel?.text = self.shoppingList[indexPath.row]
+            cell!.textLabel?.text = self.recentSearches[indexPath.row].itemName
+            
         }
-
-        checkItemsList(indexPath: indexPath)
-        
         
         
         return cell!
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        if resultSearchController.isActive {
+            return nil
+        }
+            return "Recent Searches"
+   
+        }
     
     func updateSearchResults(for searchController: UISearchController) {
         
@@ -168,7 +159,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         filteredItems.removeAll(keepingCapacity: false)
         self.tableView.reloadData()
-        // array has changed but this has maybe...
+        
         
     }
     
@@ -180,28 +171,27 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         let ref = FIRDatabase.database().reference()
         let key = ref.child("users").child(uid).child("itemsList").childByAutoId().key
         
-        
-        
-        // out of range
+        if self.resultSearchController.isActive {
+
         print( self.filteredItems[indexPath.row])
         
         let item: [String : Any] = ["barcode" : self.filteredItems[indexPath.row].barcode, "completion" : false, "listID" : key]
         let itemsList = ["\(key)" : item]
         
         ref.child("users").child(uid).child("itemsList").updateChildValues(itemsList)
+        ref.child("users").child(uid).child("recentSearches").updateChildValues(itemsList)
         
         ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
                 
             
         })
-        
+         
         ref.removeAllObservers()
         
         let selectedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
         
       
-        
         for i in 0...items.count-1{
             if selectedRow.textLabel?.text == items[i].itemName{
                 listDetail.append(items[i])
@@ -210,12 +200,91 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         }
 
         resultSearchController.searchBar.endEditing(true)
-        
-        
         resultSearchController.dismiss(animated: true, completion: nil)
         
-        navigationController?.popViewController(animated: true)
         
+        }else{
+            let item: [String : Any] = ["barcode" : self.recentSearches[indexPath.row].barcode, "completion" : false, "listID" : key]
+            let itemsList = ["\(key)" : item]
+            
+            ref.child("users").child(uid).child("itemsList").updateChildValues(itemsList)
+        }
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func getItemDetails() {
+        
+        getUsersItems()
+        
+        ref = FIRDatabase.database().reference()
+        
+        ref.child("items").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
+            let itemsSnap = snapshot.value as! [String : AnyObject]
+            self.shoppingList.removeAll()
+            
+            for (_,value) in itemsSnap {
+                
+                let itemData = Item()
+                if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String {
+                    itemData.itemName = itemName
+                    itemData.barcode = barcode
+                    itemData.price = price
+                    if self.BCfromDB.count != 0 {
+                        for i in 0...self.BCfromDB.count-1 {
+                            if (itemData.barcode == self.BCfromDB[i]){
+                                
+                                self.recentSearches.append(itemData)
+                            }
+                        }
+                        
+                        self.tableView.reloadData()
+                    }
+                    
+                }
+                
+                
+                
+            }
+            
+        })
+        ref.removeAllObservers()
+        
+    }
+    
+    //let itemsList = ["itemsList/\(key)" : self.filteredItems[indexPath.row].barcode]
+    
+    //ref.child("users").child(uid).updateChildValues(itemsList)
+    
+    
+    func getUsersItems() {
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        ref = FIRDatabase.database().reference()
+        //let key = ref.child("users").child("barcode").key
+        
+        ref.child("users").child(uid).child("recentSearches").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+            
+            if let itemsSnap = snapshot.value as? [String : AnyObject] {
+                
+                self.BCfromDB.removeAll()
+                
+                
+                for (_,value) in itemsSnap {
+                    
+                    // Error here: fatal error: unexpectedly found nil while unwrapping an Optional value
+                    let barcode = value["barcode"] as? String
+                    
+                    self.BCfromDB.append(barcode!)
+                    
+                    
+                    
+                }
+                
+                
+            }
+            
+        })
+        ref.removeAllObservers()
     }
     
    

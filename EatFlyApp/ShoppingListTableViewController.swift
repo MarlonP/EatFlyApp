@@ -21,12 +21,16 @@ class ShoppingListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.tableFooterView = UIView()
         getItemDetails()
+        getUsersManualItems()
 
     }
     
     override func viewDidAppear(_ animated: Bool) {
         getItemDetails()
+        getUsersManualItems()
+        print(userAddedItems)
     }
 
 
@@ -35,11 +39,15 @@ class ShoppingListTableViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        if section == 1 {
+            
+            return userAddedItems.count
+            
+        }
         return shoppingList.count
     }
     
@@ -49,15 +57,44 @@ class ShoppingListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        
+        if indexPath.section == 0 {
+            
+            cell.textLabel?.text = shoppingList[indexPath.row].itemName
+            
+        } else if indexPath.section == 1 {
+            
+            cell.textLabel?.text = userAddedItems[indexPath.row]
+            
+        }
 
-        cell.textLabel?.text = shoppingList[indexPath.row].itemName
+        
         
         checkCompletion(indexPath: indexPath)
 
         return cell
     }
-    //Delete cell function
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        if section == 1 {
+            if userAddedItems.count == 0 {
+                return nil
+            } else {
+                return "Manually Added"
+            }
+            
+        }
+        if section == 0 {
+            if shoppingList.count != 0 {
+                return "Searched"
+            } else {
+                return nil
+            }
+        }
+        
+        return nil
+    }
+    //Delete cell function NEED TO FIX AND INCLUDE THE MANUAL ADD AS WELL!!!!
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     
         let deletedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
@@ -165,19 +202,31 @@ class ShoppingListTableViewController: UITableViewController {
                         
                         self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
                     }
-                    
                 }
+                
             }
+            
         })
+        //self.tableView.reloadData()
         ref.removeAllObservers()
         
     }
     
     @IBAction func addPressed(_ sender: Any) {
         
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        let ref = FIRDatabase.database().reference()
+        let key = ref.child("users").child(uid).child("itemsList").childByAutoId().key
+        
         if (input.text != ""){
             let newItem = input.text
             userAddedItems.append(newItem!)
+            
+            let item: [String : Any] = ["name" : newItem!, "completion" : false, "listID" : key]
+            let itemsList = ["\(key)" : item]
+            
+            ref.child("users").child(uid).child("manuallyAddedItems").updateChildValues(itemsList)
+            
             input.resignFirstResponder()
             input.text = ""
             tableView.reloadData()
@@ -186,7 +235,36 @@ class ShoppingListTableViewController: UITableViewController {
         
     }
     
-    
+    func getUsersManualItems() {
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        ref = FIRDatabase.database().reference()
+        //let key = ref.child("users").child("barcode").key
+        
+        ref.child("users").child(uid).child("manuallyAddedItems").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+            
+            if let itemsSnap = snapshot.value as? [String : AnyObject] {
+                
+                self.userAddedItems.removeAll()
+                
+                
+                for (_,value) in itemsSnap {
+                    
+                    // Error here: fatal error: unexpectedly found nil while unwrapping an Optional value
+                    let itemName = value["name"] as? String
+                    
+                    self.userAddedItems.append(itemName!)
+                    
+                    
+                    
+                }
+                
+                
+            }
+            self.tableView.reloadData()
+        })
+        ref.removeAllObservers()
+    }
     
 
     
