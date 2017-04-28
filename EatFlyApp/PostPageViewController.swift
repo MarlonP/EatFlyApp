@@ -36,9 +36,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(_ animated: Bool) {
         retrieveUser()
-        print(posts)
-        print(user)
-        
+       
         profileImageView.downloadImage(from: self.user[0].imgPath!)
         titleLbl.text = posts[0].title
         navigationItem.title = posts[0].title
@@ -125,7 +123,6 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
             self.user.removeAll()
             
             for (_, value) in users {
-                //print(value)
                 if let uid = self.posts[0].userID {
                     
                     let userToShow = User()

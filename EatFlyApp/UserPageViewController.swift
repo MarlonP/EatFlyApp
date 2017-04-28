@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+var userPageID: String!
+
 class UserPageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var profileImageView: UIImageView!
@@ -43,7 +45,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         fetchPosts()
       
         
-        
+        print(userPageID)
 
     }
     
@@ -196,8 +198,6 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postCell", for: indexPath) as! userPostCell
         
-    
-        print(self.posts[indexPath.row].pathToImage)
         
         cell.imageView.downloadImage(from: self.posts[indexPath.row].pathToImage)
         

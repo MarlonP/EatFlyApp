@@ -14,6 +14,5 @@ class Item : NSObject {
     var barcode: String!
     var price: String!
     
-    
 }
 

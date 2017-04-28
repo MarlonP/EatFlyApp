@@ -171,16 +171,18 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
         
         performSegue(withIdentifier: "postPage", sender: self)
         
-        
-        
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        if(segue.identifier == "postPage") {
-            let vc = segue.destination as! PostPageViewController
-            vc.postID = selectedPostID
-        }
+    @IBAction func mePressed(_ sender: Any) {
+        performSegue(withIdentifier: "userPage", sender: self)
     }
+    
+    @IBAction func ProfilePicPressed(_ sender: Any) {
+        performSegue(withIdentifier: "userPage", sender: self)
+    }
+    @IBAction func usernamePressed(_ sender: Any) {
+        performSegue(withIdentifier: "userPage", sender: self)
+    }
+   
     
 }

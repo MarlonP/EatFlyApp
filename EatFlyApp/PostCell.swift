@@ -23,6 +23,7 @@ class PostCell: UICollectionViewCell {
     @IBOutlet weak var unlikeBtn: UIButton!
     
     var postID: String!
+    var postsUserID: String!
     
     
     @IBAction func likePressed(_ sender: Any) {
@@ -103,6 +104,49 @@ class PostCell: UICollectionViewCell {
             
         })
         ref.removeAllObservers()
+    }
+    
+    func getPostsUserID(){
+        
+        let ref = FIRDatabase.database().reference()
+        
+            //let key = ref.child("users").child("barcode").key
+            
+            ref.child("posts").observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                if let itemsSnap = snapshot.value as? [String : AnyObject] {
+                    
+                    for (_,value) in itemsSnap {
+                        
+                        if let pUserID = value["userID"] as? String, let postIDs = value["postID"] as? String{
+                            if postIDs == self.postID{
+                                userPageID = pUserID
+                                //print(userPageID)
+                            }
+                        }
+                    }
+                }
+                
+            })
+            ref.removeAllObservers()
+        
+        
+        
+    }
+    
+  
+    @IBAction func profilePicPressed(_ sender: Any) {
+        print("done")
+        getPostsUserID()
+        
+        
+        
+    }
+    
+    @IBAction func usernamePressed(_ sender: Any) {
+        print("done")
+        getPostsUserID()
+        
     }
 }
 

@@ -13,9 +13,10 @@ var listDetail = [Item]()
 
 class ShoppingListTableViewController: UITableViewController {
     @IBOutlet weak var input: UITextField!
-    var userAddedItems = [String]()
+    var userAddedItems = [ManualAddedItem]()
     var BCfromDB = [String]()
     var shoppingList = [Item]()
+    var SLCompletion = [Bool]()
     var ref: FIRDatabaseReference!
     
 
@@ -24,6 +25,7 @@ class ShoppingListTableViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         getItemDetails()
         getUsersManualItems()
+        print(userAddedItems)
 
     }
     
@@ -59,17 +61,34 @@ class ShoppingListTableViewController: UITableViewController {
         
         if indexPath.section == 0 {
             
-            cell.textLabel?.text = shoppingList[indexPath.row].itemName
+            if SLCompletion[indexPath.row] == true {
             
+                cell.accessoryType = .checkmark
+            }else{
+            
+                cell.accessoryType = .none
+            }
+            
+            cell.textLabel?.text = shoppingList[indexPath.row].itemName
+        
         } else if indexPath.section == 1 {
             
-            cell.textLabel?.text = userAddedItems[indexPath.row]
+            if userAddedItems[indexPath.row].completion == true {
+                
+                cell.accessoryType = .checkmark
+            }else{
+                
+                cell.accessoryType = .none
+            }
+            
+            cell.textLabel?.text = userAddedItems[indexPath.row].itemName
+            
             
         }
 
         
         
-        checkCompletion(indexPath: indexPath)
+        
 
         return cell
     }
@@ -113,9 +132,9 @@ class ShoppingListTableViewController: UITableViewController {
                             if let hasItem = snapshot.value as? [String : AnyObject] {
                                 for (key, value) in hasItem {
                                     
-                                    print(self.shoppingList.count)
-                                    print(self.shoppingList[indexPath.row].barcode)
-                                    print(value)
+//                                    print(self.shoppingList.count)
+//                                    print(self.shoppingList[indexPath.row].barcode)
+//                                    print(value)
                                     let BC = value["barcode"]
                                     
                                     if BC as! String == self.shoppingList[indexPath.row].barcode {
@@ -151,7 +170,7 @@ class ShoppingListTableViewController: UITableViewController {
         let key = ref.child("itemsList").childByAutoId().key
         
       
-        
+        if indexPath.section == 0 {
         ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
             
@@ -182,35 +201,41 @@ class ShoppingListTableViewController: UITableViewController {
             
         })
         ref.removeAllObservers()
-    
-    }// end didSelectRow function
-    
-    
-    func checkCompletion(indexPath: IndexPath) {
-        let uid = FIRAuth.auth()!.currentUser!.uid
-        let ref = FIRDatabase.database().reference()
+        }
         
-        ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-            
-            if let completed = snapshot.value as? [String : AnyObject] {
-                for (_, value) in completed {
-                    let completion = value["completion"] as! Bool
-                    
-                    if completion == true {
-                        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                    }else{
+        if indexPath.section == 1 {
+            ref.child("users").child(uid).child("manuallyAddedItems").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+                
+                
+                if let completed = snapshot.value as? [String : AnyObject] {
+                    for (_, value) in completed {
+                            
+                            let completion = value["completion"] as! Bool
+                            let id = value["listID"] as! String
+                            
+                            if completion == true {
+                                
+                                let completionVal: [String : Any] = ["completion" : false]
+                                ref.child("users").child(uid).child("manuallyAddedItems").child(id).updateChildValues(completionVal)
+                                self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
+                                
+                            }else if completion == false{
+                                
+                                let completionVal: [String : Any] = ["completion" : true]
+                                ref.child("users").child(uid).child("manuallyAddedItems").child(id).updateChildValues(completionVal)
+                                self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                            }
+                            
                         
-                        self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
                     }
                 }
                 
-            }
-            
-        })
-        //self.tableView.reloadData()
-        ref.removeAllObservers()
-        
-    }
+            })
+            ref.removeAllObservers()
+        }
+    
+    }// end didSelectRow function
+    
     
     @IBAction func addPressed(_ sender: Any) {
         
@@ -219,10 +244,18 @@ class ShoppingListTableViewController: UITableViewController {
         let key = ref.child("users").child(uid).child("itemsList").childByAutoId().key
         
         if (input.text != ""){
-            let newItem = input.text
-            userAddedItems.append(newItem!)
+            let newItem = ManualAddedItem()
             
-            let item: [String : Any] = ["name" : newItem!, "completion" : false, "listID" : key]
+            let newItemName = input.text
+            let completion = false
+            
+            newItem.itemName = newItemName
+            newItem.completion = completion
+            newItem.id = newItemName
+                
+            userAddedItems.append(newItem)
+            
+            let item: [String : Any] = ["name" : newItemName!, "completion" : completion, "listID" : key]
             let itemsList = ["\(key)" : item]
             
             ref.child("users").child(uid).child("manuallyAddedItems").updateChildValues(itemsList)
@@ -250,16 +283,18 @@ class ShoppingListTableViewController: UITableViewController {
                 
                 for (_,value) in itemsSnap {
                     
-                    // Error here: fatal error: unexpectedly found nil while unwrapping an Optional value
-                    let itemName = value["name"] as? String
+                    let manualItemData = ManualAddedItem()
+                    if let itemName = value["name"] as? String, let completion = value["completion"] as? Bool, let id = value["listID"] as? String {
+                        
+                        manualItemData.itemName = itemName
+                        manualItemData.completion = completion
+                        manualItemData.id = id
+                        
+                        print(completion)
                     
-                    self.userAddedItems.append(itemName!)
-                    
-                    
-                    
+                        self.userAddedItems.append(manualItemData)
+                    }
                 }
-                
-                
             }
             self.tableView.reloadData()
         })
@@ -282,10 +317,12 @@ class ShoppingListTableViewController: UITableViewController {
             for (_,value) in itemsSnap {
                 
                 let itemData = Item()
-                if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String {
+                if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String{
                     itemData.itemName = itemName
                     itemData.barcode = barcode
                     itemData.price = price
+                   
+                    
                     if self.BCfromDB.count != 0 {
                         for i in 0...self.BCfromDB.count-1 {
                             if (itemData.barcode == self.BCfromDB[i]){
@@ -308,11 +345,7 @@ class ShoppingListTableViewController: UITableViewController {
         
     }
 
-    //let itemsList = ["itemsList/\(key)" : self.filteredItems[indexPath.row].barcode]
-    
-    //ref.child("users").child(uid).updateChildValues(itemsList)
 
- 
     func getUsersItems() {
         let uid = FIRAuth.auth()!.currentUser!.uid
         ref = FIRDatabase.database().reference()
@@ -329,10 +362,11 @@ class ShoppingListTableViewController: UITableViewController {
             for (_,value) in itemsSnap {
                 
                 // Error here: fatal error: unexpectedly found nil while unwrapping an Optional value
-                let barcode = value["barcode"] as? String
+                if let barcode = value["barcode"] as? String, let completion = value["completion"] as? Bool{
                 
-                self.BCfromDB.append(barcode!)
-                
+                self.BCfromDB.append(barcode)
+                self.SLCompletion.append(completion)
+                }
                     
                 
                 }

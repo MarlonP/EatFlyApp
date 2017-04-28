@@ -533,7 +533,7 @@
         <!--Me-->
         <scene sceneID="5tT-PV-qAw">
             <objects>
-                <viewController title="Me" id="Vz7-My-Ovs" customClass="UserPageViewController" customModule="EatFlyApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="userPage" title="Me" id="Vz7-My-Ovs" customClass="UserPageViewController" customModule="EatFlyApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5jT-WE-sPN"/>
                         <viewControllerLayoutGuide type="bottom" id="3gQ-UY-yOP"/>
@@ -1329,7 +1329,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fZQ-OO-JeD">
-                                                    <rect key="frame" x="74" y="454.5" width="72" height="20.5"/>
+                                                    <rect key="frame" x="74" y="454" width="72" height="20.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 Likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mN0-qA-Bdc">
                                                             <rect key="frame" x="0.0" y="0.0" width="72" height="20.5"/>
@@ -1376,15 +1376,33 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jC8-Gx-djP">
+                                                    <rect key="frame" x="8" y="9" width="50" height="49"/>
+                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                                    <connections>
+                                                        <action selector="ProfilePicPressed:" destination="lOn-m7-M86" eventType="touchUpInside" id="r1l-Vx-t78"/>
+                                                        <action selector="profilePicPressed:" destination="Du9-9M-P8Y" eventType="touchUpInside" id="VYm-w0-Xth"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KXc-ke-Xrc">
+                                                    <rect key="frame" x="62" y="20" width="84" height="30"/>
+                                                    <connections>
+                                                        <action selector="usernamePressed:" destination="Du9-9M-P8Y" eventType="touchUpInside" id="fZL-CQ-ku9"/>
+                                                        <action selector="usernamePressed:" destination="lOn-m7-M86" eventType="touchUpInside" id="wCj-aR-5Ji"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="auG-WG-hj5" firstAttribute="top" secondItem="oaO-oT-KoA" secondAttribute="bottom" constant="15" id="3ZR-B5-kX9"/>
                                             <constraint firstItem="oaO-oT-KoA" firstAttribute="top" secondItem="qQW-mz-QAJ" secondAttribute="bottom" constant="4" id="3ut-vi-J4W"/>
+                                            <constraint firstItem="KXc-ke-Xrc" firstAttribute="leading" secondItem="qM2-dL-8S0" secondAttribute="leading" id="6XP-yw-ptD"/>
                                             <constraint firstItem="oaO-oT-KoA" firstAttribute="top" secondItem="pZ3-YV-Bho" secondAttribute="bottom" constant="4" id="9WH-sQ-7eg"/>
                                             <constraint firstItem="qM2-dL-8S0" firstAttribute="leading" secondItem="qQW-mz-QAJ" secondAttribute="trailing" constant="4" id="A6r-ug-Mcb"/>
                                             <constraint firstItem="auG-WG-hj5" firstAttribute="baseline" secondItem="bMa-NR-Q5s" secondAttribute="baseline" id="B30-bY-Mtb"/>
+                                            <constraint firstItem="oaO-oT-KoA" firstAttribute="top" secondItem="KXc-ke-Xrc" secondAttribute="bottom" constant="12" id="DHP-zt-JdY"/>
                                             <constraint firstItem="hvk-by-TVR" firstAttribute="leading" secondItem="zKb-U9-iLZ" secondAttribute="leading" id="EBY-FS-ZwL"/>
+                                            <constraint firstItem="pZ3-YV-Bho" firstAttribute="leading" secondItem="KXc-ke-Xrc" secondAttribute="trailing" constant="8" symbolic="YES" id="GUd-35-nbP"/>
                                             <constraint firstAttribute="trailing" secondItem="oaO-oT-KoA" secondAttribute="trailing" id="H2e-FB-Rw7"/>
                                             <constraint firstItem="bMa-NR-Q5s" firstAttribute="centerY" secondItem="fZQ-OO-JeD" secondAttribute="centerY" id="JVx-mP-fpA"/>
                                             <constraint firstItem="auG-WG-hj5" firstAttribute="baseline" secondItem="hvk-by-TVR" secondAttribute="firstBaseline" id="K0N-FB-0ha"/>
@@ -1393,17 +1411,22 @@
                                             <constraint firstItem="pZ3-YV-Bho" firstAttribute="leading" secondItem="qM2-dL-8S0" secondAttribute="trailing" constant="-2" id="Qh5-w7-uQH"/>
                                             <constraint firstItem="oaO-oT-KoA" firstAttribute="leading" secondItem="Du9-9M-P8Y" secondAttribute="leading" id="RuJ-w3-1it"/>
                                             <constraint firstItem="pZ3-YV-Bho" firstAttribute="trailing" secondItem="zKb-U9-iLZ" secondAttribute="trailing" constant="-2" id="SB1-P3-tt8"/>
+                                            <constraint firstItem="jC8-Gx-djP" firstAttribute="bottom" secondItem="qQW-mz-QAJ" secondAttribute="bottom" id="SwL-mf-F8T"/>
                                             <constraint firstItem="hvk-by-TVR" firstAttribute="top" secondItem="oaO-oT-KoA" secondAttribute="bottom" constant="12" id="Yv8-fw-hbl"/>
                                             <constraint firstItem="qQW-mz-QAJ" firstAttribute="leading" secondItem="Du9-9M-P8Y" secondAttribute="leadingMargin" id="ZIj-AQ-pg9"/>
                                             <constraint firstItem="fZQ-OO-JeD" firstAttribute="leading" secondItem="bMa-NR-Q5s" secondAttribute="trailing" constant="28" id="aYq-Cq-jMC"/>
                                             <constraint firstItem="oaO-oT-KoA" firstAttribute="centerX" secondItem="zKb-U9-iLZ" secondAttribute="centerX" id="b2Q-jk-bOK"/>
+                                            <constraint firstItem="jC8-Gx-djP" firstAttribute="trailing" secondItem="qQW-mz-QAJ" secondAttribute="trailing" id="b6c-mN-dPP"/>
+                                            <constraint firstItem="jC8-Gx-djP" firstAttribute="centerY" secondItem="qQW-mz-QAJ" secondAttribute="centerY" id="c4b-LS-FKy"/>
                                             <constraint firstItem="qM2-dL-8S0" firstAttribute="top" secondItem="Du9-9M-P8Y" secondAttribute="topMargin" constant="2" id="ciW-y7-jGW"/>
                                             <constraint firstItem="zKb-U9-iLZ" firstAttribute="bottom" secondItem="Du9-9M-P8Y" secondAttribute="bottomMargin" id="eKo-zb-mfc"/>
                                             <constraint firstItem="qQW-mz-QAJ" firstAttribute="top" secondItem="pZ3-YV-Bho" secondAttribute="top" id="eSZ-Of-7Gr"/>
+                                            <constraint firstItem="jC8-Gx-djP" firstAttribute="leading" secondItem="qQW-mz-QAJ" secondAttribute="leading" id="g2r-bG-yU5"/>
                                             <constraint firstItem="qQW-mz-QAJ" firstAttribute="top" secondItem="Du9-9M-P8Y" secondAttribute="topMargin" id="jQC-b3-LQN"/>
                                             <constraint firstItem="oaO-oT-KoA" firstAttribute="top" secondItem="qM2-dL-8S0" secondAttribute="bottom" constant="4" id="kWY-Yf-aKM"/>
                                             <constraint firstItem="hvk-by-TVR" firstAttribute="baseline" secondItem="bMa-NR-Q5s" secondAttribute="baseline" id="nEM-MY-uiP"/>
                                             <constraint firstItem="fZQ-OO-JeD" firstAttribute="leading" secondItem="hvk-by-TVR" secondAttribute="trailing" constant="23" id="tlZ-ib-HVY"/>
+                                            <constraint firstItem="jC8-Gx-djP" firstAttribute="firstBaseline" secondItem="qM2-dL-8S0" secondAttribute="firstBaseline" id="wne-H1-Xk2"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="auG-WG-hj5" secondAttribute="trailing" constant="12" id="z2x-mb-xRE"/>
                                         </constraints>
                                         <connections>
@@ -1442,7 +1465,7 @@
                         <rightBarButtonItems>
                             <barButtonItem title="Me" id="ZQI-p6-gun">
                                 <connections>
-                                    <segue destination="Vz7-My-Ovs" kind="show" id="GpO-wj-zaF"/>
+                                    <action selector="mePressed:" destination="lOn-m7-M86" id="jQR-w5-jcV"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="add" id="meD-WA-jDA">
@@ -1455,6 +1478,7 @@
                     <connections>
                         <outlet property="FeedCollectionView" destination="mcj-Tc-nzK" id="fGr-OL-zSo"/>
                         <segue destination="HW4-pg-aoZ" kind="show" identifier="postPage" id="20I-tC-PA1"/>
+                        <segue destination="Vz7-My-Ovs" kind="show" identifier="userPage" id="cIM-hY-7HH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LAR-lQ-bQ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
