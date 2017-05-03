@@ -17,6 +17,7 @@ class ShoppingListTableViewController: UITableViewController {
     var BCfromDB = [String]()
     var shoppingList = [Item]()
     var SLCompletion = [Bool]()
+    var itemListIDs = [String]()
     var ref: FIRDatabaseReference!
     
 
@@ -117,46 +118,87 @@ class ShoppingListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     
         let deletedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
+        
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        ref = FIRDatabase.database().reference()
     
         if editingStyle == UITableViewCellEditingStyle.delete {
             
-            let uid = FIRAuth.auth()!.currentUser!.uid
-            ref = FIRDatabase.database().reference()
+            if indexPath.section == 0 {
+                
+                ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+                    
+                    
+                    
+                    if let hasItem = snapshot.value as? [String : AnyObject] {
+                        for (_, value) in hasItem {
+                            
+                            //                                    print(self.shoppingList.count)
+                            //                                    print(self.shoppingList[indexPath.row].barcode)
+                            //                                    print(value)
+                            let listID = value["listID"] as! String
+                            
+                            if listID == self.itemListIDs[indexPath.row] {
+                                print(listID)
+                                print(self.itemListIDs[indexPath.row])
+                                
+                                self.ref.child("users").child(uid).child("itemsList").child(listID).removeValue()
+                                self.shoppingList.remove(at: indexPath.row)
+                                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                                deletedRow.accessoryType = UITableViewCellAccessoryType.none
+                                
+                                
+                                
+                            }
+                        }
+                        
+                    }
+                    
+                })
+                tableView.reloadData()
+            }
+            
+            if indexPath.section == 1 {
+                
+                ref.child("users").child(uid).child("manuallyAddedItems").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+                    
+                    
+                    
+                    if let hasItem = snapshot.value as? [String : AnyObject] {
+                        for (_, value) in hasItem {
+                            
+                            //                                    print(self.shoppingList.count)
+                            //                                    print(self.shoppingList[indexPath.row].barcode)
+                            //                                    print(value)
+                            if let listID1 = value["listID"] as? String {
+                            
+                                if listID1 == self.userAddedItems[indexPath.row].id {
+                                    
+                                    print(listID1)
+                                    print(self.userAddedItems[indexPath.row].id)
+                                
+                                    self.ref.child("users").child(uid).child("manuallyAddedItems").child(listID1).removeValue()
+                                    self.userAddedItems.remove(at: indexPath.row)
+                                    tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                                    deletedRow.accessoryType = UITableViewCellAccessoryType.none
+                                
+                                
+                                
+                                }
+                            }
+                        }
+                        
+                    }
+                    
+                })
+                tableView.reloadData()
+            }
+            
+            
             //let key = ref.child("users").child("barcode").key
             
             
-            ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-                
-                
-                                
-                            if let hasItem = snapshot.value as? [String : AnyObject] {
-                                for (key, value) in hasItem {
-                                    
-//                                    print(self.shoppingList.count)
-//                                    print(self.shoppingList[indexPath.row].barcode)
-//                                    print(value)
-                                    let BC = value["barcode"]
-                                    
-                                    if BC as! String == self.shoppingList[indexPath.row].barcode {
-                                        
-                
-                                        self.ref.child("users").child(uid).child("itemsList/\(key)").removeValue()
-                                        self.shoppingList.remove(at: indexPath.row)
-                                        tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-                                        deletedRow.accessoryType = UITableViewCellAccessoryType.none
-                
-                
-                
-                                    }
-                                }
-                
-                            }
-                            
-                })
-            
-            
-            
-            tableView.reloadData()
+
     
         }
     }
@@ -362,10 +404,11 @@ class ShoppingListTableViewController: UITableViewController {
             for (_,value) in itemsSnap {
                 
                 // Error here: fatal error: unexpectedly found nil while unwrapping an Optional value
-                if let barcode = value["barcode"] as? String, let completion = value["completion"] as? Bool{
+                if let barcode = value["barcode"] as? String, let completion = value["completion"] as? Bool, let listID = value["listID"] as? String{
                 
                 self.BCfromDB.append(barcode)
                 self.SLCompletion.append(completion)
+                self.itemListIDs.append(listID)
                 }
                     
                 

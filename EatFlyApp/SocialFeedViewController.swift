@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+let FeedNotificationKey = "com.mp.feedNotificationKey"
+
 class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var FeedCollectionView: UICollectionView!
@@ -21,6 +23,10 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(afterNotified),
+                                               name: NSNotification.Name(rawValue: FeedNotificationKey),
+                                               object: nil)
         
         fetchPosts()
         retrieveUsers()
@@ -33,7 +39,13 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
 //        print(user)
 //    }
  
-    
+    func afterNotified() {
+        posts.removeAll()
+        user.removeAll()
+        
+        fetchPosts()
+        retrieveUsers()
+    }
     
     func fetchPosts(){
         

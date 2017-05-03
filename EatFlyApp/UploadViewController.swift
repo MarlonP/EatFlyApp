@@ -38,7 +38,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                                                object: nil)
         
         
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(whenNotify), name: NSNotification.Name(rawValue: FeedNotificationKey), object: nil)
 
     }
     
@@ -53,6 +53,9 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         tableView.reloadData()
         
+        
+    }
+    func whenNotify(){
         
     }
     
@@ -146,6 +149,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                         ref.child("posts").child(key).child("recipe").updateChildValues(recipeFeed)
                     }
                     
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: FeedNotificationKey), object: nil)
                     
                     uploadRecipe.removeAll()
                     recipe.removeAll()
@@ -153,7 +157,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                     
                     
                     //This is the problem of going back to the log out
-                    self.dismiss(animated: true, completion: nil)
+                    _ = self.navigationController?.popViewController(animated: true)
                     
                     
                 }

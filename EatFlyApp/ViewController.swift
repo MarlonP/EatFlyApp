@@ -20,7 +20,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var currentShop = [Item]()
     var Amounts = [Int]()
     var BCfromDB = [String]()
-    let ref = FIRDatabase.database().reference()
+    var ref = FIRDatabase.database().reference()
     
 
     
@@ -110,6 +110,59 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.deselectRow(at: indexPath, animated: true)
        
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        let deletedRow:UITableViewCell = tableView.cellForRow(at: indexPath)!
+        
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        ref = FIRDatabase.database().reference()
+        
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            
+                
+                ref.child("users").child(uid).child("currentShop").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+                    
+                    
+                    
+                    if let hasItem = snapshot.value as? [String : AnyObject] {
+                        for (_, value) in hasItem {
+                            
+                            let barcode = value["barcode"] as! String
+                            
+                            print(barcode)
+                            print(self.currentShop[indexPath.row].barcode)
+                            
+                            if barcode == self.currentShop[indexPath.row].barcode {
+                                
+                                
+                                self.ref.child("users").child(uid).child("currentShop").child(barcode).removeValue()
+                                self.currentShop.remove(at: indexPath.row)
+                                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                                deletedRow.accessoryType = UITableViewCellAccessoryType.none
+                                
+                                
+                                
+                            }
+                        }
+                        
+                    }
+                    
+                })
+                tableView.reloadData()
+            
+            
+     
+            
+            
+            //let key = ref.child("users").child("barcode").key
+            
+            
+            
+            
+        }
+    }
+
     
     func getItemDetails() {
         

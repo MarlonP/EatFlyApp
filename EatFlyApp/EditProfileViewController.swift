@@ -26,7 +26,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotify), name: NSNotification.Name(rawValue: myNotificationKey), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotify), name: NSNotification.Name(rawValue: myNotificationKey), object: nil)
         
         picker.delegate = self
         
@@ -61,7 +61,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
 
     @IBAction func savePressed(_ sender: Any) {
         updateUsersProfile()
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: myNotificationKey), object: nil)
+        //NotificationCenter.default.post(name: NSNotification.Name(rawValue: myNotificationKey), object: nil)
         
         _ = navigationController?.popViewController(animated: true)
         

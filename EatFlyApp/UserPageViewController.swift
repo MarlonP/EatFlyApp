@@ -34,19 +34,13 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(doSomethingAfterNotified),
-                                               name: NSNotification.Name(rawValue: myNotificationKey),
-                                               object: nil)
-        
-        retrieveUser()
-        getFollowers()
-        getFollowing()
-        fetchPosts()
-      
-        
-        print(userPageID)
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(doSomethingAfterNotified),
+//                                               name: NSNotification.Name(rawValue: myNotificationKey),
+//                                               object: nil)
 
+      
+ 
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,13 +50,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         fetchPosts()
         
     
-        nameLbl.text = self.user[0].fullName
-        navigationItem.title = self.user[0].fullName
-        infoLbl.text = self.user[0].bio
-        profileImageView.downloadImage(from: self.user[0].imgPath!)
-        followingLbl.text = "\(following.count)"
-        followersLbl.text = "\(followers.count)"
-        postsLbl.text = "\(posts.count)"
+
     }
     
     func doSomethingAfterNotified() {
@@ -92,9 +80,20 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 }
             }
         
+            self.doSetup()
         })
         
         ref.removeAllObservers()
+    }
+    
+    func doSetup() {
+        nameLbl.text = self.user[0].fullName
+        navigationItem.title = self.user[0].fullName
+        infoLbl.text = self.user[0].bio
+        profileImageView.downloadImage(from: self.user[0].imgPath!)
+        followingLbl.text = "\(following.count)"
+        followersLbl.text = "\(followers.count)"
+        postsLbl.text = "\(posts.count)"
     }
     
     func getFollowers(){
