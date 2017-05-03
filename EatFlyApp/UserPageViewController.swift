@@ -58,6 +58,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     
         nameLbl.text = self.user[0].fullName
         navigationItem.title = self.user[0].fullName
+        infoLbl.text = self.user[0].bio
         profileImageView.downloadImage(from: self.user[0].imgPath!)
         followingLbl.text = "\(following.count)"
         followersLbl.text = "\(followers.count)"
@@ -79,10 +80,11 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 if let uid = value["uid"] as? String {
                     if uid == FIRAuth.auth()?.currentUser!.uid{
                         let userToShow = User()
-                        if let fullName = value["full name"] as? String, let imagePath = value["urlToImage"] as? String {
+                        if let fullName = value["full name"] as? String, let imagePath = value["urlToImage"] as? String, let bio = value["bio"] as? String {
                             userToShow.fullName = fullName
                             userToShow.imgPath = imagePath
                             userToShow.userID = uid
+                            userToShow.bio = bio
                             
                             self.user.append(userToShow)
                         }
@@ -210,7 +212,8 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //Code for when cell is selected
+        selectedPostID = self.posts[indexPath.row].postID
+        performSegue(withIdentifier: "cellPostPage", sender: nil)
     }
     
 }

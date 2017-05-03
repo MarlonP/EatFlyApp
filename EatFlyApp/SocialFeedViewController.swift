@@ -16,7 +16,7 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
     var posts = [Post]()
     var user = [User]()
     var following = [String]()
-    var selectedPostID : String?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,9 +135,15 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postCell", for: indexPath) as! PostCell
+        for x in 0...user.count-1 {
+            if posts[indexPath.row].userID == user[x].userID {
+                cell.authorLabel.text = self.user[x].fullName
+                
+            }
+        }
         
         cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage)
-        cell.authorLabel.text = self.posts[indexPath.row].author
+        //cell.authorLabel.text = self.posts[indexPath.row].author
         cell.likeLabel.text = "\(self.posts[indexPath.row].likes!) Likes"
         cell.postID = self.posts[indexPath.row].postID
         cell.titleLabel.text = self.posts[indexPath.row].title

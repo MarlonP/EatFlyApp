@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+var selectedPostID : String!
+
 class PostPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var titleLbl: UILabel!
@@ -18,12 +20,11 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
-    var postID : String?
+    var postID : String!
     let ref = FIRDatabase.database().reference()
     var posts = [Post]()
     var user = [User]()
     var postRecipe = [RecipeItem]()
-    let testRecipe = ["1 (9 5/8 ounce) package pork sausage","8 eggs", "1⁄4 cup parmesan cheese, grated", "1⁄4 teaspoon salt", "2 green onions, thinly sliced"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         retrieveUser()
        
         profileImageView.downloadImage(from: self.user[0].imgPath!)
@@ -57,7 +59,9 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
             for (_,post) in postsSnap {
                 if let postsID = post["postID"] as? String {
                     
-                    if self.postID == postsID {
+                  
+                    if selectedPostID == postsID {
+                        
                         let posst = Post()
                         if let author = post["author"] as? String, let likes = post["likes"] as? Int, let title = post["title"] as? String, let description = post["description"] as? String, let date = post["date"] as? String, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let userID = post["userID"] as? String {
                             
@@ -75,7 +79,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                                     posst.peopleWhoLike.append(person as! String)
                                 }
                             }
-                            
+                            print(posst)
                             self.posts.append(posst)
                         }
                         
@@ -123,6 +127,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
             self.user.removeAll()
             
             for (_, value) in users {
+                
                 if let uid = self.posts[0].userID {
                     
                     let userToShow = User()
@@ -183,6 +188,43 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
     }// end didSelectRow function
+    
+    
+    @IBAction func addToShoppingPressed(_ sender: Any) {
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        let ref = FIRDatabase.database().reference()
+        
+        
+        if (postRecipe.count != 0){
+            for i in 0...postRecipe.count-1{
+                let key = ref.child("users").child(uid).child("itemsList").childByAutoId().key
+            
+                let newItem = ManualAddedItem()
+            
+                let newItemName = postRecipe[i].itemName
+                let completion = false
+            
+                newItem.itemName = newItemName
+                newItem.completion = completion
+                newItem.id = newItemName
+            
+                let item: [String : Any] = ["name" : newItemName!, "completion" : completion, "listID" : key]
+                let itemsList = ["\(key)" : item]
+            
+                ref.child("users").child(uid).child("manuallyAddedItems").updateChildValues(itemsList)
+                
+                let alertController = UIAlertController(title: "Done", message: "Recipe added to your shopping list", preferredStyle: .alert)
+                
+                let defaultAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                alertController.addAction(defaultAction)
+                
+                present(alertController, animated: true, completion: nil)
+            
+           
+            
+            }
+        }
+    }
 
 
 

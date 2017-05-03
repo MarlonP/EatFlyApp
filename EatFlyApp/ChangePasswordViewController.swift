@@ -53,7 +53,13 @@ class ChangePasswordViewController: UIViewController {
                     }
                     
                 }else{
-                    print("new passwords are not the same")
+                    let alertController = UIAlertController(title: "Try Again", message: "new passwords are not the same", preferredStyle: .alert)
+                    
+                    let defaultAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                    alertController.addAction(defaultAction)
+                    
+                    self.present(alertController, animated: true, completion: nil)
+            
                 }
                 
             }

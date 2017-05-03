@@ -99,13 +99,13 @@ class ShoppingListTableViewController: UITableViewController {
             if userAddedItems.count == 0 {
                 return nil
             } else {
-                return "Manually Added"
+                return "Non-Scannable"
             }
             
         }
         if section == 0 {
             if shoppingList.count != 0 {
-                return "Searched"
+                return "Scannable"
             } else {
                 return nil
             }
@@ -379,16 +379,7 @@ class ShoppingListTableViewController: UITableViewController {
     }
  
    
-    
- 
-    
-    
-    
-  
-    
-    
-    
-    
+
 
 
 }
