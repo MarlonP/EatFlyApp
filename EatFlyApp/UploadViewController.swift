@@ -44,17 +44,20 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func viewDidAppear(_ animated: Bool) {
         print(uploadRecipe)
+        if uploadRecipe.count != 0 {
+            recipeDone = true
+            tableView.reloadData()
+        }else{
+            recipeDone = false
+            tableView.reloadData()
+        }
     }
     
     func doSomethingAfterNotified1() {
-        if recipeDone == false {
-            recipeDone = true
-        }
-        
-        tableView.reloadData()
         
         
     }
+    
     func whenNotify(){
         
     }
@@ -188,9 +191,15 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         
         cell.textLabel?.text = array[indexPath.row]
+        
         if indexPath.row == 1 {
+            
             if recipeDone == true{
-                self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                print(true)
+                cell.accessoryType = .checkmark
+            }else{
+                    
+                cell.accessoryType = .none
             }
         }
         

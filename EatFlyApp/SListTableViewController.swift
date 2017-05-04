@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-
+let mySLNotificationKey = "com.mp.SLnotificationKey"
 
 class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     
@@ -31,6 +31,8 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         getItemDetails()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotifySL), name: NSNotification.Name(rawValue: mySLNotificationKey), object: nil)
+        
         self.resultSearchController = UISearchController(searchResultsController: nil)
         self.resultSearchController.searchResultsUpdater = self
         
@@ -46,7 +48,10 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     
-    
+    func doThisWhenNotifySL() {
+       
+        
+    }
     
     
     func getItems() {
@@ -209,6 +214,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
             
             ref.child("users").child(uid).child("itemsList").updateChildValues(itemsList)
         }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: mySLNotificationKey), object: nil)
         navigationController?.popViewController(animated: true)
     }
     

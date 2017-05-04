@@ -19,19 +19,20 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    var barBtn: UIBarButtonItem!
     
     var postID : String!
     let ref = FIRDatabase.database().reference()
     var posts = [Post]()
     var user = [User]()
     var postRecipe = [RecipeItem]()
+    
+    let uid = FIRAuth.auth()!.currentUser!.uid
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        retrieveUser()
-        
-        
+        barBtn = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.plain, target: self, action: #selector(UserPageViewController.buttonMethod))
 
     }
     
@@ -39,13 +40,50 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         retrieveUser()
        
-        profileImageView.downloadImage(from: self.user[0].imgPath!)
-        titleLbl.text = posts[0].title
-        navigationItem.title = posts[0].title
-        userLbl.text = user[0].fullName
-        dateLbl.text = posts[0].date
-        descriptionLbl.text = posts[0].desc
-        postImageView.downloadImage(from: self.posts[0].pathToImage!)
+        
+        
+    }
+    
+    func buttonMethod() {
+        
+        let alertController = UIAlertController(title: nil, message: "Takes the appearance of the bottom bar if specified; otherwise, same as UIActionSheetStyleDefault.", preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
+            // ...
+        }
+        alertController.addAction(cancelAction)
+        
+        let editAction = UIAlertAction(title: "Edit Post", style: .default) { action in
+            self.performSegue(withIdentifier: "editPostSegue", sender: nil)
+        }
+        alertController.addAction(editAction)
+        
+        let deleteAction = UIAlertAction(title: "Delete Post", style: .destructive) { action in
+            let DeleteAlertController = UIAlertController(title: "Are You Sure?", message: "Press delete if you still want to delete this post.", preferredStyle: .alert)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
+                // ...
+            }
+            DeleteAlertController.addAction(cancelAction)
+            
+            let OKAction = UIAlertAction(title: "Delete", style: .destructive) { action in
+                self.ref.child("posts").child(self.posts[0].postID).removeValue()
+                
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "feedVC")
+                self.present(vc, animated: true, completion: nil)
+                
+            }
+            DeleteAlertController.addAction(OKAction)
+            
+            self.present(DeleteAlertController, animated: true) {
+                // ...
+            }
+        }
+        alertController.addAction(deleteAction)
+        
+        self.present(alertController, animated: true) {
+            // ...
+        }
         
     }
     
@@ -117,6 +155,22 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         ref.removeAllObservers()
     }
     
+    
+    func setData(){
+        profileImageView.downloadImage(from: self.user[0].imgPath!)
+        titleLbl.text = posts[0].title
+        navigationItem.title = posts[0].title
+        userLbl.text = user[0].fullName
+        dateLbl.text = posts[0].date
+        descriptionLbl.text = posts[0].desc
+        postImageView.downloadImage(from: self.posts[0].pathToImage!)
+        
+        if uid != posts[0].userID {
+            navigationItem.rightBarButtonItems = []
+        }else{
+            navigationItem.rightBarButtonItems = [barBtn]
+        }
+    }
 
     func retrieveUser(){
        
@@ -146,7 +200,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                 
             }
             //self.FeedCollectionView.reloadData()
-            
+            self.setData()
         })
         
         ref.removeAllObservers()

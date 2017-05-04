@@ -192,6 +192,9 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     @IBAction func mePressed(_ sender: Any) {
+        let Puid = FIRAuth.auth()?.currentUser?.uid
+        
+        userPageID = Puid
         performSegue(withIdentifier: "userPage", sender: self)
     }
     

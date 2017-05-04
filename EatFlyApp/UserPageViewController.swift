@@ -21,8 +21,10 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     @IBOutlet weak var followersLbl: UILabel!
     @IBOutlet weak var postsLbl: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    var barBtn: UIBarButtonItem! 
     
     let ref = FIRDatabase.database().reference()
+    let uid = FIRAuth.auth()!.currentUser!.uid
     
     var user = [User]()
     var following = [String]()
@@ -34,12 +36,12 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(doSomethingAfterNotified),
-//                                               name: NSNotification.Name(rawValue: myNotificationKey),
-//                                               object: nil)
-
-      
+        barBtn = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.plain, target: self, action: #selector(UserPageViewController.buttonMethod))
+        
+        //navigationItem.rightBarButtonItems = [barBtn]
+        
+        
+        
  
     }
     
@@ -53,8 +55,8 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
 
     }
     
-    func doSomethingAfterNotified() {
-        
+    func buttonMethod() {
+        performSegue(withIdentifier: "settingsSegue", sender: nil)
     }
     
     func retrieveUser(){
@@ -66,7 +68,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
             
             for (_, value) in users {
                 if let uid = value["uid"] as? String {
-                    if uid == FIRAuth.auth()?.currentUser!.uid{
+                    if uid == userPageID{
                         let userToShow = User()
                         if let fullName = value["full name"] as? String, let imagePath = value["urlToImage"] as? String, let bio = value["bio"] as? String {
                             userToShow.fullName = fullName
@@ -91,15 +93,22 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         navigationItem.title = self.user[0].fullName
         infoLbl.text = self.user[0].bio
         profileImageView.downloadImage(from: self.user[0].imgPath!)
-        followingLbl.text = "\(following.count)"
-        followersLbl.text = "\(followers.count)"
-        postsLbl.text = "\(posts.count)"
+        
+        if uid != userPageID {
+            navigationItem.rightBarButtonItems = []
+        }else{
+            navigationItem.rightBarButtonItems = [barBtn]
+        }
+        
     }
+
+    
+
     
     func getFollowers(){
-        let uid = FIRAuth.auth()!.currentUser!.uid
         
-        ref.child("users").child(uid).child("followers").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+        
+        ref.child("users").child(userPageID).child("followers").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
             let Snap = snapshot.value as! [String : AnyObject]
             self.followers.removeAll()
@@ -113,7 +122,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 
             }
             
-            
+            self.followersLbl.text = "\(self.followers.count)"
             
         })
         
@@ -121,9 +130,8 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     func getFollowing(){
         
-        let uid = FIRAuth.auth()!.currentUser!.uid
         
-        ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+        ref.child("users").child(userPageID).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
             let Snaps = snapshot.value as! [String : AnyObject]
             self.following.removeAll()
@@ -137,7 +145,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 
             }
             
-            
+            self.followingLbl.text = "\(self.following.count)"
             
         })
 
@@ -145,7 +153,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     func fetchPosts(){
-        let uid = FIRAuth.auth()!.currentUser!.uid
+   
         
         ref.child("posts").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snap) in
             
@@ -155,7 +163,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
             for (_,post) in postsSnap {
                 if let userID = post["userID"] as? String {
                     
-                        if uid == userID {
+                        if userPageID == userID {
                             let posst = Post()
                             if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
                                 
@@ -178,6 +186,8 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                     self.collectionView.reloadData()
                 }
             }
+            
+            self.postsLbl.text = "\(self.posts.count)"
         })
         
         

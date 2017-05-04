@@ -57,6 +57,8 @@ class RecipeTableViewController: UITableViewController {
     func doSomethingAfterNotified() {
         tableView.reloadData()
     }
+    
+    
 
     // MARK: - Table view data source
 
@@ -93,6 +95,8 @@ class RecipeTableViewController: UITableViewController {
 
     
     // Override to support editing the table view.
+    
+    //not working for some reason!!!
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source

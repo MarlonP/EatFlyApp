@@ -11,6 +11,7 @@ import Firebase
 
 var listDetail = [Item]()
 
+
 class ShoppingListTableViewController: UITableViewController {
     @IBOutlet weak var input: UITextField!
     var userAddedItems = [ManualAddedItem]()
@@ -24,19 +25,30 @@ class ShoppingListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
+      
+        
         getItemDetails()
-        getUsersManualItems()
-        print(userAddedItems)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(doSomethingAfterNotifiedSL),
+                                               name: NSNotification.Name(rawValue: mySLNotificationKey),
+                                               object: nil)
+     
 
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        getItemDetails()
+        
         getUsersManualItems()
         print(userAddedItems)
     }
 
-
+    func doSomethingAfterNotifiedSL() {
+        print("Done")
+      getItemDetails()
+    
+        
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -54,9 +66,7 @@ class ShoppingListTableViewController: UITableViewController {
         return shoppingList.count
     }
     
-    
-
-    
+ 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
@@ -132,22 +142,21 @@ class ShoppingListTableViewController: UITableViewController {
                     
                     if let hasItem = snapshot.value as? [String : AnyObject] {
                         for (_, value) in hasItem {
-                            
-                            //                                    print(self.shoppingList.count)
-                            //                                    print(self.shoppingList[indexPath.row].barcode)
-                            //                                    print(value)
+
                             let listID = value["listID"] as! String
                             
+                            print(listID)
+                            print(self.itemListIDs.count)
+                            
                             if listID == self.itemListIDs[indexPath.row] {
-                                print(listID)
-                                print(self.itemListIDs[indexPath.row])
+                                
                                 
                                 self.ref.child("users").child(uid).child("itemsList").child(listID).removeValue()
                                 self.shoppingList.remove(at: indexPath.row)
                                 tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
                                 deletedRow.accessoryType = UITableViewCellAccessoryType.none
                                 
-                                
+                                self.getItemDetails()
                                 
                             }
                         }
@@ -167,15 +176,13 @@ class ShoppingListTableViewController: UITableViewController {
                     if let hasItem = snapshot.value as? [String : AnyObject] {
                         for (_, value) in hasItem {
                             
-                            //                                    print(self.shoppingList.count)
-                            //                                    print(self.shoppingList[indexPath.row].barcode)
-                            //                                    print(value)
                             if let listID1 = value["listID"] as? String {
+                                
+                                print(listID1)
+                                print(self.userAddedItems[indexPath.row].id)
                             
                                 if listID1 == self.userAddedItems[indexPath.row].id {
-                                    
-                                    print(listID1)
-                                    print(self.userAddedItems[indexPath.row].id)
+                                
                                 
                                     self.ref.child("users").child(uid).child("manuallyAddedItems").child(listID1).removeValue()
                                     self.userAddedItems.remove(at: indexPath.row)
@@ -307,7 +314,7 @@ class ShoppingListTableViewController: UITableViewController {
             tableView.reloadData()
         }
         
-        
+        getUsersManualItems()
     }
     
     func getUsersManualItems() {

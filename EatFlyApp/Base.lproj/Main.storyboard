@@ -691,13 +691,7 @@
                             <constraint firstItem="t36-rV-Tpz" firstAttribute="leading" secondItem="X6X-BQ-QwC" secondAttribute="trailing" constant="8" symbolic="YES" id="zaz-1h-7ZR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Users Name" id="cxK-pi-GBh">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="FUF-lx-qIg">
-                            <connections>
-                                <segue destination="6XR-G1-L64" kind="show" id="gj2-xG-3D4"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Users Name" id="cxK-pi-GBh"/>
                     <connections>
                         <outlet property="collectionView" destination="bQA-6W-Dmt" id="lFQ-JI-VE5"/>
                         <outlet property="followBtn" destination="Xxk-2y-7IE" id="Zfe-dv-NsC"/>
@@ -708,6 +702,7 @@
                         <outlet property="postsLbl" destination="LgP-db-DBr" id="Rzo-pg-KuX"/>
                         <outlet property="profileImageView" destination="X6X-BQ-QwC" id="6X0-4p-Pmn"/>
                         <segue destination="HW4-pg-aoZ" kind="show" identifier="cellPostPage" id="eQJ-qa-LXW"/>
+                        <segue destination="6XR-G1-L64" kind="show" identifier="settingsSegue" id="daZ-xG-lmt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ffs-iC-jBf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1656,11 +1651,30 @@
                         <outlet property="tableView" destination="9qZ-MB-h2O" id="M9s-pI-4EW"/>
                         <outlet property="titleLbl" destination="7R1-44-JD5" id="viz-Ja-lvG"/>
                         <outlet property="userLbl" destination="RGM-dX-smI" id="RGc-uG-htG"/>
+                        <segue destination="Ikh-nb-G70" kind="show" identifier="editPostSegue" id="FS1-VU-bsE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TQ3-yW-M5g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1718" y="-1881"/>
+        </scene>
+        <!--Edit Post-->
+        <scene sceneID="DVe-W1-X2p">
+            <objects>
+                <viewController title="Edit Post" id="Ikh-nb-G70" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HZg-Yy-uu8"/>
+                        <viewControllerLayoutGuide type="bottom" id="cEP-3T-mZ2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2rC-JO-661">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yj3-EO-oz9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2478" y="-1882"/>
         </scene>
         <!--Shopping List-->
         <scene sceneID="U9A-cn-zRg">
