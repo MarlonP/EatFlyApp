@@ -30,7 +30,7 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
         
         fetchPosts()
         retrieveUsers()
-        print(user)
+      
     }
     
 //    override func viewDidAppear(_ animated: Bool) {
@@ -40,11 +40,13 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
 //    }
  
     func afterNotified() {
-        posts.removeAll()
-        user.removeAll()
+//        posts.removeAll()
+//        user.removeAll()
+        //posts.removeAll()
+
+        FeedCollectionView.reloadData()
         
         fetchPosts()
-        retrieveUsers()
     }
     
     func fetchPosts(){
@@ -70,14 +72,14 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
                             
                             let postsSnap = snap.value as! [String : AnyObject]
                             
+                            self.posts.removeAll()
                             for (_,post) in postsSnap {
                                 if let userID = post["userID"] as? String {
                                     for each in self.following {
                                         if each == userID {
                                             let posst = Post()
-                                            if let author = post["author"] as? String, let title = post["title"] as? String, let date = post["date"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
+                                            if let title = post["title"] as? String, let date = post["date"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
                                                 
-                                                posst.author = author
                                                 posst.title = title
                                                 posst.date = date
                                                 posst.likes = likes
@@ -115,7 +117,7 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
             self.user.removeAll()
             
             for (_, value) in users {
-                print(value)
+                
                 if let uid = value["uid"] as? String {
                     
                         let userToShow = User()
@@ -155,7 +157,6 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         
         cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage)
-        //cell.authorLabel.text = self.posts[indexPath.row].author
         cell.likeLabel.text = "\(self.posts[indexPath.row].likes!) Likes"
         cell.postID = self.posts[indexPath.row].postID
         cell.titleLabel.text = self.posts[indexPath.row].title
@@ -170,9 +171,9 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         
         for i in 0...user.count-1 {
-            print(i)
+            
             if posts[indexPath.row].userID == user[i].userID {
-                print(user[i].imgPath)
+                
                 cell.imageView.downloadImage(from: user[i].imgPath)
             }
         }
@@ -182,10 +183,10 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        print("Row \(indexPath.row)selected")
+        
         selectedPostID = self.posts[indexPath.row].postID
         
-        print(self.posts[indexPath.row].postID)
+        
         
         performSegue(withIdentifier: "postPage", sender: self)
         

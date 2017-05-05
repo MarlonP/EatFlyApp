@@ -131,7 +131,6 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                     let feed = ["userID" : uid,
                                 "pathToImage" : url.absoluteString,
                                 "likes" : 0,
-                                "author" : FIRAuth.auth()!.currentUser!.displayName!,
                                 "title" : self.titleTextField.text as String!,
                                 "description" : self.descriptionTextView.text as String!,
                                 "date" : dateToday,

@@ -46,17 +46,91 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func buttonMethod() {
         
-        let alertController = UIAlertController(title: nil, message: "Takes the appearance of the bottom bar if specified; otherwise, same as UIActionSheetStyleDefault.", preferredStyle: .actionSheet)
-        
+        let alertController = UIAlertController(title: nil, message: "To edit or delete your post select on of the below...", preferredStyle: .actionSheet)
+        //CANCEL BTN
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in
             // ...
         }
         alertController.addAction(cancelAction)
         
-        let editAction = UIAlertAction(title: "Edit Post", style: .default) { action in
+        //EDIT TITLE BTN
+        let editTitleAction = UIAlertAction(title: "Edit Title", style: .default) { action in
+            
+            let alert = UIAlertController(title: "Edit Title",
+                                          message: "Enter your new title...",
+                                          preferredStyle: .alert)
+            // Submit button
+            let submitAction = UIAlertAction(title: "Submit", style: .default, handler: { (action) -> Void in
+                // Get 1st TextField's text
+                let newTitleTextField = alert.textFields![0]
+                
+                self.titleLbl.text = newTitleTextField.text!
+                
+                self.updatePost(newDescription: self.descriptionLbl.text!, newTitle: newTitleTextField.text!)
+               
+            })
+            
+            // Cancel button
+            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
+            
+            // Add 1 textField and customize it
+            alert.addTextField { (textField: UITextField) in
+                textField.keyboardAppearance = .dark
+                textField.keyboardType = .default
+                textField.autocorrectionType = .default
+                textField.placeholder = "Type something here"
+                textField.clearButtonMode = .whileEditing
+            }
+            
+            // Add action buttons and present the Alert
+            alert.addAction(submitAction)
+            alert.addAction(cancel)
+            self.present(alert, animated: true, completion: nil)
+
+
+        }
+        alertController.addAction(editTitleAction)
+        
+        //EDIT DESCRIPTION BTN
+        let editDescriptionAction = UIAlertAction(title: "Edit Description", style: .default) { action in
+            
+            let alert = UIAlertController(title: "Edit Description",
+                                          message: "Enter your new description...",
+                                          preferredStyle: .alert)
+            // Submit button
+            let submitAction = UIAlertAction(title: "Submit", style: .default, handler: { (action) -> Void in
+                // Get 1st TextField's text
+                let newDescTextField = alert.textFields![0]
+                
+                self.descriptionLbl.text = newDescTextField.text!
+                
+                self.updatePost(newDescription: newDescTextField.text!, newTitle: self.titleLbl.text!)
+            })
+            
+            // Cancel button
+            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
+            
+            // Add 1 textField and customize it
+            alert.addTextField { (textField: UITextField) in
+                textField.keyboardAppearance = .dark
+                textField.keyboardType = .default
+                textField.autocorrectionType = .default
+                textField.placeholder = "Type something here"
+                textField.clearButtonMode = .whileEditing
+            }
+            
+            // Add action buttons and present the Alert
+            alert.addAction(submitAction)
+            alert.addAction(cancel)
+            self.present(alert, animated: true, completion: nil)
+        }
+        alertController.addAction(editDescriptionAction)
+        
+        //EDIT RECIPE BTN
+        let editRecipeAction = UIAlertAction(title: "Edit Recipe", style: .default) { action in
             self.performSegue(withIdentifier: "editPostSegue", sender: nil)
         }
-        alertController.addAction(editAction)
+        alertController.addAction(editRecipeAction)
         
         let deleteAction = UIAlertAction(title: "Delete Post", style: .destructive) { action in
             let DeleteAlertController = UIAlertController(title: "Are You Sure?", message: "Press delete if you still want to delete this post.", preferredStyle: .alert)
@@ -87,6 +161,36 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    func updatePost(newDescription: String, newTitle: String){
+        let feed = ["userID" : uid,
+                    "pathToImage" : posts[0].pathToImage,
+                    "likes" : posts[0].peopleWhoLike.count,
+                    "title" : newTitle,
+                    "description" : newDescription,
+                    "date" : posts[0].date,
+                    "postID" : posts[0].postID] as [String : Any]
+        
+        
+        
+        ref.child("posts").child(posts[0].postID).updateChildValues(feed)
+        
+        
+        
+        for i in 0...postRecipe.count-1{
+            let key1 = ref.child("posts").childByAutoId().key
+            let recipe = ["itemName" : postRecipe[i].itemName, "amount" : postRecipe[i].amount, "fraction" : postRecipe[i].fraction, "RID" : key1] as [String : Any]
+            
+            let recipeFeed = ["\(key1)" : recipe]
+            
+            ref.child("posts").child(posts[0].postID).child("recipe").setValue(recipeFeed)
+        }
+        
+        
+        
+        
+        
+    }
+    
     func fetchPost(){
         
         ref.child("posts").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snap) in
@@ -101,9 +205,8 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                     if selectedPostID == postsID {
                         
                         let posst = Post()
-                        if let author = post["author"] as? String, let likes = post["likes"] as? Int, let title = post["title"] as? String, let description = post["description"] as? String, let date = post["date"] as? String, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let userID = post["userID"] as? String {
+                        if let likes = post["likes"] as? Int, let title = post["title"] as? String, let description = post["description"] as? String, let date = post["date"] as? String, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let userID = post["userID"] as? String {
                             
-                            posst.author = author
                             posst.likes = likes
                             posst.title = title
                             posst.desc = description
