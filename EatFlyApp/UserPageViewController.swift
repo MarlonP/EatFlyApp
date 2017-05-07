@@ -165,9 +165,9 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                     
                         if userPageID == userID {
                             let posst = Post()
-                            if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
+                            if  let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
                                 
-                                posst.author = author
+                            
                                 posst.likes = likes
                                 posst.pathToImage = pathToImage
                                 posst.postID = postID

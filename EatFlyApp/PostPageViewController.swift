@@ -167,7 +167,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                     "likes" : posts[0].peopleWhoLike.count,
                     "title" : newTitle,
                     "description" : newDescription,
-                    "date" : posts[0].date,
+                    "date" : posts[0].timestamp,
                     "postID" : posts[0].postID] as [String : Any]
         
         
@@ -205,12 +205,12 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                     if selectedPostID == postsID {
                         
                         let posst = Post()
-                        if let likes = post["likes"] as? Int, let title = post["title"] as? String, let description = post["description"] as? String, let date = post["date"] as? String, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let userID = post["userID"] as? String {
+                        if let likes = post["likes"] as? Int, let title = post["title"] as? String, let description = post["description"] as? String, let timestamp = post["timestamp"] as? NSNumber, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let userID = post["userID"] as? String {
                             
                             posst.likes = likes
                             posst.title = title
                             posst.desc = description
-                            posst.date = date
+                            posst.timestamp = timestamp
                             posst.pathToImage = pathToImage
                             posst.postID = postID
                             posst.userID = userID
@@ -264,7 +264,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         titleLbl.text = posts[0].title
         navigationItem.title = posts[0].title
         userLbl.text = user[0].fullName
-        dateLbl.text = posts[0].date
+        dateLbl.text = posts[0].timestamp.stringValue
         descriptionLbl.text = posts[0].desc
         postImageView.downloadImage(from: self.posts[0].pathToImage!)
         

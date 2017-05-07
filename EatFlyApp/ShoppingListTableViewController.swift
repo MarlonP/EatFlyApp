@@ -168,6 +168,7 @@ class ShoppingListTableViewController: UITableViewController {
             }
             
             if indexPath.section == 1 {
+                //after 2 deletes 3rd one crashes or after a few not 100%
                 
                 ref.child("users").child(uid).child("manuallyAddedItems").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
                     

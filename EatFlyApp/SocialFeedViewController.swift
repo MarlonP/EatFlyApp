@@ -28,33 +28,33 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
                                                name: NSNotification.Name(rawValue: FeedNotificationKey),
                                                object: nil)
         
-        fetchPosts()
-        retrieveUsers()
+        
+        
       
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        fetchPosts()
-//        retrieveUsers()
-//        print(user)
-//    }
- 
-    func afterNotified() {
-//        posts.removeAll()
-//        user.removeAll()
-        //posts.removeAll()
-
-        FeedCollectionView.reloadData()
+    override func viewDidAppear(_ animated: Bool) {
         
         fetchPosts()
+
+        
+
+    }
+ 
+    func afterNotified() {
+
+
+       
+        
     }
     
     func fetchPosts(){
+        retrieveUsers()
         
         let ref = FIRDatabase.database().reference()
         
         ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-            
+           self.posts.removeAll()
             let users = snapshot.value as! [String : AnyObject]
             
             for (_,value) in users {
@@ -72,16 +72,16 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
                             
                             let postsSnap = snap.value as! [String : AnyObject]
                             
-                            self.posts.removeAll()
+                            
                             for (_,post) in postsSnap {
                                 if let userID = post["userID"] as? String {
                                     for each in self.following {
                                         if each == userID {
                                             let posst = Post()
-                                            if let title = post["title"] as? String, let date = post["date"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
+                                            if let title = post["title"] as? String, let timestamp = post["timestamp"] as? NSNumber, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
                                                 
                                                 posst.title = title
-                                                posst.date = date
+                                                posst.timestamp = timestamp
                                                 posst.likes = likes
                                                 posst.pathToImage = pathToImage
                                                 posst.postID = postID
@@ -132,7 +132,7 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
                 
             }
-            self.FeedCollectionView.reloadData()
+            //self.FeedCollectionView.reloadData()
             
         })
         
@@ -140,10 +140,15 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
+
+        
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        print(posts.count)
+        print("----------")
         return self.posts.count
     }
     
@@ -160,7 +165,7 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
         cell.likeLabel.text = "\(self.posts[indexPath.row].likes!) Likes"
         cell.postID = self.posts[indexPath.row].postID
         cell.titleLabel.text = self.posts[indexPath.row].title
-        cell.dateLabel.text = self.posts[indexPath.row].date
+        cell.dateLabel.text = self.posts[indexPath.row].timestamp.stringValue
         
         for person in self.posts[indexPath.row].peopleWhoLike {
             if person == FIRAuth.auth()!.currentUser!.uid {

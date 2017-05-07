@@ -109,15 +109,9 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         let data = UIImageJPEGRepresentation(self.previewImage.image!, 0.6)
         
-        let date = Date()
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day], from: date)
+   
         
-        let year =  components.year
-        let month = components.month
-        let day = components.day
-        
-        let dateToday = "\(day!).\(month!).\(year!)"
+        let timestamp = NSDate().timeIntervalSince1970
    
         let uploadTask = imageRef.put(data!, metadata: nil) { (metadata, error) in
             if error != nil {
@@ -133,7 +127,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 "likes" : 0,
                                 "title" : self.titleTextField.text as String!,
                                 "description" : self.descriptionTextView.text as String!,
-                                "date" : dateToday,
+                                "timestamp" : Int(timestamp),
                                 "postID" : key] as [String : Any]
                     
                     let postFeed = ["\(key)" : feed]
