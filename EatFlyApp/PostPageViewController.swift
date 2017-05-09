@@ -19,6 +19,8 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var likeBtn: UIButton!
+    @IBOutlet weak var likeLbl: UILabel!
     var barBtn: UIBarButtonItem!
     
     var postID : String!
@@ -126,11 +128,6 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         }
         alertController.addAction(editDescriptionAction)
         
-        //EDIT RECIPE BTN
-        let editRecipeAction = UIAlertAction(title: "Edit Recipe", style: .default) { action in
-            self.performSegue(withIdentifier: "editPostSegue", sender: nil)
-        }
-        alertController.addAction(editRecipeAction)
         
         let deleteAction = UIAlertAction(title: "Delete Post", style: .destructive) { action in
             let DeleteAlertController = UIAlertController(title: "Are You Sure?", message: "Press delete if you still want to delete this post.", preferredStyle: .alert)
@@ -346,6 +343,77 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     
     }// end didSelectRow function
     
+    @IBAction func likeBtnPressed(_ sender: Any) {
+        let ref = FIRDatabase.database().reference()
+        let keyToPost = ref.child("posts").childByAutoId().key
+        
+        
+        ref.child("posts").child(self.posts[0].postID).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let post = snapshot.value as? [String : AnyObject] {
+                let updateLikes: [String : Any] = ["peopleWhoLike/\(keyToPost)" : FIRAuth.auth()!.currentUser!.uid]
+                ref.child("posts").child(self.posts[0].postID).updateChildValues(updateLikes, withCompletionBlock: { (error, reff) in
+                    
+                    if error == nil {
+                        ref.child("posts").child(self.posts[0].postID).observeSingleEvent(of: .value, with: { (snap) in
+                            if let properties = snap.value as? [String : AnyObject] {
+                                if let likes = properties["peopleWhoLike"] as? [String : AnyObject] {
+                                    let count = likes.count
+                                    self.likeLbl.text = "\(count) Likes"
+                                    
+                                    let update = ["likes" : count]
+                                    ref.child("posts").child(self.posts[0].postID).updateChildValues(update)
+                                    
+                                    self.likeBtn.titleLabel?.text = "Like"
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+            
+            
+        })
+        
+        ref.removeAllObservers()
+        
+        
+        ref.child("posts").child(self.posts[0].postID).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let properties = snapshot.value as? [String : AnyObject] {
+                if let peopleWhoLike = properties["peopleWhoLike"] as? [String : AnyObject] {
+                    for (id,person) in peopleWhoLike {
+                        if person as? String == FIRAuth.auth()!.currentUser!.uid {
+                            ref.child("posts").child(self.posts[0].postID).child("peopleWhoLike").child(id).removeValue(completionBlock: { (error, reff) in
+                                if error == nil {
+                                    ref.child("posts").child(self.posts[0].postID).observeSingleEvent(of: .value, with: { (snap) in
+                                        if let prop = snap.value as? [String : AnyObject] {
+                                            if let likes = prop["peopleWhoLike"] as? [String : AnyObject] {
+                                                let count = likes.count
+                                                self.likeLbl.text = "\(count) Likes"
+                                                ref.child("posts").child(self.posts[0].postID).updateChildValues(["likes" : count])
+                                            }else {
+                                                self.likeLbl.text = "0 Likes"
+                                                ref.child("posts").child(self.posts[0].postID).updateChildValues(["likes" : 0])
+                                            }
+                                        }
+                                    })
+                                }
+                            })
+                            
+                            self.likeBtn.titleLabel?.text = "Unlike"
+                            
+                            
+                        }
+                    }
+                }
+            }
+            
+        })
+        ref.removeAllObservers()
+
+        
+    }
     
     @IBAction func addToShoppingPressed(_ sender: Any) {
         let uid = FIRAuth.auth()!.currentUser!.uid

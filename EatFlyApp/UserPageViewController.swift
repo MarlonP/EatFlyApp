@@ -40,6 +40,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         //navigationItem.rightBarButtonItems = [barBtn]
         
+
         
         
  
@@ -98,6 +99,24 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
             navigationItem.rightBarButtonItems = []
         }else{
             navigationItem.rightBarButtonItems = [barBtn]
+        }
+        
+        
+        if uid != user[0].userID{
+            ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+                
+                if let following = snapshot.value as? [String : AnyObject] {
+                    for (_, value) in following {
+                        if value as! String == self.user[0].userID {
+                            self.followBtn.titleLabel?.text = "Unfollow"
+                        }
+                        
+                    }
+                }
+            })
+            ref.removeAllObservers()
+        }else{
+            followBtn.isHidden = true
         }
         
     }
@@ -196,7 +215,46 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
 
 
     @IBAction func followPressed(_ sender: Any) {
+        if self.uid != user[0].userID{
+            
+        let key = ref.child("users").childByAutoId().key
+        
+        var isFollower = false
+        
+        ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+            if let following = snapshot.value as? [String : AnyObject] {
+                for (ke, value) in following {
+                    if value as! String == self.user[0].userID {
+                        isFollower = true
+                        
+                        self.ref.child("users").child(self.uid).child("following/\(ke)").removeValue()
+                        self.ref.child("users").child(self.user[0].userID).child("followers/\(ke)").removeValue()
+                        
+                        self.followBtn.titleLabel?.text = "Follow"
+                    }
+                }
+                
+            }
+            
+            if !isFollower {
+                let following = ["following/\(key)" : self.user[0].userID]
+                let followers = ["followers/\(key)" : self.uid]
+                
+                self.ref.child("users").child(self.uid).updateChildValues(following)
+                self.ref.child("users").child(self.user[0].userID).updateChildValues(followers)
+                
+                self.followBtn.titleLabel?.text = "Unfollow"
+                
+                
+            }
+        })
+            
+        }
     }
+    
+    
+
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

@@ -27,7 +27,10 @@ class ShoppingListTableViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
       
         
-        getItemDetails()
+        //getItemDetails()
+        observeShoppingList()
+        observeUsersManualItems()
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(doSomethingAfterNotifiedSL),
                                                name: NSNotification.Name(rawValue: mySLNotificationKey),
@@ -38,13 +41,11 @@ class ShoppingListTableViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
-        getUsersManualItems()
-        print(userAddedItems)
+      
     }
 
     func doSomethingAfterNotifiedSL() {
-        print("Done")
-      getItemDetails()
+   
     
         
     }
@@ -97,10 +98,6 @@ class ShoppingListTableViewController: UITableViewController {
             
         }
 
-        
-        
-        
-
         return cell
     }
     
@@ -134,77 +131,43 @@ class ShoppingListTableViewController: UITableViewController {
     
         if editingStyle == UITableViewCellEditingStyle.delete {
             
+            //PROBLEM IS ARRAY IS CHANGING PLACES AND BECAUSE ID'S ARE IN DIFFERENT PLACES ITS DELETING THE WRONG ITEM
             if indexPath.section == 0 {
                 
-                ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+                let listID = self.itemListIDs[indexPath.row]
+                
+                self.ref.child("users").child(uid).child("itemsList").child(listID).removeValue()
+                
+                self.shoppingList.remove(at: indexPath.row)
+                self.BCfromDB.remove(at: indexPath.row)
+                self.SLCompletion.remove(at: indexPath.row)
+                self.itemListIDs.remove(at: indexPath.row)
+                
+                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                  deletedRow.accessoryType = UITableViewCellAccessoryType.none
+                
                     
-                    
-                    
-                    if let hasItem = snapshot.value as? [String : AnyObject] {
-                        for (_, value) in hasItem {
-
-                            let listID = value["listID"] as! String
-                            
-                            print(listID)
-                            print(self.itemListIDs.count)
-                            
-                            if listID == self.itemListIDs[indexPath.row] {
-                                
-                                
-                                self.ref.child("users").child(uid).child("itemsList").child(listID).removeValue()
-                                self.shoppingList.remove(at: indexPath.row)
-                                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-                                deletedRow.accessoryType = UITableViewCellAccessoryType.none
-                                
-                                self.getItemDetails()
-                                
-                            }
-                        }
-                        
-                    }
-                    
-                })
+              
                 tableView.reloadData()
             }
             
             if indexPath.section == 1 {
-                //after 2 deletes 3rd one crashes or after a few not 100%
                 
-                ref.child("users").child(uid).child("manuallyAddedItems").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-                    
-                    
-                    
-                    if let hasItem = snapshot.value as? [String : AnyObject] {
-                        for (_, value) in hasItem {
-                            
-                            if let listID1 = value["listID"] as? String {
-                                
-                                print(listID1)
-                                print(self.userAddedItems[indexPath.row].id)
-                            
-                                if listID1 == self.userAddedItems[indexPath.row].id {
-                                
-                                
-                                    self.ref.child("users").child(uid).child("manuallyAddedItems").child(listID1).removeValue()
-                                    self.userAddedItems.remove(at: indexPath.row)
-                                    tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-                                    deletedRow.accessoryType = UITableViewCellAccessoryType.none
-                                
-                                
-                                
-                                }
-                            }
-                        }
-                        
-                    }
-                    
-                })
-                tableView.reloadData()
+                if let listID = self.userAddedItems[indexPath.row].id{
+                
+                    self.ref.child("users").child(uid).child("manuallyAddedItems").child(listID).removeValue()
+                
+                    //self.userAddedItems.remove(at: indexPath.row)
+               
+                    //tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                    deletedRow.accessoryType = UITableViewCellAccessoryType.none
+               
+                    tableView.reloadData()
+                }
             }
             
             
-            //let key = ref.child("users").child("barcode").key
-            
+    
             
 
     
@@ -294,16 +257,9 @@ class ShoppingListTableViewController: UITableViewController {
         let key = ref.child("users").child(uid).child("itemsList").childByAutoId().key
         
         if (input.text != ""){
-            let newItem = ManualAddedItem()
             
             let newItemName = input.text
             let completion = false
-            
-            newItem.itemName = newItemName
-            newItem.completion = completion
-            newItem.id = newItemName
-                
-            userAddedItems.append(newItem)
             
             let item: [String : Any] = ["name" : newItemName!, "completion" : completion, "listID" : key]
             let itemsList = ["\(key)" : item]
@@ -315,48 +271,55 @@ class ShoppingListTableViewController: UITableViewController {
             tableView.reloadData()
         }
         
-        getUsersManualItems()
     }
     
-    func getUsersManualItems() {
+    
+    func observeUsersManualItems() {
         let uid = FIRAuth.auth()!.currentUser!.uid
         ref = FIRDatabase.database().reference()
-        //let key = ref.child("users").child("barcode").key
         
-        ref.child("users").child(uid).child("manuallyAddedItems").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+        ref.child("users").child(uid).child("manuallyAddedItems").observe(.childAdded, with: { (snapshot) in
+            self.getItemDetails()
             
-            
-            if let itemsSnap = snapshot.value as? [String : AnyObject] {
+            if let dictionary = snapshot.value as? [String : AnyObject] {
+                let manualItemData = ManualAddedItem()
                 
-                self.userAddedItems.removeAll()
+                manualItemData.itemName = dictionary["name"] as! String
+                manualItemData.completion = dictionary["completion"] as! Bool
+                manualItemData.id = dictionary["listID"] as! String
+
+                self.userAddedItems.append(manualItemData)
                 
                 
-                for (_,value) in itemsSnap {
-                    
-                    let manualItemData = ManualAddedItem()
-                    if let itemName = value["name"] as? String, let completion = value["completion"] as? Bool, let id = value["listID"] as? String {
-                        
-                        manualItemData.itemName = itemName
-                        manualItemData.completion = completion
-                        manualItemData.id = id
-                        
-                        print(completion)
-                    
-                        self.userAddedItems.append(manualItemData)
-                    }
-                }
             }
-            self.tableView.reloadData()
         })
-        ref.removeAllObservers()
+        
+        ref.child("users").child(uid).child("manuallyAddedItems").observe(.childRemoved, with: { (snapshot) in
+            self.getItemDetails()
+            
+            var manualItemsIndex: Int!
+            
+            for i in 0...self.userAddedItems.count-1{
+                
+                
+                if self.userAddedItems[i].id == snapshot.key{
+                    
+                    manualItemsIndex = i
+                    
+                }
+                
+            }
+            
+            self.userAddedItems.remove(at: manualItemsIndex)
+            
+        })
+
+        
     }
-    
 
     
     
     func getItemDetails() {
-        
-        getUsersItems()
         
         ref = FIRDatabase.database().reference()
         
@@ -395,40 +358,55 @@ class ShoppingListTableViewController: UITableViewController {
         
     }
 
-
-    func getUsersItems() {
+    
+    func observeShoppingList(){
+        
         let uid = FIRAuth.auth()!.currentUser!.uid
         ref = FIRDatabase.database().reference()
-        //let key = ref.child("users").child("barcode").key
         
-        ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+        ref.child("users").child(uid).child("itemsList").observe(.childAdded, with: { (snapshot) in
+            self.getItemDetails()
             
-            
-            if let itemsSnap = snapshot.value as? [String : AnyObject] {
-
-            self.BCfromDB.removeAll()
-            
-            
-            for (_,value) in itemsSnap {
+            if let dictionary = snapshot.value as? [String : AnyObject] {
                 
-                // Error here: fatal error: unexpectedly found nil while unwrapping an Optional value
-                if let barcode = value["barcode"] as? String, let completion = value["completion"] as? Bool, let listID = value["listID"] as? String{
+                let barcode = dictionary["barcode"] as! String
+                let completion = dictionary["completion"] as! Bool
+                let listID = dictionary["listID"] as! String
                 
                 self.BCfromDB.append(barcode)
                 self.SLCompletion.append(completion)
                 self.itemListIDs.append(listID)
-                }
+                
+                self.tableView.reloadData()
+            }
+        }, withCancel: nil)
+        
+        ref.child("users").child(uid).child("itemsList").observe(.childRemoved, with: { (snapshot) in
+            self.getItemDetails()
+            
+            var itemsIndex: Int!
+            
+            for i in 0...self.itemListIDs.count-1{
+               
+                
+                if self.itemListIDs[i] == snapshot.key{
+                   
+                    itemsIndex = i
                     
-                
+                    self.shoppingList.remove(at: itemsIndex)
+                    self.BCfromDB.remove(at: itemsIndex)
+                    self.SLCompletion.remove(at: itemsIndex)
+                    self.itemListIDs.remove(at: itemsIndex)
+                    
+                    self.tableView.reloadData()
                 }
-                
                 
             }
             
-        })
-        ref.removeAllObservers()
+            
+        }, withCancel: nil)
+        
     }
- 
    
 
 

@@ -63,7 +63,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func observePosts() {
         observeUsers()
-        fetchPostsChildRemoved()
+        observePostsChildRemoved()
         
         databaseHandle = ref?.child("posts").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : AnyObject] {
@@ -89,7 +89,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
-    func fetchPostsChildRemoved() {
+    func observePostsChildRemoved() {
         //
         databaseHandle = ref?.child("posts").observe(.childRemoved, with: { (snapshot) in
         

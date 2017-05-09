@@ -11,7 +11,7 @@ import Firebase
 
 var uploadRecipe = [RecipeItem]()
 
-class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate{
+class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UITextFieldDelegate{
     
     
     @IBOutlet weak var postBtn: UIBarButtonItem!
@@ -31,7 +31,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.tableView.tableFooterView = UIView()
         picker.delegate = self
         self.hideKeyboardWhenTappedAround()
-        
+        titleTextField.delegate = self
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(doSomethingAfterNotified1),
                                                name: NSNotification.Name(rawValue: myNotificationKey1),
@@ -182,8 +182,19 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         
-        
+       
         cell.textLabel?.text = array[indexPath.row]
+        
+        if indexPath.row == 0 {
+            
+            if previewImage.image != nil{
+                print(true)
+                cell.accessoryType = .checkmark
+            }else{
+                
+                cell.accessoryType = .none
+            }
+        }
         
         if indexPath.row == 1 {
             
@@ -196,7 +207,18 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
             }
         }
         
+        checkIfReadyToPost()
+        
         return cell
+    }
+    
+    func checkIfReadyToPost(){
+        if (titleTextField.text != "") && (descriptionTextView.text != "") && (previewImage.image != nil) && (recipeDone == true) && (descriptionTextView.text != "Description...") {
+            
+            postBtn.isEnabled = true
+        }else{
+            postBtn.isEnabled = false
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -233,7 +255,23 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         
     }
 
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if (textField == self.titleTextField){
+            checkIfReadyToPost()
+        }
+    }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if (textField == self.titleTextField){
+            checkIfReadyToPost()
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if (textView == self.descriptionTextView){
+            checkIfReadyToPost()
+        }
+    }
     
 }
 

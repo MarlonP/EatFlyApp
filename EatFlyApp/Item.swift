@@ -10,9 +10,12 @@ import UIKit
 
 class Item : NSObject {
     
-    var itemName: String!
     var barcode: String!
+    var img: String!
+    var itemName: String!
+    var itemType: String!
     var price: String!
+    var store: String!
     
 }
 
