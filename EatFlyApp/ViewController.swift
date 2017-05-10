@@ -107,6 +107,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        currentShopBarcode = currentShop[indexPath.row].barcode
+        
+        performSegue(withIdentifier: "itemPageSegue", sender: nil)
         tableView.deselectRow(at: indexPath, animated: true)
        
     }
