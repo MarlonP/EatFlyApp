@@ -20,7 +20,7 @@ class Item : NSObject {
     var major: NSNumber!
     var minor: NSNumber!
     var accuracy: Double!
-    var proximity: String!
+    var proximity: String?
     
     
     

@@ -63,28 +63,55 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return itemsBeingTracked.count
+        return usersShoppingListItems.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        print(itemsBeingTracked[indexPath.row].itemName)
-        cell.textLabel?.text = itemsBeingTracked[indexPath.row].itemName
+        let item = usersShoppingListItems[indexPath.row]
         
-        //print(itemsBeingTracked[indexPath.row].accuracy)
-        if itemsBeingTracked[indexPath.row].proximity == "Unknown"{
-            cell.detailTextLabel?.text = itemsBeingTracked[indexPath.row].proximity
         
-        }else{
-            if (itemsBeingTracked[indexPath.row].accuracy < 1) {
-                cell.detailTextLabel?.text = "Approx. > 1m"
+        
+        
+        
+        
+        print(item.itemName)
+        cell.textLabel?.text = item.itemName
+        
+        if let proximity = item.proximity, let accuracy = item.accuracy {
+            
+            if proximity == "Unknown"{
+                cell.detailTextLabel?.text = proximity
+                
             }else{
-                let accuracyString = (String(format: "%.0f", itemsBeingTracked[indexPath.row].accuracy))
-                //print(accuracyString)
-                cell.detailTextLabel?.text = "Approx. \(accuracyString)m"
+                if (accuracy < 1) {
+                    cell.detailTextLabel?.text = "Approx. > 1m"
+                }else{
+                    let accuracyString = (String(format: "%.0f", accuracy))
+                    //print(accuracyString)
+                    cell.detailTextLabel?.text = "Approx. \(accuracyString)m"
+                }
             }
+            
+            cell.detailTextLabel?.text = proximity
+            
+            
         }
+        
+        
+//        if item.proximity == "Unknown"{
+//            
+//        
+//        }else{
+//            if (item.accuracy < 1) {
+//                cell.detailTextLabel?.text = "Approx. > 1m"
+//            }else{
+//                let accuracyString = (String(format: "%.0f", item.accuracy))
+//                //print(accuracyString)
+//                cell.detailTextLabel?.text = "Approx. \(accuracyString)m"
+//            }
+//        }
         
         return cell
     }
@@ -97,58 +124,77 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
     func beaconManager(_ manager: Any, didRangeBeacons beacons: [CLBeacon],
                        in region: CLBeaconRegion) {
         
-        itemsBeingTracked.removeAll()
-   
         
-        
-        print(usersShoppingListItems)
-        for beacon in beacons {
-            let trackedItem = Item()
-            
-            var beaconProximity: String;
-            switch (beacon.proximity) {
-            case CLProximity.unknown:    beaconProximity = "Unknown";
-            case CLProximity.far:        beaconProximity = "Far";
-            case CLProximity.near:       beaconProximity = "Near";
-            case CLProximity.immediate:  beaconProximity = "Immediate";
-            }
-            
-          
-            for item in usersShoppingListItems {
+        for item in usersShoppingListItems {
+            for beacon in beacons {
                 
+                guard item.beaconID == "\(beacon.major):\(beacon.minor)" else { continue }
                 
-                
-                if item.beaconID == "\(beacon.major):\(beacon.minor)" {
-                    
-                 
-                    
-                    
-                    
-                    trackedItem.major = beacon.major
-                    trackedItem.minor = beacon.minor
-                    trackedItem.accuracy =  beacon.accuracy as Double
-                    trackedItem.proximity = beaconProximity
-                    trackedItem.itemName = item.itemName
-                    trackedItem.barcode = item.barcode
-                    trackedItem.price = item.price
-                    
-                   
-                    
-                    itemsBeingTracked.append(trackedItem)
-                     print(trackedItem.itemName)
-                    print("----------")
+                var beaconProximity: String;
+                switch (beacon.proximity) {
+                    case CLProximity.unknown:    beaconProximity = "Unknown";
+                    case CLProximity.far:        beaconProximity = "Far";
+                    case CLProximity.near:       beaconProximity = "Near";
+                    case CLProximity.immediate:  beaconProximity = "Immediate";
                 }
                 
-            
+                item.proximity = beaconProximity
+                item.accuracy = beacon.accuracy
+                
             }
-            
-            
-            
-            //print("BEACON RANGED: accuracy: \(beacon.accuracy) major: \(beacon.major)  minor: \(beacon.minor) proximity: \(beaconProximity)")
-            
         }
-       
+        
         tableView.reloadData()
+        
+//        itemsBeingTracked.removeAll()
+//   
+//        
+//        
+//        print(usersShoppingListItems)
+//        for beacon in beacons {
+//            let trackedItem = Item()
+//            
+//            var beaconProximity: String;
+//            switch (beacon.proximity) {
+//            case CLProximity.unknown:    beaconProximity = "Unknown";
+//            case CLProximity.far:        beaconProximity = "Far";
+//            case CLProximity.near:       beaconProximity = "Near";
+//            case CLProximity.immediate:  beaconProximity = "Immediate";
+//            }
+//            
+//          
+//            for item in usersShoppingListItems {
+//                
+//                
+//                if item.beaconID == "\(beacon.major):\(beacon.minor)" {
+//                    
+//                 
+//                    
+//                    
+//                    
+//                    trackedItem.major = beacon.major
+//                    trackedItem.minor = beacon.minor
+//                    trackedItem.accuracy =  beacon.accuracy as Double
+//                    trackedItem.proximity = beaconProximity
+//                    trackedItem.itemName = item.itemName
+//                    trackedItem.barcode = item.barcode
+//                    trackedItem.price = item.price
+//                    
+//                   
+//                    
+//                    itemsBeingTracked.append(trackedItem)
+//                     print(trackedItem.itemName)
+//                    print("----------")
+//                }
+//                
+//            
+//            }
+//            
+//            
+//            
+//            //print("BEACON RANGED: accuracy: \(beacon.accuracy) major: \(beacon.major)  minor: \(beacon.minor) proximity: \(beaconProximity)")
+//    }
+    
       
         
     }

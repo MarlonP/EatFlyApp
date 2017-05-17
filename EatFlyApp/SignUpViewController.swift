@@ -26,6 +26,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedAround()
+        
         picker.delegate = self
         
         let storage = FIRStorage.storage().reference(forURL: "gs://eatfly-70803.appspot.com")
