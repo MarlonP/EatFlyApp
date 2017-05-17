@@ -94,7 +94,6 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
                 }
             }
             
-            cell.detailTextLabel?.text = proximity
             
             
         }
