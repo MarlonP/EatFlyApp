@@ -17,6 +17,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var comPasswordField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nextBtn: UIButton!
+    @IBOutlet weak var selectBtn: UIButton!
     
     let picker = UIImagePickerController()
     var userStorage: FIRStorageReference!

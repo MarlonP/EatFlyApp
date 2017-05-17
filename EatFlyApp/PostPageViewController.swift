@@ -261,7 +261,13 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         titleLbl.text = posts[0].title
         navigationItem.title = posts[0].title
         userLbl.text = user[0].fullName
-        dateLbl.text = posts[0].timestamp.stringValue
+        
+        //Displays post's date
+        let timeStampDate = NSDate(timeIntervalSince1970: self.posts[0].timestamp.doubleValue)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm a"
+        dateLbl.text = dateFormatter.string(from: timeStampDate as Date)
+        
         descriptionLbl.text = posts[0].desc
         postImageView.downloadImage(from: self.posts[0].pathToImage!)
         
@@ -313,6 +319,8 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        print(postRecipe.count)
         
         return postRecipe.count
     }

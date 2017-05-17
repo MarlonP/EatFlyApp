@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import IBAnimatable
 
 class FeedViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -26,10 +27,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Sets up the database reference
         ref = FIRDatabase.database().reference()
         
-        
         observePosts()
-        
-
 
         
     }
@@ -165,7 +163,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage)
         
         //Displays amount of likes on post
-        cell.likeLabel.text = "\(self.posts[indexPath.row].likes!) Likes"
+        cell.likeLabel.text = "\(self.posts[indexPath.row].likes!) "
         
         //Sets cells post id to the one in the array
         cell.postID = self.posts[indexPath.row].postID
@@ -196,6 +194,18 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 cell.imageView.downloadImage(from: user[i].imgPath)
             }
         }
+        
+
+        cell.contentView.layer.backgroundColor = UIColor.white.cgColor
+       
+        cell.layer.shadowColor = UIColor.gray.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        cell.layer.shadowRadius = 2.0
+        cell.layer.shadowOpacity = 1.0
+        cell.layer.masksToBounds = false
+        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
+        
+
         
         return cell
     }

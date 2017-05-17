@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>IBAnimatable.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-EatFlyApp.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,17 +57,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3AC5C3C75CCCC9DC2ABAFD1DC9D7F756</key>
+		<key>34C8CFEA8872316ECC7FB169378088A6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4DB37FDD6D9682249FC26FBD3DF9EBE9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6BE9A60D8AB972023F60D9513751C5B4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9332F4A4CAE45256FFBCADAFAA8D8577</key>
 		<dict>
 			<key>primary</key>
 			<true/>

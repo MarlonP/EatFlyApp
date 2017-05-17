@@ -10,12 +10,13 @@ import UIKit
 import Firebase
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate {
 
     var window: UIWindow?
     var actIdc = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     var container: UIView!
     
+    let beaconManager = ESTBeaconManager()
     
     class func instance() -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -49,8 +50,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        self.beaconManager.delegate = self
+        
+        //
+        self.beaconManager.delegate = self
+        //
+        self.beaconManager.requestAlwaysAuthorization()
+        
+       
+        
+        UIApplication.shared.registerUserNotificationSettings(
+            UIUserNotificationSettings(types: .alert, categories: nil))
+        
+        
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+        
+        
         FIRApp.configure()
         return true
+    }
+    
+    func beaconManager(_ manager: Any, didEnter region: CLBeaconRegion) {
+//        let notification = UILocalNotification()
+//        notification.alertBody =
+//            "Your gate closes in 47 minutes. " +
+//            "Current security wait time is 15 minutes, " +
+//            "and it's a 5 minute walk from security to the gate. " +
+//        "Looks like you've got plenty of time!"
+//        UIApplication.shared.presentLocalNotificationNow(notification)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

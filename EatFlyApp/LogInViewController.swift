@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 
+
 class LogInViewController: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var pwField: UITextField!
@@ -16,11 +17,29 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedAround()
         
         emailField.text = "t@t.com"
         pwField.text = "qwerty"
         
-
+  
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.jpg")!)
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        // Creates the Top border
+        let borderTop = CALayer()
+        let borderWidth = CGFloat(2.0)
+        
+        borderTop.borderColor = UIColor.lightGray.cgColor
+        borderTop.frame = CGRect(x: 0, y: 0, width: pwField.frame.width, height: 1)
+        borderTop.borderWidth = borderWidth
+        pwField.layer.addSublayer(borderTop)
+        pwField.layer.masksToBounds = true
+        
+       
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

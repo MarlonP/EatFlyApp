@@ -16,6 +16,14 @@ class Item : NSObject {
     var itemType: String!
     var price: String!
     var store: String!
+    var beaconID: String!
+    var major: NSNumber!
+    var minor: NSNumber!
+    var accuracy: Double!
+    var proximity: String!
+    
+    
+    
     
 }
 

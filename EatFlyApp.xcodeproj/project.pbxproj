@@ -15,6 +15,10 @@
 		F216BB691E8D5B6300978D9A /* RecipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F216BB681E8D5B6300978D9A /* RecipeTableViewController.swift */; };
 		F216BB721E8D71A100978D9A /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F216BB711E8D71A100978D9A /* PopUpViewController.swift */; };
 		F22870691E5CA554001C7262 /* SListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22870681E5CA554001C7262 /* SListTableViewController.swift */; };
+		F23361901EC89DEC00F3909D /* ShoppingListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F233618F1EC89DEC00F3909D /* ShoppingListCell.swift */; };
+		F23361921EC9FE4000F3909D /* Beacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23361911EC9FE4000F3909D /* Beacon.swift */; };
+		F23361941ECB553700F3909D /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F23361931ECB553700F3909D /* Mapbox.framework */; };
+		F23361951ECB553700F3909D /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F23361931ECB553700F3909D /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F23C3C4C1EA7C42700BED5BD /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4B1EA7C42700BED5BD /* EditProfileViewController.swift */; };
 		F23C3C4E1EA7C44200BED5BD /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4D1EA7C44200BED5BD /* ChangePasswordViewController.swift */; };
 		F23C3C501EA908BA00BED5BD /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4F1EA908BA00BED5BD /* ForgotPasswordViewController.swift */; };
@@ -24,6 +28,9 @@
 		F28B14851E5F4E4B009ED6A9 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */; };
 		F28B148A1E5F50EC009ED6A9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14891E5F50EC009ED6A9 /* User.swift */; };
 		F2B1555F1EC1F48800204197 /* itemDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1555E1EC1F48800204197 /* itemDetailsViewController.swift */; };
+		F2B155A01EC5C51F00204197 /* BeaconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1559F1EC5C51F00204197 /* BeaconViewController.swift */; };
+		F2B155A21EC732F700204197 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2B155A11EC732F700204197 /* Assets.xcassets */; };
+		F2B155A61EC7481400204197 /* IbDesignable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B155A51EC7481400204197 /* IbDesignable.swift */; };
 		F2B4656C1E9D3850001589D0 /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B4656B1E9D3850001589D0 /* EditUserViewController.swift */; };
 		F2B4656F1E9E54C6001589D0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B4656E1E9E54C6001589D0 /* SettingsTableViewController.swift */; };
 		F2B465711E9F9957001589D0 /* RecipeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B465701E9F9957001589D0 /* RecipeItem.swift */; };
@@ -37,7 +44,6 @@
 		F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93B51E43A96100334F68 /* AppDelegate.swift */; };
 		F46F93B81E43A96100334F68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93B71E43A96100334F68 /* ViewController.swift */; };
 		F46F93BB1E43A96100334F68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F46F93B91E43A96100334F68 /* Main.storyboard */; };
-		F46F93BD1E43A96100334F68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F46F93BC1E43A96100334F68 /* Assets.xcassets */; };
 		F46F93C01E43A96100334F68 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F46F93BE1E43A96100334F68 /* LaunchScreen.storyboard */; };
 		F46F93CB1E43A96100334F68 /* EatFlyAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93CA1E43A96100334F68 /* EatFlyAppTests.swift */; };
 		F46F93D61E43A96100334F68 /* EatFlyAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93D51E43A96100334F68 /* EatFlyAppUITests.swift */; };
@@ -64,6 +70,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F23361961ECB553700F3909D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F23361951ECB553700F3909D /* Mapbox.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0E90DBBA1E801AFF00516435 /* userPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userPostCell.swift; sourceTree = "<group>"; };
 		0ED8D2E31E94DF6800A8C2CE /* PostPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostPageViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +95,9 @@
 		F216BB681E8D5B6300978D9A /* RecipeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeTableViewController.swift; sourceTree = "<group>"; };
 		F216BB711E8D71A100978D9A /* PopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		F22870681E5CA554001C7262 /* SListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SListTableViewController.swift; sourceTree = "<group>"; };
+		F233618F1EC89DEC00F3909D /* ShoppingListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingListCell.swift; sourceTree = "<group>"; };
+		F23361911EC9FE4000F3909D /* Beacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beacon.swift; sourceTree = "<group>"; };
+		F23361931ECB553700F3909D /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		F23C3C4B1EA7C42700BED5BD /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		F23C3C4D1EA7C44200BED5BD /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		F23C3C4F1EA908BA00BED5BD /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +107,10 @@
 		F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		F28B14891E5F50EC009ED6A9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F2B1555E1EC1F48800204197 /* itemDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = itemDetailsViewController.swift; sourceTree = "<group>"; };
+		F2B1559E1EC4944100204197 /* ObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjCBridge.h; sourceTree = "<group>"; };
+		F2B1559F1EC5C51F00204197 /* BeaconViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconViewController.swift; sourceTree = "<group>"; };
+		F2B155A11EC732F700204197 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F2B155A51EC7481400204197 /* IbDesignable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IbDesignable.swift; sourceTree = "<group>"; };
 		F2B4656B1E9D3850001589D0 /* EditUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
 		F2B4656E1E9E54C6001589D0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		F2B465701E9F9957001589D0 /* RecipeItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeItem.swift; sourceTree = "<group>"; };
@@ -98,7 +125,6 @@
 		F46F93B51E43A96100334F68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F46F93B71E43A96100334F68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F46F93BA1E43A96100334F68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		F46F93BC1E43A96100334F68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F46F93BF1E43A96100334F68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F46F93C11E43A96100334F68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F46F93C61E43A96100334F68 /* EatFlyAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EatFlyAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D04BE9A234D9421140553C3F /* Pods_EatFlyApp.framework in Frameworks */,
+				F23361941ECB553700F3909D /* Mapbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +206,7 @@
 				F23C3C4F1EA908BA00BED5BD /* ForgotPasswordViewController.swift */,
 				F23C3C521EAA500B00BED5BD /* ChooseRetailerTableViewController.swift */,
 				F2B1555E1EC1F48800204197 /* itemDetailsViewController.swift */,
+				F2B1559F1EC5C51F00204197 /* BeaconViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -190,6 +218,7 @@
 				F2C214B01E60981200A1D565 /* PostCell.swift */,
 				F2C214F61E799B6C00A1D565 /* PayTableViewCell.swift */,
 				0E90DBBA1E801AFF00516435 /* userPostCell.swift */,
+				F233618F1EC89DEC00F3909D /* ShoppingListCell.swift */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -202,6 +231,7 @@
 				F2C214B21E60995200A1D565 /* Post.swift */,
 				F2B465701E9F9957001589D0 /* RecipeItem.swift */,
 				F23C3C541EACDFD000BED5BD /* ManualAddedItem.swift */,
+				F23361911EC9FE4000F3909D /* Beacon.swift */,
 			);
 			name = "Objects/ Classes";
 			sourceTree = "<group>";
@@ -209,6 +239,7 @@
 		F46F93A91E43A96100334F68 = {
 			isa = PBXGroup;
 			children = (
+				F23361931ECB553700F3909D /* Mapbox.framework */,
 				F46F93B41E43A96100334F68 /* EatFlyApp */,
 				F46F93C91E43A96100334F68 /* EatFlyAppTests */,
 				F46F93D41E43A96100334F68 /* EatFlyAppUITests */,
@@ -235,12 +266,14 @@
 				F28B14871E5F50BF009ED6A9 /* Custom Cell */,
 				F28B14861E5F5096009ED6A9 /* View Controllers */,
 				F46F93B51E43A96100334F68 /* AppDelegate.swift */,
-				F46F93BC1E43A96100334F68 /* Assets.xcassets */,
+				F2B155A11EC732F700204197 /* Assets.xcassets */,
 				F46F93B91E43A96100334F68 /* Main.storyboard */,
 				F46F93BE1E43A96100334F68 /* LaunchScreen.storyboard */,
 				F46F93C11E43A96100334F68 /* Info.plist */,
 				F4952D831E4CC36000BCF523 /* GoogleService-Info.plist */,
 				F44C5C751E50B0AF00B52336 /* items.json */,
+				F2B1559E1EC4944100204197 /* ObjCBridge.h */,
+				F2B155A51EC7481400204197 /* IbDesignable.swift */,
 			);
 			path = EatFlyApp;
 			sourceTree = "<group>";
@@ -276,6 +309,7 @@
 				F46F93B01E43A96100334F68 /* Resources */,
 				43C68EE6AA09E7456DC76DF6 /* [CP] Embed Pods Frameworks */,
 				74E61AC94DC396A90094F69B /* [CP] Copy Pods Resources */,
+				F23361961ECB553700F3909D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -379,8 +413,8 @@
 				F46F93C01E43A96100334F68 /* LaunchScreen.storyboard in Resources */,
 				F4952D841E4CC36000BCF523 /* GoogleService-Info.plist in Resources */,
 				F44C5C761E50B0AF00B52336 /* items.json in Resources */,
-				F46F93BD1E43A96100334F68 /* Assets.xcassets in Resources */,
 				F46F93BB1E43A96100334F68 /* Main.storyboard in Resources */,
+				F2B155A21EC732F700204197 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,7 +477,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -453,11 +487,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2B155A01EC5C51F00204197 /* BeaconViewController.swift in Sources */,
 				F4952D861E4CC84A00BCF523 /* SignUpViewController.swift in Sources */,
 				F2C214AD1E60853F00A1D565 /* UploadViewController.swift in Sources */,
 				F2C214B11E60981200A1D565 /* PostCell.swift in Sources */,
 				F46F93B81E43A96100334F68 /* ViewController.swift in Sources */,
+				F23361921EC9FE4000F3909D /* Beacon.swift in Sources */,
 				F46F93E81E44D34E00334F68 /* SocialFeedViewController.swift in Sources */,
+				F2B155A61EC7481400204197 /* IbDesignable.swift in Sources */,
 				F2C214B31E60995200A1D565 /* Post.swift in Sources */,
 				0EF13A861E5DA82800D131CF /* ShoppingListTableViewController.swift in Sources */,
 				F44C5C781E50B0EF00B52336 /* Item.swift in Sources */,
@@ -466,6 +503,7 @@
 				F23C3C501EA908BA00BED5BD /* ForgotPasswordViewController.swift in Sources */,
 				F216BB691E8D5B6300978D9A /* RecipeTableViewController.swift in Sources */,
 				F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */,
+				F23361901EC89DEC00F3909D /* ShoppingListCell.swift in Sources */,
 				F2C214F51E68733A00A1D565 /* UserPageViewController.swift in Sources */,
 				F2B4656C1E9D3850001589D0 /* EditUserViewController.swift in Sources */,
 				F23C3C531EAA500B00BED5BD /* ChooseRetailerTableViewController.swift in Sources */,
@@ -582,6 +620,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_NAME}/ObjCBridge.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -624,6 +663,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_NAME}/ObjCBridge.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -637,6 +677,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = PB5S47GH58;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = EatFlyApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MCP.EatFlyApp;
@@ -652,6 +696,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = PB5S47GH58;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = EatFlyApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MCP.EatFlyApp;

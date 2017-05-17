@@ -25,6 +25,7 @@ class ShoppingListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
+        self.hideKeyboardWhenTappedAround()
       
         
         //getItemDetails()
@@ -50,6 +51,14 @@ class ShoppingListTableViewController: UITableViewController {
         
     }
     
+    @IBAction func locateItemsBtnPressed(_ sender: Any) {
+        
+        
+        
+        performSegue(withIdentifier: "locateItemsSegue", sender: nil)
+    }
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -69,34 +78,45 @@ class ShoppingListTableViewController: UITableViewController {
     
  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ShoppingListCell
+       
         
         if indexPath.section == 0 {
+            cell.indexPath = indexPath as NSIndexPath
+             cell.SLListID = self.itemListIDs[indexPath.row]
             
             if SLCompletion[indexPath.row] == true {
             
-                cell.accessoryType = .checkmark
+                cell.checkBox.checked = true
             }else{
             
-                cell.accessoryType = .none
+                cell.checkBox.checked = false
             }
             
-            cell.textLabel?.text = shoppingList[indexPath.row].itemName
+            cell.itemName.text = shoppingList[indexPath.row].itemName
+            cell.itemDesc.text = shoppingList[indexPath.row].itemType
+            cell.price.text = "£\(shoppingList[indexPath.row].price!)"
         
         } else if indexPath.section == 1 {
+            cell.indexPath = indexPath as NSIndexPath
+            cell.MLListID = self.userAddedItems[indexPath.row].id
             
             if userAddedItems[indexPath.row].completion == true {
                 
-                cell.accessoryType = .checkmark
+                cell.checkBox.checked = true
             }else{
                 
-                cell.accessoryType = .none
+                cell.checkBox.checked = false
             }
             
-            cell.textLabel?.text = userAddedItems[indexPath.row].itemName
+            cell.itemName.text = userAddedItems[indexPath.row].itemName
+            cell.itemDesc.text = "Manual"
+            cell.price.text = ""
             
             
         }
+        
+        usersShoppingListItems = shoppingList
 
         return cell
     }
@@ -121,6 +141,17 @@ class ShoppingListTableViewController: UITableViewController {
         
         return nil
     }
+    
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
+    {
+        if let view = view as? UITableViewHeaderFooterView {
+        
+            view.textLabel?.backgroundColor = UIColor.clear
+            view.textLabel?.textColor = UIColor.white
+        }
+    }
+    
     //Delete cell function NEED TO FIX AND INCLUDE THE MANUAL ADD AS WELL!!!!
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     
@@ -178,77 +209,9 @@ class ShoppingListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let uid = FIRAuth.auth()!.currentUser!.uid
-        let ref = FIRDatabase.database().reference()
-        let key = ref.child("itemsList").childByAutoId().key
-        
-      
-        if indexPath.section == 0 {
-        ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-            
-            
-            if let completed = snapshot.value as? [String : AnyObject] {
-                for (_, value) in completed {
-                    let BC = value["barcode"]
-                    if BC as! String == self.shoppingList[indexPath.row].barcode {
-                    
-                        let completion = value["completion"] as! Bool
-                        let id = value["listID"] as! String
-                    
-                        if completion == true {
-                            
-                            let completionVal: [String : Any] = ["completion" : false]
-                            ref.child("users").child(uid).child("itemsList").child(id).updateChildValues(completionVal)
-                            self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
-                            
-                        }else if completion == false{
-                            
-                            let completionVal: [String : Any] = ["completion" : true]
-                            ref.child("users").child(uid).child("itemsList").child(id).updateChildValues(completionVal)
-                            self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                        }
-                    
-                    }
-                }
-            }
-            
-        })
-        ref.removeAllObservers()
-        }
-        
-        if indexPath.section == 1 {
-            ref.child("users").child(uid).child("manuallyAddedItems").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-                
-                
-                if let completed = snapshot.value as? [String : AnyObject] {
-                    for (_, value) in completed {
-                            
-                            let completion = value["completion"] as! Bool
-                            let id = value["listID"] as! String
-                            
-                            if completion == true {
-                                
-                                let completionVal: [String : Any] = ["completion" : false]
-                                ref.child("users").child(uid).child("manuallyAddedItems").child(id).updateChildValues(completionVal)
-                                self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
-                                
-                            }else if completion == false{
-                                
-                                let completionVal: [String : Any] = ["completion" : true]
-                                ref.child("users").child(uid).child("manuallyAddedItems").child(id).updateChildValues(completionVal)
-                                self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                            }
-                            
-                        
-                    }
-                }
-                
-            })
-            ref.removeAllObservers()
-        }
-    
+
     }// end didSelectRow function
-    
+   
     
     @IBAction func addPressed(_ sender: Any) {
         
@@ -257,15 +220,15 @@ class ShoppingListTableViewController: UITableViewController {
         let key = ref.child("users").child(uid).child("itemsList").childByAutoId().key
         
         if (input.text != ""){
-            
+        
             let newItemName = input.text
             let completion = false
-            
+        
             let item: [String : Any] = ["name" : newItemName!, "completion" : completion, "listID" : key]
             let itemsList = ["\(key)" : item]
-            
+        
             ref.child("users").child(uid).child("manuallyAddedItems").updateChildValues(itemsList)
-            
+        
             input.resignFirstResponder()
             input.text = ""
             tableView.reloadData()
@@ -330,10 +293,12 @@ class ShoppingListTableViewController: UITableViewController {
             for (_,value) in itemsSnap {
                 
                 let itemData = Item()
-                if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String{
+                if let itemName = value["itemName"] as? String, let itemType = value["itemType"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String, let beaconID = value["beacon"] as? String{
                     itemData.itemName = itemName
+                    itemData.itemType = itemType
                     itemData.barcode = barcode
                     itemData.price = price
+                    itemData.beaconID = beaconID
                    
                     
                     if self.BCfromDB.count != 0 {

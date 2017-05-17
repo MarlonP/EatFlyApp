@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import IBAnimatable
 
 class PostCell: UICollectionViewCell {
     
@@ -42,7 +43,7 @@ class PostCell: UICollectionViewCell {
                             if let properties = snap.value as? [String : AnyObject] {
                                 if let likes = properties["peopleWhoLike"] as? [String : AnyObject] {
                                     let count = likes.count
-                                    self.likeLabel.text = "\(count) Likes"
+                                    self.likeLabel.text = "\(count)"
                                     
                                     let update = ["likes" : count]
                                     ref.child("posts").child(self.postID).updateChildValues(update)
@@ -81,10 +82,10 @@ class PostCell: UICollectionViewCell {
                                         if let prop = snap.value as? [String : AnyObject] {
                                             if let likes = prop["peopleWhoLike"] as? [String : AnyObject] {
                                                 let count = likes.count
-                                                self.likeLabel.text = "\(count) Likes"
+                                                self.likeLabel.text = "\(count)"
                                                 ref.child("posts").child(self.postID).updateChildValues(["likes" : count])
                                             }else {
-                                                self.likeLabel.text = "0 Likes"
+                                                self.likeLabel.text = "0"
                                                 ref.child("posts").child(self.postID).updateChildValues(["likes" : 0])
                                             }
                                         }
