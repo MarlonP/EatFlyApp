@@ -18,6 +18,11 @@ class ForgotPasswordViewController: UIViewController {
         super.viewDidLoad()
 
     }
+    @IBAction func backBtnPressed(_ sender: Any) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "loginVC")
+        
+        self.present(vc, animated: true, completion: nil)
+    }
 
     @IBAction func resetPressed(_ sender: Any) {
         if emailTextField.text == "" {

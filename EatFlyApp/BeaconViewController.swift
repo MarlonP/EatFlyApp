@@ -99,19 +99,7 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
         }
         
         
-//        if item.proximity == "Unknown"{
-//            
-//        
-//        }else{
-//            if (item.accuracy < 1) {
-//                cell.detailTextLabel?.text = "Approx. > 1m"
-//            }else{
-//                let accuracyString = (String(format: "%.0f", item.accuracy))
-//                //print(accuracyString)
-//                cell.detailTextLabel?.text = "Approx. \(accuracyString)m"
-//            }
-//        }
-        
+
         return cell
     }
     
@@ -140,95 +128,36 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
                 item.proximity = beaconProximity
                 item.accuracy = beacon.accuracy
                 
+                
             }
         }
         
-        tableView.reloadData()
+        if beacons != nil{
+        handleReloadTable()
+        }
+        //tableView.reloadData()
+   
         
-//        itemsBeingTracked.removeAll()
-//   
-//        
-//        
-//        print(usersShoppingListItems)
-//        for beacon in beacons {
-//            let trackedItem = Item()
-//            
-//            var beaconProximity: String;
-//            switch (beacon.proximity) {
-//            case CLProximity.unknown:    beaconProximity = "Unknown";
-//            case CLProximity.far:        beaconProximity = "Far";
-//            case CLProximity.near:       beaconProximity = "Near";
-//            case CLProximity.immediate:  beaconProximity = "Immediate";
-//            }
-//            
-//          
-//            for item in usersShoppingListItems {
-//                
-//                
-//                if item.beaconID == "\(beacon.major):\(beacon.minor)" {
-//                    
-//                 
-//                    
-//                    
-//                    
-//                    trackedItem.major = beacon.major
-//                    trackedItem.minor = beacon.minor
-//                    trackedItem.accuracy =  beacon.accuracy as Double
-//                    trackedItem.proximity = beaconProximity
-//                    trackedItem.itemName = item.itemName
-//                    trackedItem.barcode = item.barcode
-//                    trackedItem.price = item.price
-//                    
-//                   
-//                    
-//                    itemsBeingTracked.append(trackedItem)
-//                     print(trackedItem.itemName)
-//                    print("----------")
-//                }
-//                
-//            
-//            }
-//            
-//            
-//            
-//            //print("BEACON RANGED: accuracy: \(beacon.accuracy) major: \(beacon.major)  minor: \(beacon.minor) proximity: \(beaconProximity)")
-//    }
+    }
     
-      
+
+    
+    func handleReloadTable() {
+        usersShoppingListItems.sort(by: { (item1, item2) -> Bool in
+            
+            return item1.accuracy < item2.accuracy
+        })
         
+        DispatchQueue.main.async(execute: {
+            self.tableView.reloadData()
+        })
     }
     
     func beaconManager(_ manager: Any, didEnter region: CLBeaconRegion) {
         print(region)
     }
         
-    func locationString(nearestBeacon: CLBeacon!) {
-            guard let beacon = nearestBeacon else { return }
-            let proximity = nameForProximity(beacon.proximity)
-            let accuracy = String(format: "%.2f", beacon.accuracy)
-            
-            var location = "Location: \(proximity)"
-            if beacon.proximity != .unknown {
-                location += " (approx. \(accuracy)m)"
-            }
-        
-        print(accuracy)
-        label1.text = location
-    
-    }
-    
-        func nameForProximity(_ proximity: CLProximity) -> String {
-            switch proximity {
-            case .unknown:
-                return "Unknown"
-            case .immediate:
-                return "Immediate"
-            case .near:
-                return "Near"
-            case .far:
-                return "Far"
-            }
-        }
+
     
     
 //    func getItems() {

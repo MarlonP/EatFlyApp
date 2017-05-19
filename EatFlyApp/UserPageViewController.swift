@@ -21,7 +21,14 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     @IBOutlet weak var followersLbl: UILabel!
     @IBOutlet weak var postsLbl: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    var barBtn: UIBarButtonItem! 
+    
+    var settingsBarBtn: UIButton!
+    var settingsBarBtnItem:UIBarButtonItem!
+    var followBarBtn: UIButton!
+    var followBarBtnItem:UIBarButtonItem!
+    var unfollowBarBtn: UIButton!
+    var unfollowBarBtnItem:UIBarButtonItem!
+   
     
     let ref = FIRDatabase.database().reference()
     let uid = FIRAuth.auth()!.currentUser!.uid
@@ -35,8 +42,29 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Settings Btn
+        settingsBarBtn = UIButton(type: .custom)
+        settingsBarBtn.setImage(UIImage(named: "attention"), for: .normal)
+        settingsBarBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        settingsBarBtn.addTarget(self, action: #selector(UserPageViewController.buttonMethod), for: .touchUpInside)
+        settingsBarBtnItem = UIBarButtonItem(customView: settingsBarBtn)
         
-        barBtn = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.plain, target: self, action: #selector(UserPageViewController.buttonMethod))
+        //Follow Btn
+        followBarBtn = UIButton(type: .custom)
+        followBarBtn.setImage(UIImage(named: "profile"), for: .normal)
+        followBarBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        followBarBtn.addTarget(self, action: #selector(UserPageViewController.followMethod), for: .touchUpInside)
+        followBarBtnItem = UIBarButtonItem(customView: followBarBtn)
+        
+        //Unfollow Btn
+        unfollowBarBtn = UIButton(type: .custom)
+        unfollowBarBtn.setImage(UIImage(named: "gender"), for: .normal)
+        unfollowBarBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        unfollowBarBtn.addTarget(self, action: #selector(UserPageViewController.unfollowMethod), for: .touchUpInside)
+        unfollowBarBtnItem = UIBarButtonItem(customView: unfollowBarBtn)
+        
+        
+        
         
         //navigationItem.rightBarButtonItems = [barBtn]
         
@@ -58,6 +86,50 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     func buttonMethod() {
         performSegue(withIdentifier: "settingsSegue", sender: nil)
+    }
+    
+    func unfollowMethod(){
+      
+
+            ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+                
+                if let following = snapshot.value as? [String : AnyObject] {
+                    for (ke, value) in following {
+                        if value as! String == self.user[0].userID {
+                            
+                            self.ref.child("users").child(self.uid).child("following/\(ke)").removeValue()
+                            self.ref.child("users").child(self.user[0].userID).child("followers/\(ke)").removeValue()
+                            
+                            self.navigationItem.setRightBarButtonItems([self.followBarBtnItem], animated: true)
+                        }
+                    }
+                    
+                }
+                
+            })
+            
+        
+
+        
+    }
+    
+    func followMethod(){
+        let key = ref.child("users").childByAutoId().key
+        
+        ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+                let following = ["following/\(key)" : self.user[0].userID]
+                let followers = ["followers/\(key)" : self.uid]
+                
+                self.ref.child("users").child(self.uid).updateChildValues(following)
+                self.ref.child("users").child(self.user[0].userID).updateChildValues(followers)
+                
+                self.navigationItem.setRightBarButtonItems([self.unfollowBarBtnItem], animated: true)
+                
+                
+            
+        })
+        
     }
     
     func retrieveUser(){
@@ -95,10 +167,9 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         infoLbl.text = self.user[0].bio
         profileImageView.downloadImage(from: self.user[0].imgPath!)
         
-        if uid != userPageID {
-            navigationItem.rightBarButtonItems = []
-        }else{
-            navigationItem.rightBarButtonItems = [barBtn]
+        if uid == userPageID {
+            self.navigationItem.setRightBarButtonItems([settingsBarBtnItem], animated: true)
+       
         }
         
         
@@ -108,15 +179,17 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 if let following = snapshot.value as? [String : AnyObject] {
                     for (_, value) in following {
                         if value as! String == self.user[0].userID {
-                            self.followBtn.titleLabel?.text = "Unfollow"
+                            
+                            self.navigationItem.setRightBarButtonItems([self.unfollowBarBtnItem], animated: true)
+                            
+                        }else{
+                            self.navigationItem.setRightBarButtonItems([self.followBarBtnItem], animated: true)
                         }
                         
                     }
                 }
             })
             ref.removeAllObservers()
-        }else{
-            followBtn.isHidden = true
         }
         
     }
@@ -212,49 +285,6 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         
     }
 
-
-
-    @IBAction func followPressed(_ sender: Any) {
-        if self.uid != user[0].userID{
-            
-        let key = ref.child("users").childByAutoId().key
-        
-        var isFollower = false
-        
-        ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-            
-            if let following = snapshot.value as? [String : AnyObject] {
-                for (ke, value) in following {
-                    if value as! String == self.user[0].userID {
-                        isFollower = true
-                        
-                        self.ref.child("users").child(self.uid).child("following/\(ke)").removeValue()
-                        self.ref.child("users").child(self.user[0].userID).child("followers/\(ke)").removeValue()
-                        
-                        self.followBtn.titleLabel?.text = "Follow"
-                    }
-                }
-                
-            }
-            
-            if !isFollower {
-                let following = ["following/\(key)" : self.user[0].userID]
-                let followers = ["followers/\(key)" : self.uid]
-                
-                self.ref.child("users").child(self.uid).updateChildValues(following)
-                self.ref.child("users").child(self.user[0].userID).updateChildValues(followers)
-                
-                self.followBtn.titleLabel?.text = "Unfollow"
-                
-                
-            }
-        })
-            
-        }
-    }
-    
-    
-
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -305,3 +335,4 @@ extension UIImageView {
     }
     
 }
+

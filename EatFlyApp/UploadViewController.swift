@@ -22,7 +22,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     //@IBOutlet weak var selectBtn: UIButton!
     
     var picker = UIImagePickerController()
-    var array = ["Photo/Video", "Recipe", "Instructions"]
+    var array = ["Recipe", "Instructions"]
     
     var recipeDone = false
 
@@ -62,21 +62,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if (descriptionTextView.text == "Description..."){
-            descriptionTextView.textColor = .black
-            descriptionTextView.text = ""
-        }
-        //descriptionTextView.resignFirstResponder()
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if (descriptionTextView.text == ""){
-            descriptionTextView.text = "Description..."
-            descriptionTextView.textColor = .lightGray
-        }
-        //descriptionTextView.resignFirstResponder()
-    }
+   
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
@@ -184,19 +170,9 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         
        
         cell.textLabel?.text = array[indexPath.row]
-        
+        cell.textLabel?.textColor = .lightGray
+      
         if indexPath.row == 0 {
-            
-            if previewImage.image != nil{
-                print(true)
-                cell.accessoryType = .checkmark
-            }else{
-                
-                cell.accessoryType = .none
-            }
-        }
-        
-        if indexPath.row == 1 {
             
             if recipeDone == true{
                 print(true)
@@ -213,7 +189,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func checkIfReadyToPost(){
-        if (titleTextField.text != "") && (descriptionTextView.text != "") && (previewImage.image != nil) && (recipeDone == true) && (descriptionTextView.text != "Description...") {
+        if (titleTextField.text != "") && (descriptionTextView.text != "") && (previewImage.image != nil) && (recipeDone == true) && (descriptionTextView.text != "") {
             
             postBtn.isEnabled = true
         }else{
@@ -221,34 +197,34 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
+    @IBAction func photoBtnPressed(_ sender: Any) {
+        picker.allowsEditing = true
+        picker.sourceType = .photoLibrary
+        self.present(picker, animated: true, completion: nil)
+        
+        
+        let containerView = UIView(frame: CGRect(x:0,y:0,width:320,height:500))
+        let imageView = UIImageView()
+        
+        if let image = UIImage(named: "a_image") {
+            let ratio = image.size.width / image.size.height
+            if containerView.frame.width > containerView.frame.height {
+                let newHeight = containerView.frame.width / ratio
+                imageView.frame.size = CGSize(width: containerView.frame.width, height: newHeight)
+            }
+            else{
+                let newWidth = containerView.frame.height * ratio
+                imageView.frame.size = CGSize(width: newWidth, height: containerView.frame.height)
+            }
+        }
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
         
+    
         
         if indexPath.row == 0 {
-            picker.allowsEditing = true
-            picker.sourceType = .photoLibrary
-            self.present(picker, animated: true, completion: nil)
-            
-            
-            let containerView = UIView(frame: CGRect(x:0,y:0,width:320,height:500))
-            let imageView = UIImageView()
-            
-            if let image = UIImage(named: "a_image") {
-                let ratio = image.size.width / image.size.height
-                if containerView.frame.width > containerView.frame.height {
-                    let newHeight = containerView.frame.width / ratio
-                    imageView.frame.size = CGSize(width: containerView.frame.width, height: newHeight)
-                }
-                else{
-                    let newWidth = containerView.frame.height * ratio
-                    imageView.frame.size = CGSize(width: newWidth, height: containerView.frame.height)
-                }
-            }
-        }
-        
-        if indexPath.row == 1 {
             performSegue(withIdentifier: "recipeView", sender: nil)
         }
         

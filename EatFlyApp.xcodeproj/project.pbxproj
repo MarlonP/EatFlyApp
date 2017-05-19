@@ -17,8 +17,7 @@
 		F22870691E5CA554001C7262 /* SListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22870681E5CA554001C7262 /* SListTableViewController.swift */; };
 		F23361901EC89DEC00F3909D /* ShoppingListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F233618F1EC89DEC00F3909D /* ShoppingListCell.swift */; };
 		F23361921EC9FE4000F3909D /* Beacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23361911EC9FE4000F3909D /* Beacon.swift */; };
-		F23361941ECB553700F3909D /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F23361931ECB553700F3909D /* Mapbox.framework */; };
-		F23361951ECB553700F3909D /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F23361931ECB553700F3909D /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F23361981ECC965D00F3909D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23361971ECC965D00F3909D /* MapViewController.swift */; };
 		F23C3C4C1EA7C42700BED5BD /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4B1EA7C42700BED5BD /* EditProfileViewController.swift */; };
 		F23C3C4E1EA7C44200BED5BD /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4D1EA7C44200BED5BD /* ChangePasswordViewController.swift */; };
 		F23C3C501EA908BA00BED5BD /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4F1EA908BA00BED5BD /* ForgotPasswordViewController.swift */; };
@@ -77,7 +76,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F23361951ECB553700F3909D /* Mapbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,7 +95,7 @@
 		F22870681E5CA554001C7262 /* SListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SListTableViewController.swift; sourceTree = "<group>"; };
 		F233618F1EC89DEC00F3909D /* ShoppingListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingListCell.swift; sourceTree = "<group>"; };
 		F23361911EC9FE4000F3909D /* Beacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beacon.swift; sourceTree = "<group>"; };
-		F23361931ECB553700F3909D /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
+		F23361971ECC965D00F3909D /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F23C3C4B1EA7C42700BED5BD /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		F23C3C4D1EA7C44200BED5BD /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		F23C3C4F1EA908BA00BED5BD /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
@@ -145,7 +143,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D04BE9A234D9421140553C3F /* Pods_EatFlyApp.framework in Frameworks */,
-				F23361941ECB553700F3909D /* Mapbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +204,7 @@
 				F23C3C521EAA500B00BED5BD /* ChooseRetailerTableViewController.swift */,
 				F2B1555E1EC1F48800204197 /* itemDetailsViewController.swift */,
 				F2B1559F1EC5C51F00204197 /* BeaconViewController.swift */,
+				F23361971ECC965D00F3909D /* MapViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -239,7 +237,6 @@
 		F46F93A91E43A96100334F68 = {
 			isa = PBXGroup;
 			children = (
-				F23361931ECB553700F3909D /* Mapbox.framework */,
 				F46F93B41E43A96100334F68 /* EatFlyApp */,
 				F46F93C91E43A96100334F68 /* EatFlyAppTests */,
 				F46F93D41E43A96100334F68 /* EatFlyAppUITests */,
@@ -500,6 +497,7 @@
 				F44C5C781E50B0EF00B52336 /* Item.swift in Sources */,
 				F23C3C4C1EA7C42700BED5BD /* EditProfileViewController.swift in Sources */,
 				F28B14831E5F4D7A009ED6A9 /* UserCell.swift in Sources */,
+				F23361981ECC965D00F3909D /* MapViewController.swift in Sources */,
 				F23C3C501EA908BA00BED5BD /* ForgotPasswordViewController.swift in Sources */,
 				F216BB691E8D5B6300978D9A /* RecipeTableViewController.swift in Sources */,
 				F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */,
