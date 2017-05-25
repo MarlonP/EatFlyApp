@@ -44,7 +44,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         super.viewDidLoad()
         //Settings Btn
         settingsBarBtn = UIButton(type: .custom)
-        settingsBarBtn.setImage(UIImage(named: "attention"), for: .normal)
+        settingsBarBtn.setImage(UIImage(named: "settings"), for: .normal)
         settingsBarBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         settingsBarBtn.addTarget(self, action: #selector(UserPageViewController.buttonMethod), for: .touchUpInside)
         settingsBarBtnItem = UIBarButtonItem(customView: settingsBarBtn)
@@ -66,8 +66,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         
         
-        //navigationItem.rightBarButtonItems = [barBtn]
-        
+        self.navigationItem.setRightBarButtonItems([self.followBarBtnItem], animated: true)        
 
         
         
@@ -182,8 +181,6 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                             
                             self.navigationItem.setRightBarButtonItems([self.unfollowBarBtnItem], animated: true)
                             
-                        }else{
-                            self.navigationItem.setRightBarButtonItems([self.followBarBtnItem], animated: true)
                         }
                         
                     }

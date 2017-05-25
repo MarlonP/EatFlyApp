@@ -18,11 +18,17 @@
 		F23361901EC89DEC00F3909D /* ShoppingListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F233618F1EC89DEC00F3909D /* ShoppingListCell.swift */; };
 		F23361921EC9FE4000F3909D /* Beacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23361911EC9FE4000F3909D /* Beacon.swift */; };
 		F23361981ECC965D00F3909D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23361971ECC965D00F3909D /* MapViewController.swift */; };
+		F233619C1ED1BE9500F3909D /* bUni.plist in Resources */ = {isa = PBXBuildFile; fileRef = F233619A1ED1BE8F00F3909D /* bUni.plist */; };
+		F233619D1ED1BE9500F3909D /* MagicMountainAttractions.plist in Resources */ = {isa = PBXBuildFile; fileRef = F233619B1ED1BE8F00F3909D /* MagicMountainAttractions.plist */; };
+		F233619F1ED1BEDE00F3909D /* mapSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = F233619E1ED1BEDE00F3909D /* mapSite.swift */; };
+		F23361A21ED1C29300F3909D /* MapOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23361A11ED1C29300F3909D /* MapOverlay.swift */; };
+		F23361A41ED1C2C800F3909D /* MapOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23361A31ED1C2C800F3909D /* MapOverlayView.swift */; };
 		F23C3C4C1EA7C42700BED5BD /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4B1EA7C42700BED5BD /* EditProfileViewController.swift */; };
 		F23C3C4E1EA7C44200BED5BD /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4D1EA7C44200BED5BD /* ChangePasswordViewController.swift */; };
 		F23C3C501EA908BA00BED5BD /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C4F1EA908BA00BED5BD /* ForgotPasswordViewController.swift */; };
 		F23C3C531EAA500B00BED5BD /* ChooseRetailerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C521EAA500B00BED5BD /* ChooseRetailerTableViewController.swift */; };
 		F23C3C551EACDFD000BED5BD /* ManualAddedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C3C541EACDFD000BED5BD /* ManualAddedItem.swift */; };
+		F240063F1ED5CAA80078E9B1 /* PayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F240063E1ED5CAA70078E9B1 /* PayViewController.swift */; };
 		F28B14831E5F4D7A009ED6A9 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14821E5F4D7A009ED6A9 /* UserCell.swift */; };
 		F28B14851E5F4E4B009ED6A9 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */; };
 		F28B148A1E5F50EC009ED6A9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B14891E5F50EC009ED6A9 /* User.swift */; };
@@ -96,11 +102,17 @@
 		F233618F1EC89DEC00F3909D /* ShoppingListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingListCell.swift; sourceTree = "<group>"; };
 		F23361911EC9FE4000F3909D /* Beacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beacon.swift; sourceTree = "<group>"; };
 		F23361971ECC965D00F3909D /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		F233619A1ED1BE8F00F3909D /* bUni.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bUni.plist; sourceTree = "<group>"; };
+		F233619B1ED1BE8F00F3909D /* MagicMountainAttractions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MagicMountainAttractions.plist; sourceTree = "<group>"; };
+		F233619E1ED1BEDE00F3909D /* mapSite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mapSite.swift; sourceTree = "<group>"; };
+		F23361A11ED1C29300F3909D /* MapOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapOverlay.swift; sourceTree = "<group>"; };
+		F23361A31ED1C2C800F3909D /* MapOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapOverlayView.swift; sourceTree = "<group>"; };
 		F23C3C4B1EA7C42700BED5BD /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		F23C3C4D1EA7C44200BED5BD /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		F23C3C4F1EA908BA00BED5BD /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		F23C3C521EAA500B00BED5BD /* ChooseRetailerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseRetailerTableViewController.swift; sourceTree = "<group>"; };
 		F23C3C541EACDFD000BED5BD /* ManualAddedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualAddedItem.swift; sourceTree = "<group>"; };
+		F240063E1ED5CAA70078E9B1 /* PayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayViewController.swift; sourceTree = "<group>"; };
 		F28B14821E5F4D7A009ED6A9 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		F28B14841E5F4E4B009ED6A9 /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		F28B14891E5F50EC009ED6A9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -180,6 +192,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F23361991ED1BE5100F3909D /* Map Information */ = {
+			isa = PBXGroup;
+			children = (
+				F233619A1ED1BE8F00F3909D /* bUni.plist */,
+				F233619B1ED1BE8F00F3909D /* MagicMountainAttractions.plist */,
+			);
+			name = "Map Information";
+			sourceTree = "<group>";
+		};
+		F23361A01ED1C22100F3909D /* Map Overlays */ = {
+			isa = PBXGroup;
+			children = (
+				F23361A11ED1C29300F3909D /* MapOverlay.swift */,
+				F23361A31ED1C2C800F3909D /* MapOverlayView.swift */,
+			);
+			name = "Map Overlays";
+			sourceTree = "<group>";
+		};
 		F28B14861E5F5096009ED6A9 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +235,7 @@
 				F2B1555E1EC1F48800204197 /* itemDetailsViewController.swift */,
 				F2B1559F1EC5C51F00204197 /* BeaconViewController.swift */,
 				F23361971ECC965D00F3909D /* MapViewController.swift */,
+				F240063E1ED5CAA70078E9B1 /* PayViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -221,7 +252,7 @@
 			name = "Custom Cell";
 			sourceTree = "<group>";
 		};
-		F28B14881E5F50D0009ED6A9 /* Objects/ Classes */ = {
+		F28B14881E5F50D0009ED6A9 /* Objects/ Classes/ Models */ = {
 			isa = PBXGroup;
 			children = (
 				F28B14891E5F50EC009ED6A9 /* User.swift */,
@@ -230,8 +261,9 @@
 				F2B465701E9F9957001589D0 /* RecipeItem.swift */,
 				F23C3C541EACDFD000BED5BD /* ManualAddedItem.swift */,
 				F23361911EC9FE4000F3909D /* Beacon.swift */,
+				F233619E1ED1BEDE00F3909D /* mapSite.swift */,
 			);
-			name = "Objects/ Classes";
+			name = "Objects/ Classes/ Models";
 			sourceTree = "<group>";
 		};
 		F46F93A91E43A96100334F68 = {
@@ -259,7 +291,9 @@
 		F46F93B41E43A96100334F68 /* EatFlyApp */ = {
 			isa = PBXGroup;
 			children = (
-				F28B14881E5F50D0009ED6A9 /* Objects/ Classes */,
+				F23361A01ED1C22100F3909D /* Map Overlays */,
+				F23361991ED1BE5100F3909D /* Map Information */,
+				F28B14881E5F50D0009ED6A9 /* Objects/ Classes/ Models */,
 				F28B14871E5F50BF009ED6A9 /* Custom Cell */,
 				F28B14861E5F5096009ED6A9 /* View Controllers */,
 				F46F93B51E43A96100334F68 /* AppDelegate.swift */,
@@ -412,6 +446,8 @@
 				F44C5C761E50B0AF00B52336 /* items.json in Resources */,
 				F46F93BB1E43A96100334F68 /* Main.storyboard in Resources */,
 				F2B155A21EC732F700204197 /* Assets.xcassets in Resources */,
+				F233619D1ED1BE9500F3909D /* MagicMountainAttractions.plist in Resources */,
+				F233619C1ED1BE9500F3909D /* bUni.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +521,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2B155A01EC5C51F00204197 /* BeaconViewController.swift in Sources */,
+				F240063F1ED5CAA80078E9B1 /* PayViewController.swift in Sources */,
 				F4952D861E4CC84A00BCF523 /* SignUpViewController.swift in Sources */,
 				F2C214AD1E60853F00A1D565 /* UploadViewController.swift in Sources */,
 				F2C214B11E60981200A1D565 /* PostCell.swift in Sources */,
@@ -503,6 +540,7 @@
 				F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */,
 				F23361901EC89DEC00F3909D /* ShoppingListCell.swift in Sources */,
 				F2C214F51E68733A00A1D565 /* UserPageViewController.swift in Sources */,
+				F233619F1ED1BEDE00F3909D /* mapSite.swift in Sources */,
 				F2B4656C1E9D3850001589D0 /* EditUserViewController.swift in Sources */,
 				F23C3C531EAA500B00BED5BD /* ChooseRetailerTableViewController.swift in Sources */,
 				F28B14851E5F4E4B009ED6A9 /* UsersViewController.swift in Sources */,
@@ -513,9 +551,11 @@
 				F46F93E41E44D2E300334F68 /* LogInViewController.swift in Sources */,
 				F23C3C4E1EA7C44200BED5BD /* ChangePasswordViewController.swift in Sources */,
 				F2B465711E9F9957001589D0 /* RecipeItem.swift in Sources */,
+				F23361A41ED1C2C800F3909D /* MapOverlayView.swift in Sources */,
 				F216BB721E8D71A100978D9A /* PopUpViewController.swift in Sources */,
 				F22870691E5CA554001C7262 /* SListTableViewController.swift in Sources */,
 				F2C214F71E799B6C00A1D565 /* PayTableViewCell.swift in Sources */,
+				F23361A21ED1C29300F3909D /* MapOverlay.swift in Sources */,
 				0E90DBBB1E801AFF00516435 /* userPostCell.swift in Sources */,
 				F28B148A1E5F50EC009ED6A9 /* User.swift in Sources */,
 				F23C3C551EACDFD000BED5BD /* ManualAddedItem.swift in Sources */,

@@ -40,11 +40,13 @@ class itemDetailsViewController: UIViewController {
                 if currentShopBarcode == value["barcode"] as! String {
                 
                 
-                if let itemName = value["itemName"] as? String, let price = value["price"] as? String, let itemType = value["itemType"] as? String {
+                if let itemName = value["itemName"] as? String, let itemDesc = value["itemDesc"] as? String, let price = value["price"] as? String, let itemType = value["itemType"] as? String, let imgPath = value["img"] as? String {
                     
                     self.itemNameLbl.text = itemName
-                    self.priceLbl.text = price
+                    self.descLbl.text = itemDesc
+                    self.priceLbl.text = "£\(price)"
                     self.itemTypeLbl.text = itemType
+                    self.imageView.downloadImage(from: imgPath)
                     
                 }
                 }

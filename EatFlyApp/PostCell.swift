@@ -107,6 +107,40 @@ class PostCell: UICollectionViewCell {
         ref.removeAllObservers()
     }
     
+    func checkIfLiked(){
+        let ref = FIRDatabase.database().reference()
+        
+        ref.child("posts").child(self.postID).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let properties = snapshot.value as? [String : AnyObject]
+            if let peopleWhoLike = properties?["peopleWhoLike"] as? [String : AnyObject] {
+                
+                for (_,person) in peopleWhoLike {
+                    if person as? String == FIRAuth.auth()!.currentUser!.uid {
+                        self.likeBtn.isHidden = true
+                        self.unlikeBtn.isHidden = false
+                        self.likeBtn.isEnabled = true
+                        
+                    }else{
+                        self.likeBtn.isHidden = false
+                        self.unlikeBtn.isHidden = true
+                        self.unlikeBtn.isEnabled = true
+                        
+                    }
+                    
+                }
+                
+            }else{
+                self.likeBtn.isHidden = false
+                self.unlikeBtn.isHidden = true
+                self.unlikeBtn.isEnabled = true
+
+            }
+            
+            
+        })
+    }
+    
     func getPostsUserID(){
         
         let ref = FIRDatabase.database().reference()

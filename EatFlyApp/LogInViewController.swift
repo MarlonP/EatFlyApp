@@ -10,9 +10,10 @@ import UIKit
 import Firebase
 
 
-class LogInViewController: UIViewController {
+class LogInViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var pwField: UITextField!
+    @IBOutlet weak var scrollView: UIScrollView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +51,25 @@ class LogInViewController: UIViewController {
 //            
 //        }
     }
-
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        print("begin")
+        scrollView.setContentOffset(CGPoint(x: 0, y: 200), animated: true)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+         print("end")
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
+    
+    
     @IBAction func loginPressed(_ sender: Any) {
         //can put notification for error before return in else method same in sign up
         guard emailField.text != "", pwField.text != "" else { return}

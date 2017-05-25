@@ -55,6 +55,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         present(controller, animated: true, completion: nil)
     }
     
+    @IBAction func payButtonPressed(_ sender: Any) {
+        finalTotalPrice = totalPriceLbl.text
+        amountOfItems = currentShop.count
+    }
+ 
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

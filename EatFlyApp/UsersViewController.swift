@@ -17,6 +17,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.tableFooterView = UIView()
         
         retrieveUsers()
 
@@ -60,7 +61,8 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.nameLbl.text = self.user[indexPath.row].fullName
         cell.userID = self.user[indexPath.row].userID
         cell.userImage.downloadImage(from: self.user[indexPath.row].imgPath!)
-        checkFollowing(indexPath: indexPath)
+        //checkFollowing(indexPath: indexPath)
+        cell.checkFollowing()
         
         return cell
     }
@@ -71,61 +73,13 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let uid = FIRAuth.auth()!.currentUser!.uid
-        let ref = FIRDatabase.database().reference()
-        let key = ref.child("users").childByAutoId().key
+        userPageID = self.user[indexPath.row].userID
+        performSegue(withIdentifier: "goUserProfileSegue", sender: self)
         
-        var isFollower = false
-        
-        ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-            
-            if let following = snapshot.value as? [String : AnyObject] {
-                for (ke, value) in following {
-                    if value as! String == self.user[indexPath.row].userID {
-                        isFollower = true
-                        
-                        ref.child("users").child(uid).child("following/\(ke)").removeValue()
-                        ref.child("users").child(self.user[indexPath.row].userID).child("followers/\(ke)").removeValue()
-                        
-                        self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
-                    }
-                }
-                
-            }
-            
-            if !isFollower {
-                let following = ["following/\(key)" : self.user[indexPath.row].userID]
-                let followers = ["followers/\(key)" : uid]
-                
-                ref.child("users").child(uid).updateChildValues(following)
-                ref.child("users").child(self.user[indexPath.row].userID).updateChildValues(followers)
-                
-                self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                
-                
-            }
-        })
-        
-        ref.removeAllObservers()
+
     }
     
-    func checkFollowing(indexPath: IndexPath) {
-        let uid = FIRAuth.auth()!.currentUser!.uid
-        let ref = FIRDatabase.database().reference()
-        
-        ref.child("users").child(uid).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
-            
-            if let following = snapshot.value as? [String : AnyObject] {
-                for (_, value) in following {
-                    if value as! String == self.user[indexPath.row].userID {
-                        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                    }
-
-                }
-            }
-        })
-        ref.removeAllObservers()
-    }
+  
 
     
     

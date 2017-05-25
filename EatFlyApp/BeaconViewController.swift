@@ -28,15 +28,19 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
     
     var itemsBeingTracked = [Item]()
     
-    //var beaconsBeingTracked = [Beacon]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.beaconManager.delegate = self
         self.beaconManager.requestAlwaysAuthorization()
         
-        //getItems()
-        getBeacons()
+        self.tableView.tableFooterView = UIView()
+        
+        let alert = UIAlertController(title: "Read Below:", message: "Do not completely rely on the distances as it is not 100% accurate. And for this to work turn you bluetooth on.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+       
+        //getBeacons()
         
         
     }
@@ -92,10 +96,11 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
                     //print(accuracyString)
                     cell.detailTextLabel?.text = "Approx. \(accuracyString)m"
                 }
+                
+              handleReloadTable()
             }
             
-            
-            
+
         }
         
         
@@ -103,10 +108,23 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
         return cell
     }
     
+    var valueToPass:String!
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "mapViewSegue", sender: nil)
+        
+        // Get Cell Label
+        let indexPath = tableView.indexPathForSelectedRow!
+        let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+        
+        valueToPass = currentCell.textLabel?.text
+        performSegue(withIdentifier: "mapViewSegue", sender: self)
+        
+        passedValue = valueToPass
+        
+        
     }
-
+    
+ 
 
     func beaconManager(_ manager: Any, didRangeBeacons beacons: [CLBeacon],
                        in region: CLBeaconRegion) {
@@ -131,11 +149,9 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
                 
             }
         }
-        
-        if beacons != nil{
-        handleReloadTable()
-        }
-        //tableView.reloadData()
+        print(beacons.count)
+       
+        tableView.reloadData()
    
         
     }
@@ -144,13 +160,11 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
     
     func handleReloadTable() {
         usersShoppingListItems.sort(by: { (item1, item2) -> Bool in
-            
+            //fatal error: unexpectedly found nil while unwrapping an Optional value (maybe because not getting any data from beacons))
             return item1.accuracy < item2.accuracy
         })
         
-        DispatchQueue.main.async(execute: {
-            self.tableView.reloadData()
-        })
+
     }
     
     func beaconManager(_ manager: Any, didEnter region: CLBeaconRegion) {
@@ -160,36 +174,6 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
 
     
     
-//    func getItems() {
-//        ref = FIRDatabase.database().reference()
-//        
-//        ref?.child("items").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
-//            let itemsSnap = snapshot.value as! [String : AnyObject]
-//            self.items.removeAll()
-//            
-//            
-//            for (_,value) in itemsSnap {
-//                
-//                let itemData = Item()
-//                if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String, let beaconID = value["beacon"] as? String {
-//                    itemData.itemName = itemName
-//                    itemData.barcode = barcode
-//                    itemData.price = price
-//                    itemData.beaconID = beaconID
-//                    
-//                    
-//                    self.items.append(itemData)
-//                   
-//                    
-//                }
-//                
-//                self.tableView.reloadData()
-//                
-//            }
-//            
-//        })
-//        ref?.removeAllObservers()
-//    }
 
     
     func getBeacons(){
@@ -215,15 +199,7 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
                     self.beaconsFromDB.append(beaconGet)
                 }
                 
-//                for bbeacon in self.beaconsFromDB {
-//                    let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString: bbeacon.UUID)! , major: bbeacon.major as! CLBeaconMajorValue, minor: bbeacon.minor as! CLBeaconMinorValue, identifier: "Estimote")
-//                    
-//                    
-//                    
-//                    self.beaconManager.startRangingBeacons(in: beaconRegion)
-//                    print(beaconRegion)
-//                }
-                
+              
                 self.tableView.reloadData()
                 
             }

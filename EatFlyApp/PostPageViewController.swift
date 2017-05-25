@@ -28,11 +28,14 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     var posts = [Post]()
     var user = [User]()
     var postRecipe = [RecipeItem]()
+    var liked: Bool!
     
     let uid = FIRAuth.auth()!.currentUser!.uid
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.tableFooterView = UIView()
         
         barBtn = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.plain, target: self, action: #selector(UserPageViewController.buttonMethod))
 
@@ -41,7 +44,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidAppear(_ animated: Bool) {
         
         retrieveUser()
-       
+        
         
         
     }
@@ -270,12 +273,17 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         descriptionLbl.text = posts[0].desc
         postImageView.downloadImage(from: self.posts[0].pathToImage!)
+        likeLbl.text = "\(posts[0].likes!) Likes"
+        
         
         if uid != posts[0].userID {
             navigationItem.rightBarButtonItems = []
         }else{
             navigationItem.rightBarButtonItems = [barBtn]
         }
+        
+        checkIfLiked()
+
     }
 
     func retrieveUser(){
@@ -352,9 +360,21 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     }// end didSelectRow function
     
     @IBAction func likeBtnPressed(_ sender: Any) {
+        
+        
+        if self.liked == true {
+            unlike()
+        }else{
+            like()
+        }
+        
+    }
+    
+    
+    
+    func like(){
         let ref = FIRDatabase.database().reference()
         let keyToPost = ref.child("posts").childByAutoId().key
-        
         
         ref.child("posts").child(self.posts[0].postID).observeSingleEvent(of: .value, with: { (snapshot) in
             
@@ -372,7 +392,9 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                                     let update = ["likes" : count]
                                     ref.child("posts").child(self.posts[0].postID).updateChildValues(update)
                                     
-                                    self.likeBtn.titleLabel?.text = "Like"
+                                    
+                                    self.likeBtn.setImage(UIImage(named: "unlike1-1"), for: .normal)
+                                    self.liked = true
                                 }
                             }
                         })
@@ -385,6 +407,11 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         ref.removeAllObservers()
         
+    }
+    
+    func unlike(){
+        let ref = FIRDatabase.database().reference()
+        let keyToPost = ref.child("posts").childByAutoId().key
         
         ref.child("posts").child(self.posts[0].postID).observeSingleEvent(of: .value, with: { (snapshot) in
             
@@ -409,7 +436,9 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                                 }
                             })
                             
-                            self.likeBtn.titleLabel?.text = "Unlike"
+                            
+                            self.likeBtn.setImage(UIImage(named: "like1"), for: .normal)
+                            self.liked = false
                             
                             
                         }
@@ -419,8 +448,35 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
             
         })
         ref.removeAllObservers()
-
         
+    }
+    
+    func checkIfLiked(){
+        ref.child("posts").child(self.posts[0].postID).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let properties = snapshot.value as? [String : AnyObject]
+            if let peopleWhoLike = properties?["peopleWhoLike"] as? [String : AnyObject] {
+                
+                for (_,person) in peopleWhoLike {
+                    if person as? String == FIRAuth.auth()!.currentUser!.uid {
+                        self.likeBtn.setImage(UIImage(named: "unlike1-1"), for: .normal)
+                        self.liked = true
+                        
+                    }else{
+                        self.likeBtn.setImage(UIImage(named: "like1"), for: .normal)
+                        self.liked = false
+                        
+                    }
+                    
+                }
+                
+            }else{
+                self.likeBtn.setImage(UIImage(named: "like1"), for: .normal)
+                self.liked = false
+            }
+            
+            
+        })
     }
     
     @IBAction func addToShoppingPressed(_ sender: Any) {
