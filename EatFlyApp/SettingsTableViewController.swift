@@ -13,12 +13,15 @@ class SettingsTableViewController: UITableViewController {
     
     let data = [["Edit Profile", "Email Address", "Change Password"],["Log Out"]]
     let Titles = ["Account", "   "]
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+       
 
         
     }
+
 
    
     // MARK: - Table view data source

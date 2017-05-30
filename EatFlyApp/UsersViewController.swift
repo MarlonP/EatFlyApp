@@ -17,10 +17,17 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(notifyMethod), name: NSNotification.Name(rawValue: FollowNotificationKey), object: nil)
         self.tableView.tableFooterView = UIView()
         
         retrieveUsers()
 
+    }
+    
+    func notifyMethod(){
+        print("done")
+        tableView.reloadData()
     }
     
     func retrieveUsers(){
@@ -57,11 +64,11 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! UserCell
-        
+        cell.selectionStyle = .none
         cell.nameLbl.text = self.user[indexPath.row].fullName
         cell.userID = self.user[indexPath.row].userID
         cell.userImage.downloadImage(from: self.user[indexPath.row].imgPath!)
-        //checkFollowing(indexPath: indexPath)
+        cell.followBtn.setImage(UIImage(named: "username"), for: .normal)
         cell.checkFollowing()
         
         return cell

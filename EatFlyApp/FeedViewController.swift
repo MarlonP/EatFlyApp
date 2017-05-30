@@ -10,7 +10,9 @@ import UIKit
 import Firebase
 import IBAnimatable
 
-class FeedViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+let FeedNotificationKey1 = "com.mp.feedNotificationKey"
+let FeedNotificationKey2 = "com.mp.feedNotificationKey2"
+class FeedViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate {
     
     @IBOutlet weak var FeedCollectionView: UICollectionView!
     
@@ -20,17 +22,62 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     var ref: FIRDatabaseReference?
     var databaseHandle: FIRDatabaseHandle?
+    
+    var refresher:UIRefreshControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotify), name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshAfterLikeFromPPage), name: NSNotification.Name(rawValue: FeedNotificationKey2), object: nil)
+        self.tabBarController?.delegate = self
         // Sets up the database reference
         ref = FIRDatabase.database().reference()
         
         observePosts()
+        
+        let refresher = UIRefreshControl()
+        self.FeedCollectionView!.alwaysBounceVertical = true
+        refresher.tintColor = UIColor.white
+        refresher.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        self.FeedCollectionView!.refreshControl = refresher
+        self.FeedCollectionView!.refreshControl?.beginRefreshing()
+
 
         
     }
+    
+    func doThisWhenNotify() {
+        posts.removeAll()
+        observePosts()
+        
+    }
+    
+    func refreshAfterLikeFromPPage(){
+        self.attemptReloadOfTable()
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        let tabBarIndex = tabBarController.selectedIndex
+        if tabBarIndex == 0 {
+            print("1")
+            self.FeedCollectionView?.scrollToItem(at: IndexPath(row: 0, section: 0),at: .top, animated: true)
+        }
+    }
+
+
+
+ 
+    
+    func refresh()
+    {
+       self.attemptReloadOfTable()
+   
+        self.FeedCollectionView!.refreshControl?.endRefreshing()
+    }
+
+
+    
     
     func observeUsers(){
         
@@ -62,6 +109,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func observePosts() {
         observeUsers()
         observePostsChildRemoved()
+        observePostsChildChanged()
         
         databaseHandle = ref?.child("posts").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : AnyObject] {
@@ -115,6 +163,44 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
+    func observePostsChildChanged() {
+        //
+        databaseHandle = ref?.child("posts").observe(.childChanged, with: { (snapshot) in
+            
+            var postsIndex: Int!
+            
+            for i in 0...self.posts.count-1{
+                print(self.posts[i].postID)
+                
+                if self.posts[i].postID == snapshot.key{
+                    print(i)
+                    postsIndex = i
+                    
+                }
+                
+            }
+            
+            if let dictionary = snapshot.value as? [String : AnyObject] {
+                let likes: Int!
+                
+         
+                likes = dictionary["likes"] as! Int
+           
+                
+                
+                self.posts[postsIndex].likes = likes
+                
+               
+            }
+            
+            
+            
+            
+            
+        })
+        
+    }
+    
     
     fileprivate func attemptReloadOfTable() {
         self.timer?.invalidate()
@@ -147,6 +233,71 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return self.posts.count
     }
     
+    func timeAgoSinceDate(date:NSDate, numericDates:Bool) -> String {
+        let calendar = NSCalendar.current
+        let unitFlags: Set<Calendar.Component> = [.minute, .hour, .day, .weekOfYear, .month, .year, .second]
+        let now = NSDate()
+        let earliest = now.earlierDate(date as Date)
+        let latest = (earliest == now as Date) ? date : now
+        let components = calendar.dateComponents(unitFlags, from: earliest as Date,  to: latest as Date)
+        
+        if (components.year! >= 2) {
+            return "\(components.year!) years ago"
+        } else if (components.year! >= 1){
+            if (numericDates){
+                return "1 year ago"
+            } else {
+                return "Last year"
+            }
+        } else if (components.month! >= 2) {
+            return "\(components.month!) months ago"
+        } else if (components.month! >= 1){
+            if (numericDates){
+                return "1 month ago"
+            } else {
+                return "Last month"
+            }
+        } else if (components.weekOfYear! >= 2) {
+            return "\(components.weekOfYear!) weeks ago"
+        } else if (components.weekOfYear! >= 1){
+            if (numericDates){
+                return "1 week ago"
+            } else {
+                return "Last week"
+            }
+        } else if (components.day! >= 2) {
+            return "\(components.day!) days ago"
+        } else if (components.day! >= 1){
+            if (numericDates){
+                return "1 day ago"
+            } else {
+                return "Yesterday"
+            }
+        } else if (components.hour! >= 2) {
+            return "\(components.hour!) hours ago"
+        } else if (components.hour! >= 1){
+            if (numericDates){
+                return "1 hour ago"
+            } else {
+                return "An hour ago"
+            }
+        } else if (components.minute! >= 2) {
+            return "\(components.minute!) minutes ago"
+        } else if (components.minute! >= 1){
+            if (numericDates){
+                return "1 minute ago"
+            } else {
+                return "A minute ago"
+            }
+        } else if (components.second! >= 3) {
+            return "\(components.second!) seconds ago"
+        } else {
+            return "Just now"
+        }
+        
+    }
+
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postCell", for: indexPath) as! PostCell
@@ -172,10 +323,14 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.titleLabel.text = self.posts[indexPath.row].title
         
         //Displays post's date
+        
+        
         let timeStampDate = NSDate(timeIntervalSince1970: self.posts[indexPath.row].timestamp.doubleValue)
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm a"
-        cell.dateLabel.text = dateFormatter.string(from: timeStampDate as Date)
+        //cell.dateLabel.text = dateFormatter.string(from: timeStampDate as Date)
+        cell.dateLabel.text = timeAgoSinceDate(date: timeStampDate, numericDates: true)
         
         //Shows either like or unlike button depending on if user has liked the post
         for person in self.posts[indexPath.row].peopleWhoLike {
@@ -240,3 +395,5 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
    
 
 }
+
+

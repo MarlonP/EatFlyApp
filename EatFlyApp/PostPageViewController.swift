@@ -34,6 +34,8 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(whenNotify), name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(whenNotify), name: NSNotification.Name(rawValue: FeedNotificationKey2), object: nil)
         
         self.tableView.tableFooterView = UIView()
         
@@ -47,6 +49,9 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         
         
+    }
+    
+    func whenNotify(){
     }
     
     func buttonMethod() {
@@ -72,6 +77,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                 self.titleLbl.text = newTitleTextField.text!
                 
                 self.updatePost(newDescription: self.descriptionLbl.text!, newTitle: newTitleTextField.text!)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
                
             })
             
@@ -110,6 +116,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                 self.descriptionLbl.text = newDescTextField.text!
                 
                 self.updatePost(newDescription: newDescTextField.text!, newTitle: self.titleLbl.text!)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
             })
             
             // Cancel button
@@ -406,7 +413,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         })
         
         ref.removeAllObservers()
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: FeedNotificationKey2), object: nil)
     }
     
     func unlike(){
@@ -448,6 +455,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
             
         })
         ref.removeAllObservers()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: FeedNotificationKey2), object: nil)
         
     }
     

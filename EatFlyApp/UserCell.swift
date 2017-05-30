@@ -70,7 +70,7 @@ class UserCell: UITableViewCell {
             if let following = snapshot.value as? [String : AnyObject] {
                 for (_, value) in following {
                     if value as! String == self.userID {
-                        //self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                    
                         self.followBtn.setImage(UIImage(named: "gender"), for: .normal)
                     }
                     

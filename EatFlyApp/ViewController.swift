@@ -21,6 +21,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var Amounts = [Int]()
     var BCfromDB = [String]()
     var ref = FIRDatabase.database().reference()
+    var databaseHandle: FIRDatabaseHandle?
     
 
     
@@ -74,8 +75,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.itemPrice = Double(currentShop[indexPath.row].price)!
         
         cell.itemID = self.currentShop[indexPath.row].barcode
-        
-        cell.amountTextField.keyboardType = UIKeyboardType.numberPad
         
         cell.amountTextField.text = "\(cell.amount)"
         
@@ -267,6 +266,43 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    func updateAmounts(){
+        
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        
+        databaseHandle = ref.child("users").child(uid).child("currentShop").observe(.childChanged, with: { (snapshot) in
+            
+            var amountsIndex: Int!
+            
+            for i in 0...self.currentShop.count-1{
+                print(self.currentShop[i].barcode)
+                print(snapshot.key)
+                
+                if self.currentShop[i].barcode == snapshot.key{
+                    print(i)
+                    amountsIndex = i
+                    
+                }
+                
+            }
+            
+            if let dictionary = snapshot.value as? [String : AnyObject] {
+                
+                let newAmount: Int!
+                
+                newAmount = dictionary["amount"] as! Int
+                
+                self.Amounts[amountsIndex] = newAmount
+                
+                self.tableView.reloadData()
+            }
+            
+            
+            
+        })
+        
+    }
+    
     
    
 }
@@ -393,7 +429,7 @@ extension ViewController: PayTableViewCellDelegate {
     
     func buttonPressed() {
         //need to update Amounts array
-        getAmounts()
+        updateAmounts()
         
         print("something changed")
         var totalPrice: Double = 0

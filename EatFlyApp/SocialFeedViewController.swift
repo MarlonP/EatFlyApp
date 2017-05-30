@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-let FeedNotificationKey = "com.mp.feedNotificationKey"
+
 
 class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -23,11 +23,7 @@ class SocialFeedViewController: UIViewController, UICollectionViewDelegate, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(afterNotified),
-                                               name: NSNotification.Name(rawValue: FeedNotificationKey),
-                                               object: nil)
-        
+  
         
         
       

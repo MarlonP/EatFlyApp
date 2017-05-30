@@ -32,14 +32,18 @@ class PayTableViewCell: UITableViewCell, UITextFieldDelegate {
         delegate?.buttonPressed()
         var price: Double = 0
         
+        //Sets amount
         amount = amount + 1
-        
+        print(amount)
         amountTextField.text = "\(amount)"
         
+        
+        //Sets price
         price = itemPrice * Double(amount)
         let priceText = String(format: "%.2f", price)
         priceLbl.text = "£\(priceText)"
         
+        //Writes amount to firebase
         let uid = FIRAuth.auth()!.currentUser!.uid
         let ref = FIRDatabase.database().reference()
         
@@ -56,15 +60,19 @@ class PayTableViewCell: UITableViewCell, UITextFieldDelegate {
         delegate?.buttonPressed()
         var price: Double = 0
         
+        //Sets amount
         if amount > 1 {
             amount = amount - 1
         }
+        print(amount)
         amountTextField.text = "\(amount)"
         
+        //Sets price
         price = itemPrice * Double(amount)
         let priceText = String(format: "%.2f", price)
         priceLbl.text = "£\(priceText)"
         
+        //Writes amount to firebase
         let uid = FIRAuth.auth()!.currentUser!.uid
         let ref = FIRDatabase.database().reference()
         
@@ -77,9 +85,5 @@ class PayTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        amountTextField.resignFirstResponder()
-        return (true)
-    }
 
 }

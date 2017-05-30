@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-let ProfileNotificationKey = "com.mp.profileNotificationKey"
+
 
 class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -27,7 +27,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         
-        //NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotify), name: NSNotification.Name(rawValue: myNotificationKey), object: nil)
+        
         
         picker.delegate = self
         
@@ -40,10 +40,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
     }
     
-    func doThisWhenNotify() {
-        
-    }
-    
+  
 
     @IBAction func editPressed(_ sender: Any) {
         picker.allowsEditing = true
@@ -62,7 +59,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
 
     @IBAction func savePressed(_ sender: Any) {
         updateUsersProfile()
-        //NotificationCenter.default.post(name: NSNotification.Name(rawValue: myNotificationKey), object: nil)
+        
         
         _ = navigationController?.popViewController(animated: true)
         

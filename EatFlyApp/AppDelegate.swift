@@ -62,24 +62,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
         UIApplication.shared.registerUserNotificationSettings(
             UIUserNotificationSettings(types: .alert, categories: nil))
         
+        UIBarButtonItem.appearance().setBackButtonBackgroundImage(UIImage(named: "back"), for: .normal, barMetrics: .default)
         
+
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+        
+        
+        
         
         
         FIRApp.configure()
         return true
     }
     
-    func beaconManager(_ manager: Any, didEnter region: CLBeaconRegion) {
-//        let notification = UILocalNotification()
-//        notification.alertBody =
-//            "Your gate closes in 47 minutes. " +
-//            "Current security wait time is 15 minutes, " +
-//            "and it's a 5 minute walk from security to the gate. " +
-//        "Looks like you've got plenty of time!"
-//        UIApplication.shared.presentLocalNotificationNow(notification)
-    }
+
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

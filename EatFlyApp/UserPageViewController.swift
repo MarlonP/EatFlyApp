@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 
 var userPageID: String!
+let FollowNotificationKey = "com.mp.followNotificationKey"
 
 class UserPageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
@@ -42,6 +43,8 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         //Settings Btn
         settingsBarBtn = UIButton(type: .custom)
         settingsBarBtn.setImage(UIImage(named: "settings"), for: .normal)
@@ -83,6 +86,8 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
 
     }
     
+    
+    
     func buttonMethod() {
         performSegue(withIdentifier: "settingsSegue", sender: nil)
     }
@@ -107,7 +112,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 
             })
             
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: FollowNotificationKey), object: nil)
 
         
     }
@@ -128,7 +133,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 
             
         })
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: FollowNotificationKey), object: nil)
     }
     
     func retrieveUser(){
@@ -199,7 +204,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         ref.child("users").child(userPageID).child("followers").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
-            let Snap = snapshot.value as! [String : AnyObject]
+            if let Snap = snapshot.value as? [String : AnyObject] {
             self.followers.removeAll()
             
             
@@ -211,9 +216,12 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 
             }
             
-            self.followersLbl.text = "\(self.followers.count)"
-            
+                self.followersLbl.text = "\(self.followers.count)"
+            } else {
+                self.followersLbl.text = "0"
+            }
         })
+        
         
     }
     
@@ -222,7 +230,7 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         ref.child("users").child(userPageID).child("following").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
-            let Snaps = snapshot.value as! [String : AnyObject]
+            if let Snaps = snapshot.value as? [String : AnyObject] {
             self.following.removeAll()
             
             
@@ -234,7 +242,12 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 
             }
             
-            self.followingLbl.text = "\(self.following.count)"
+                self.followingLbl.text = "\(self.following.count)"
+                
+            }else{
+                
+                self.followingLbl.text = "0"
+            }
             
         })
 
