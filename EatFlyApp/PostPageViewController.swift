@@ -21,7 +21,8 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var likeBtn: UIButton!
     @IBOutlet weak var likeLbl: UILabel!
-    var barBtn: UIBarButtonItem!
+    var barBtn: UIButton!
+    var barBtnItem:UIBarButtonItem!
     
     var postID : String!
     let ref = FIRDatabase.database().reference()
@@ -39,7 +40,14 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.tableView.tableFooterView = UIView()
         
-        barBtn = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.plain, target: self, action: #selector(UserPageViewController.buttonMethod))
+        //Edit Btn
+        barBtn = UIButton(type: .custom)
+        barBtn.setImage(UIImage(named: "edit"), for: .normal)
+        barBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        barBtn.addTarget(self, action: #selector(PostPageViewController.buttonMethod), for: .touchUpInside)
+        barBtnItem = UIBarButtonItem(customView: barBtn)
+        
+    
 
     }
     
@@ -286,7 +294,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
         if uid != posts[0].userID {
             navigationItem.rightBarButtonItems = []
         }else{
-            navigationItem.rightBarButtonItems = [barBtn]
+            navigationItem.rightBarButtonItems = [barBtnItem]
         }
         
         checkIfLiked()

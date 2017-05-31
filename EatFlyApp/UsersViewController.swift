@@ -18,6 +18,9 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+
+        
         NotificationCenter.default.addObserver(self, selector: #selector(notifyMethod), name: NSNotification.Name(rawValue: FollowNotificationKey), object: nil)
         self.tableView.tableFooterView = UIView()
         
@@ -29,6 +32,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         print("done")
         tableView.reloadData()
     }
+    
     
     func retrieveUsers(){
         let ref = FIRDatabase.database().reference()
@@ -68,7 +72,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.nameLbl.text = self.user[indexPath.row].fullName
         cell.userID = self.user[indexPath.row].userID
         cell.userImage.downloadImage(from: self.user[indexPath.row].imgPath!)
-        cell.followBtn.setImage(UIImage(named: "username"), for: .normal)
+        cell.followBtn.setImage(UIImage(named: "follow"), for: .normal)
         cell.checkFollowing()
         
         return cell

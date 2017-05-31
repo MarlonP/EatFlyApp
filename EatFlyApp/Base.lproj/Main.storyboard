@@ -37,7 +37,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kF9-A0-syU">
-                                                    <rect key="frame" x="18" y="26" width="130" height="21"/>
+                                                    <rect key="frame" x="18" y="25.5" width="130" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="130" id="OP9-Xw-6Cj"/>
                                                     </constraints>
@@ -50,7 +50,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="mnc-7d-7bf"/>
                                                     </constraints>
-                                                    <state key="normal" image="username"/>
+                                                    <state key="normal" image="minus"/>
                                                     <connections>
                                                         <action selector="pressPlusBtn:" destination="Tc7-eH-6GO" eventType="touchUpInside" id="UX6-de-fbE"/>
                                                     </connections>
@@ -60,13 +60,13 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="33" id="9iX-OL-uYJ"/>
                                                     </constraints>
-                                                    <state key="normal" image="username"/>
+                                                    <state key="normal" image="add-1"/>
                                                     <connections>
                                                         <action selector="pressMinusBtn:" destination="Tc7-eH-6GO" eventType="touchUpInside" id="RhH-Au-z1s"/>
                                                     </connections>
                                                 </button>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mSD-Zk-WXf" customClass="AnimatableTextField" customModule="IBAnimatable">
-                                                    <rect key="frame" x="197" y="20" width="38" height="30"/>
+                                                    <rect key="frame" x="197" y="19.5" width="38" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="YyA-2v-kki"/>
                                                     </constraints>
@@ -83,13 +83,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L8p-as-qgg">
-                                                    <rect key="frame" x="281" y="26" width="49" height="17"/>
+                                                    <rect key="frame" x="281" y="25.5" width="49" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.78047645089999995" green="0.78009414669999999" blue="0.80389338730000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="username" translatesAutoresizingMaskIntoConstraints="NO" id="IBz-Yp-bvp">
-                                                    <rect key="frame" x="350" y="19" width="17" height="30"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="IBz-Yp-bvp">
+                                                    <rect key="frame" x="350" y="19" width="17" height="28"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -186,7 +186,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Shop" id="wkE-53-e6l">
-                        <barButtonItem key="rightBarButtonItem" image="timeline" id="rSc-JI-Xhz">
+                        <barButtonItem key="rightBarButtonItem" image="scanning-barcode" id="rSc-JI-Xhz">
                             <connections>
                                 <action selector="scanButtonPressed:" destination="ZbX-6M-HiC" id="ne3-I5-d0x"/>
                             </connections>
@@ -379,7 +379,7 @@
                             </textField>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="groups" id="tZE-uG-8Kw">
+                            <barButtonItem image="navigation" id="tZE-uG-8Kw">
                                 <connections>
                                     <action selector="locateItemsBtnPressed:" destination="3Ul-Wo-Xal" id="AMm-ww-cR1"/>
                                     <segue destination="via-d0-6rJ" kind="show" identifier="locateItemsSegue" id="bwJ-LC-owH"/>
@@ -1907,11 +1907,11 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SCe-he-uEs">
-                                                    <rect key="frame" x="332" y="8" width="35" height="22"/>
+                                                    <rect key="frame" x="332" y="8" width="35" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="ROz-Zl-bul"/>
                                                     </constraints>
-                                                    <state key="normal" image="username"/>
+                                                    <state key="normal" image="unfollow"/>
                                                     <connections>
                                                         <action selector="followBtnPressed:" destination="0Rq-n1-Vki" eventType="touchUpInside" id="BsX-Up-5jx"/>
                                                     </connections>
@@ -2368,7 +2368,7 @@
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMa-NR-Q5s">
                                                     <rect key="frame" x="315" y="218" width="25" height="24"/>
-                                                    <state key="normal" image="like1"/>
+                                                    <state key="normal" image="like"/>
                                                     <connections>
                                                         <action selector="likePressed:" destination="Du9-9M-P8Y" eventType="touchUpInside" id="gTo-Gr-Nnz"/>
                                                     </connections>
@@ -2416,15 +2416,6 @@
                                                         <action selector="usernamePressed:" destination="lOn-m7-M86" eventType="touchUpInside" id="wCj-aR-5Ji"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mN0-qA-Bdc">
-                                                    <rect key="frame" x="307" y="244" width="36" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="36" id="ewr-8b-u9P"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZ3-YV-Bho" customClass="AnimatableLabel" customModule="IBAnimatable">
                                                     <rect key="frame" x="20" y="47" width="311" height="106"/>
                                                     <constraints>
@@ -2439,7 +2430,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="7bI-vo-e0b"/>
                                                     </constraints>
-                                                    <state key="normal" image="unlike1-1"/>
+                                                    <state key="normal" image="unlike"/>
                                                     <connections>
                                                         <action selector="unlikePressed:" destination="Du9-9M-P8Y" eventType="touchUpInside" id="CIV-FP-Eek"/>
                                                     </connections>
@@ -2453,12 +2444,19 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mN0-qA-Bdc">
+                                                    <rect key="frame" x="322.5" y="243" width="10" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstItem="qM2-dL-8S0" firstAttribute="trailing" secondItem="KXc-ke-Xrc" secondAttribute="trailing" id="4gV-iE-NV8"/>
                                             <constraint firstItem="bMa-NR-Q5s" firstAttribute="centerY" secondItem="KXc-ke-Xrc" secondAttribute="centerY" constant="-1" id="4k9-2l-LJk"/>
+                                            <constraint firstItem="mN0-qA-Bdc" firstAttribute="top" secondItem="hvk-by-TVR" secondAttribute="bottom" constant="1" id="8y9-0y-iFd"/>
                                             <constraint firstItem="auG-WG-hj5" firstAttribute="top" secondItem="oaO-oT-KoA" secondAttribute="bottom" constant="39" id="9jj-Zi-C7H"/>
                                             <constraint firstItem="KXc-ke-Xrc" firstAttribute="top" secondItem="oaO-oT-KoA" secondAttribute="bottom" constant="19" id="BEo-LO-JZg"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="hvk-by-TVR" secondAttribute="trailing" constant="3" id="Dgo-zL-lyB"/>
@@ -2478,7 +2476,7 @@
                                             <constraint firstItem="auG-WG-hj5" firstAttribute="trailing" secondItem="fZQ-OO-JeD" secondAttribute="trailing" constant="1" id="aaa-V6-V1s"/>
                                             <constraint firstItem="KXc-ke-Xrc" firstAttribute="leading" secondItem="auG-WG-hj5" secondAttribute="leading" constant="-1" id="agZ-dA-dBx"/>
                                             <constraint firstItem="KXc-ke-Xrc" firstAttribute="top" secondItem="pZ3-YV-Bho" secondAttribute="bottom" constant="66" id="cv9-2n-2Ov"/>
-                                            <constraint firstItem="mN0-qA-Bdc" firstAttribute="trailing" secondItem="Du9-9M-P8Y" secondAttribute="trailingMargin" id="e3h-SD-ScL"/>
+                                            <constraint firstItem="mN0-qA-Bdc" firstAttribute="trailing" secondItem="Du9-9M-P8Y" secondAttribute="trailingMargin" constant="-10.5" id="e3h-SD-ScL"/>
                                             <constraint firstItem="jC8-Gx-djP" firstAttribute="top" secondItem="qQW-mz-QAJ" secondAttribute="top" id="eXm-Pb-kSg"/>
                                             <constraint firstItem="qM2-dL-8S0" firstAttribute="leading" secondItem="KXc-ke-Xrc" secondAttribute="leading" id="h7J-9q-kJf"/>
                                             <constraint firstItem="qQW-mz-QAJ" firstAttribute="top" secondItem="qM2-dL-8S0" secondAttribute="top" constant="-5" id="hCh-Fc-bKP"/>
@@ -2488,7 +2486,7 @@
                                             <constraint firstItem="qQW-mz-QAJ" firstAttribute="leading" secondItem="Du9-9M-P8Y" secondAttribute="leadingMargin" constant="1" id="o6v-o9-cha"/>
                                             <constraint firstItem="fZQ-OO-JeD" firstAttribute="leading" secondItem="Du9-9M-P8Y" secondAttribute="leadingMargin" constant="66" id="oAT-Nh-4NH"/>
                                             <constraint firstItem="oaO-oT-KoA" firstAttribute="centerY" secondItem="pZ3-YV-Bho" secondAttribute="centerY" id="p8b-qT-aa7"/>
-                                            <constraint firstItem="mN0-qA-Bdc" firstAttribute="bottom" secondItem="qQW-mz-QAJ" secondAttribute="bottom" constant="1" id="q6y-a3-dje"/>
+                                            <constraint firstItem="mN0-qA-Bdc" firstAttribute="bottom" secondItem="qQW-mz-QAJ" secondAttribute="bottom" id="q6y-a3-dje"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="qQW-mz-QAJ" secondAttribute="bottom" constant="4" id="veb-O2-Cei"/>
                                             <constraint firstAttribute="bottom" secondItem="fZQ-OO-JeD" secondAttribute="bottom" constant="-199" id="vgZ-Td-47o"/>
                                             <constraint firstItem="hvk-by-TVR" firstAttribute="top" secondItem="qM2-dL-8S0" secondAttribute="top" constant="-1" id="yrN-pe-0kT"/>
@@ -2525,13 +2523,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="K8m-30-lhz">
-                        <barButtonItem key="leftBarButtonItem" image="lists" id="lK1-us-0GF">
+                        <barButtonItem key="leftBarButtonItem" image="users" id="lK1-us-0GF">
                             <connections>
                                 <segue destination="PDL-8f-URq" kind="show" id="JGa-Qa-epg"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="username" id="ZQI-p6-gun">
+                            <barButtonItem image="user" id="ZQI-p6-gun">
                                 <connections>
                                     <action selector="mePressed:" destination="lOn-m7-M86" id="jQR-w5-jcV"/>
                                 </connections>
@@ -2720,7 +2718,7 @@
                                                     <constraint firstAttribute="width" constant="25" id="Kuv-Ug-csS"/>
                                                     <constraint firstAttribute="height" constant="25" id="irX-gB-Zm5"/>
                                                 </constraints>
-                                                <state key="normal" backgroundImage="like1"/>
+                                                <state key="normal" backgroundImage="like"/>
                                                 <connections>
                                                     <action selector="likeBtnPressed:" destination="RaP-s4-ov7" eventType="touchUpInside" id="0uq-qd-7dR"/>
                                                 </connections>
@@ -2839,7 +2837,7 @@
         <scene sceneID="Mja-OO-uMX">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xpi-dc-R69" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="1" title="" image="overview" id="COn-Vj-FeL">
+                    <tabBarItem key="tabBarItem" tag="1" title="" image="network" id="COn-Vj-FeL">
                         <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -2879,7 +2877,7 @@
         <scene sceneID="N3D-yu-SaF">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fMA-14-fDX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="calendar" id="OmH-hx-1GU">
+                    <tabBarItem key="tabBarItem" title="" image="shopping-cart" id="OmH-hx-1GU">
                         <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -2902,28 +2900,34 @@
         <image name="161" width="850" height="586"/>
         <image name="1st Floor Plan" width="1309" height="423"/>
         <image name="add" width="22" height="22"/>
+        <image name="add-1" width="20" height="20"/>
         <image name="add-photo" width="50" height="51"/>
         <image name="back" width="21" height="21"/>
         <image name="background" width="537" height="800"/>
-        <image name="calendar" width="22" height="22"/>
         <image name="checked" width="80" height="80"/>
         <image name="done" width="23" height="17"/>
         <image name="email" width="21" height="18"/>
-        <image name="groups" width="18" height="18"/>
-        <image name="like1" width="50" height="50"/>
+        <image name="like" width="22" height="22"/>
         <image name="lists" width="21" height="19"/>
         <image name="logo white" width="600" height="321"/>
+        <image name="minus" width="20" height="20"/>
         <image name="more" width="23" height="6"/>
-        <image name="overview" width="22" height="22"/>
+        <image name="navigation" width="22" height="22"/>
+        <image name="network" width="22" height="22"/>
+        <image name="next" width="22" height="22"/>
         <image name="password" width="20" height="22"/>
+        <image name="scanning-barcode" width="30" height="30"/>
+        <image name="shopping-cart" width="22" height="22"/>
         <image name="test" width="192" height="186"/>
-        <image name="timeline" width="23" height="23"/>
         <image name="unchecked" width="80" height="81"/>
-        <image name="unlike1-1" width="50" height="50"/>
+        <image name="unfollow" width="25" height="25"/>
+        <image name="unlike" width="22" height="22"/>
+        <image name="user" width="22" height="22"/>
         <image name="username" width="20" height="19"/>
+        <image name="users" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="vjW-eG-v3j"/>
+        <segue reference="cIM-hY-7HH"/>
         <segue reference="McC-C3-Y7P"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -62,7 +62,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
         UIApplication.shared.registerUserNotificationSettings(
             UIUserNotificationSettings(types: .alert, categories: nil))
         
-        UIBarButtonItem.appearance().setBackButtonBackgroundImage(UIImage(named: "back"), for: .normal, barMetrics: .default)
+
+        
+  
         
 
         UINavigationBar.appearance().tintColor = UIColor.white

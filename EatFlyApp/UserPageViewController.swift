@@ -54,14 +54,14 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         //Follow Btn
         followBarBtn = UIButton(type: .custom)
-        followBarBtn.setImage(UIImage(named: "profile"), for: .normal)
+        followBarBtn.setImage(UIImage(named: "follow"), for: .normal)
         followBarBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         followBarBtn.addTarget(self, action: #selector(UserPageViewController.followMethod), for: .touchUpInside)
         followBarBtnItem = UIBarButtonItem(customView: followBarBtn)
         
         //Unfollow Btn
         unfollowBarBtn = UIButton(type: .custom)
-        unfollowBarBtn.setImage(UIImage(named: "gender"), for: .normal)
+        unfollowBarBtn.setImage(UIImage(named: "unfollow"), for: .normal)
         unfollowBarBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         unfollowBarBtn.addTarget(self, action: #selector(UserPageViewController.unfollowMethod), for: .touchUpInside)
         unfollowBarBtnItem = UIBarButtonItem(customView: unfollowBarBtn)
@@ -84,6 +84,16 @@ class UserPageViewController: UIViewController, UICollectionViewDelegate, UIColl
         
     
 
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        let yourBackImage = UIImage(named: "back")
+        self.navigationController?.navigationBar.backIndicatorImage = yourBackImage
+        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = yourBackImage
+        self.navigationController?.navigationBar.backItem?.title = ""
     }
     
     

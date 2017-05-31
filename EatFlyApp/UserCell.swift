@@ -38,7 +38,7 @@ class UserCell: UITableViewCell {
                         //self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
                         
                         
-                        self.followBtn.setImage(UIImage(named: "username"), for: .normal)
+                        self.followBtn.setImage(UIImage(named: "follow"), for: .normal)
                     }
                 }
                 
@@ -52,7 +52,7 @@ class UserCell: UITableViewCell {
                 ref.child("users").child(self.userID).updateChildValues(followers)
                 
                 //self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                self.followBtn.setImage(UIImage(named: "gender"), for: .normal)
+                self.followBtn.setImage(UIImage(named: "unfollow"), for: .normal)
                 
                 
             }
@@ -71,7 +71,7 @@ class UserCell: UITableViewCell {
                 for (_, value) in following {
                     if value as! String == self.userID {
                     
-                        self.followBtn.setImage(UIImage(named: "gender"), for: .normal)
+                        self.followBtn.setImage(UIImage(named: "unfollow"), for: .normal)
                     }
                     
                 }
