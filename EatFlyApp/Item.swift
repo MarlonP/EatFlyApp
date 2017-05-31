@@ -19,7 +19,7 @@ class Item : NSObject {
     var beaconID: String!
     var major: NSNumber!
     var minor: NSNumber!
-    var accuracy: Double!
+    var accuracy: Double?
     var proximity: String?
     
     

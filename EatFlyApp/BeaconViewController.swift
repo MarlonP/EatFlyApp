@@ -170,8 +170,9 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
     
     func handleReloadTable() {
         usersShoppingListItems.sort(by: { (item1, item2) -> Bool in
-            //fatal error: unexpectedly found nil while unwrapping an Optional value (maybe because not getting any data from beacons))
-            return item1.accuracy < item2.accuracy
+            guard let accuracyOne = item1.accuracy, let accuracyTwo = item2.accuracy else { return false }
+            
+            return accuracyOne < accuracyTwo
         })
         
 

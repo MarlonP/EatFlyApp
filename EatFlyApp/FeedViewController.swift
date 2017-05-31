@@ -28,7 +28,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotify), name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotify), name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshAfterLikeFromPPage), name: NSNotification.Name(rawValue: FeedNotificationKey2), object: nil)
         self.tabBarController?.delegate = self
         // Sets up the database reference
@@ -57,11 +57,11 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.navigationController?.navigationBar.backItem?.title = ""
     }
     
-    func doThisWhenNotify() {
-        posts.removeAll()
-        observePosts()
-        
-    }
+//    func doThisWhenNotify() {
+//        posts.removeAll()
+//        observePosts()
+//        
+//    }
     
     func refreshAfterLikeFromPPage(){
         self.attemptReloadOfTable()
@@ -83,7 +83,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     {
        self.attemptReloadOfTable()
    
-        self.FeedCollectionView!.refreshControl?.endRefreshing()
+        
     }
 
 
@@ -192,13 +192,19 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             if let dictionary = snapshot.value as? [String : AnyObject] {
                 let likes: Int!
+                let title: String!
+                let desc: String!
                 
          
                 likes = dictionary["likes"] as! Int
+                title = dictionary["title"] as! String
+                desc = dictionary["description"] as! String
            
                 
                 
                 self.posts[postsIndex].likes = likes
+                self.posts[postsIndex].title = title
+                self.posts[postsIndex].desc = desc
                 
                
             }
@@ -214,7 +220,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     fileprivate func attemptReloadOfTable() {
         self.timer?.invalidate()
-        
+        self.FeedCollectionView!.refreshControl!.endRefreshing()
         self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
     }
     

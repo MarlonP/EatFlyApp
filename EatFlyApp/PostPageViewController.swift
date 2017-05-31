@@ -35,7 +35,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(whenNotify), name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(whenNotify), name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(whenNotify), name: NSNotification.Name(rawValue: FeedNotificationKey2), object: nil)
         
         self.tableView.tableFooterView = UIView()
@@ -85,7 +85,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                 self.titleLbl.text = newTitleTextField.text!
                 
                 self.updatePost(newDescription: self.descriptionLbl.text!, newTitle: newTitleTextField.text!)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
+                //NotificationCenter.default.post(name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
                
             })
             
@@ -124,7 +124,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                 self.descriptionLbl.text = newDescTextField.text!
                 
                 self.updatePost(newDescription: newDescTextField.text!, newTitle: self.titleLbl.text!)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
+                //NotificationCenter.default.post(name: NSNotification.Name(rawValue: FeedNotificationKey1), object: nil)
             })
             
             // Cancel button
@@ -408,7 +408,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                                     ref.child("posts").child(self.posts[0].postID).updateChildValues(update)
                                     
                                     
-                                    self.likeBtn.setImage(UIImage(named: "unlike1-1"), for: .normal)
+                                    self.likeBtn.setImage(UIImage(named: "unlike"), for: .normal)
                                     self.liked = true
                                 }
                             }
@@ -452,7 +452,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                             })
                             
                             
-                            self.likeBtn.setImage(UIImage(named: "like1"), for: .normal)
+                            self.likeBtn.setImage(UIImage(named: "like"), for: .normal)
                             self.liked = false
                             
                             
@@ -475,11 +475,11 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 for (_,person) in peopleWhoLike {
                     if person as? String == FIRAuth.auth()!.currentUser!.uid {
-                        self.likeBtn.setImage(UIImage(named: "unlike1-1"), for: .normal)
+                        self.likeBtn.setImage(UIImage(named: "unlike"), for: .normal)
                         self.liked = true
                         
                     }else{
-                        self.likeBtn.setImage(UIImage(named: "like1"), for: .normal)
+                        self.likeBtn.setImage(UIImage(named: "like"), for: .normal)
                         self.liked = false
                         
                     }
@@ -487,7 +487,7 @@ class PostPageViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 
             }else{
-                self.likeBtn.setImage(UIImage(named: "like1"), for: .normal)
+                self.likeBtn.setImage(UIImage(named: "like"), for: .normal)
                 self.liked = false
             }
             

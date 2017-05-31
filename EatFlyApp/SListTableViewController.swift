@@ -29,6 +29,8 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedAround()
+        
         getItemDetails()
         
         NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotifySL), name: NSNotification.Name(rawValue: mySLNotificationKey), object: nil)
@@ -38,6 +40,8 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         self.resultSearchController.dimsBackgroundDuringPresentation = false
         self.resultSearchController.searchBar.sizeToFit()
+        
+        definesPresentationContext = true
         
         self.tableView.tableHeaderView = self.resultSearchController.searchBar
         
