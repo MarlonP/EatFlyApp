@@ -44,6 +44,9 @@
 		F2C214B31E60995200A1D565 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214B21E60995200A1D565 /* Post.swift */; };
 		F2C214F51E68733A00A1D565 /* UserPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214F41E68733A00A1D565 /* UserPageViewController.swift */; };
 		F2C214F71E799B6C00A1D565 /* PayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C214F61E799B6C00A1D565 /* PayTableViewCell.swift */; };
+		F2EB45171EE017610046105D /* BeaconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EB45161EE017600046105D /* BeaconCell.swift */; };
+		F2EB45191EE030BC0046105D /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EB45181EE030BB0046105D /* SearchCell.swift */; };
+		F2EB451B1EE19EBE0046105D /* shoppingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EB451A1EE19EBE0046105D /* shoppingListItem.swift */; };
 		F44C5C761E50B0AF00B52336 /* items.json in Resources */ = {isa = PBXBuildFile; fileRef = F44C5C751E50B0AF00B52336 /* items.json */; };
 		F44C5C781E50B0EF00B52336 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44C5C771E50B0EF00B52336 /* Item.swift */; };
 		F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93B51E43A96100334F68 /* AppDelegate.swift */; };
@@ -129,6 +132,9 @@
 		F2C214B21E60995200A1D565 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		F2C214F41E68733A00A1D565 /* UserPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPageViewController.swift; sourceTree = "<group>"; };
 		F2C214F61E799B6C00A1D565 /* PayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayTableViewCell.swift; sourceTree = "<group>"; };
+		F2EB45161EE017600046105D /* BeaconCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconCell.swift; sourceTree = "<group>"; };
+		F2EB45181EE030BB0046105D /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		F2EB451A1EE19EBE0046105D /* shoppingListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shoppingListItem.swift; sourceTree = "<group>"; };
 		F44C5C751E50B0AF00B52336 /* items.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = items.json; sourceTree = "<group>"; };
 		F44C5C771E50B0EF00B52336 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		F46F93B21E43A96100334F68 /* EatFlyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EatFlyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -248,6 +254,8 @@
 				F2C214F61E799B6C00A1D565 /* PayTableViewCell.swift */,
 				0E90DBBA1E801AFF00516435 /* userPostCell.swift */,
 				F233618F1EC89DEC00F3909D /* ShoppingListCell.swift */,
+				F2EB45161EE017600046105D /* BeaconCell.swift */,
+				F2EB45181EE030BB0046105D /* SearchCell.swift */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -262,6 +270,7 @@
 				F23C3C541EACDFD000BED5BD /* ManualAddedItem.swift */,
 				F23361911EC9FE4000F3909D /* Beacon.swift */,
 				F233619E1ED1BEDE00F3909D /* mapSite.swift */,
+				F2EB451A1EE19EBE0046105D /* shoppingListItem.swift */,
 			);
 			name = "Objects/ Classes/ Models";
 			sourceTree = "<group>";
@@ -523,6 +532,7 @@
 				F2B155A01EC5C51F00204197 /* BeaconViewController.swift in Sources */,
 				F240063F1ED5CAA80078E9B1 /* PayViewController.swift in Sources */,
 				F4952D861E4CC84A00BCF523 /* SignUpViewController.swift in Sources */,
+				F2EB45171EE017610046105D /* BeaconCell.swift in Sources */,
 				F2C214AD1E60853F00A1D565 /* UploadViewController.swift in Sources */,
 				F2C214B11E60981200A1D565 /* PostCell.swift in Sources */,
 				F46F93B81E43A96100334F68 /* ViewController.swift in Sources */,
@@ -537,6 +547,7 @@
 				F23361981ECC965D00F3909D /* MapViewController.swift in Sources */,
 				F23C3C501EA908BA00BED5BD /* ForgotPasswordViewController.swift in Sources */,
 				F216BB691E8D5B6300978D9A /* RecipeTableViewController.swift in Sources */,
+				F2EB45191EE030BC0046105D /* SearchCell.swift in Sources */,
 				F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */,
 				F23361901EC89DEC00F3909D /* ShoppingListCell.swift in Sources */,
 				F2C214F51E68733A00A1D565 /* UserPageViewController.swift in Sources */,
@@ -546,6 +557,7 @@
 				F28B14851E5F4E4B009ED6A9 /* UsersViewController.swift in Sources */,
 				F2B4656F1E9E54C6001589D0 /* SettingsTableViewController.swift in Sources */,
 				F20FD63A1EBE2075007FC705 /* FeedViewController.swift in Sources */,
+				F2EB451B1EE19EBE0046105D /* shoppingListItem.swift in Sources */,
 				0ED8D2E41E94DF6800A8C2CE /* PostPageViewController.swift in Sources */,
 				F2B1555F1EC1F48800204197 /* itemDetailsViewController.swift in Sources */,
 				F46F93E41E44D2E300334F68 /* LogInViewController.swift in Sources */,
@@ -724,6 +736,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = MCP.EatFlyApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -743,6 +756,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = MCP.EatFlyApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

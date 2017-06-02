@@ -76,6 +76,11 @@ class PopUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         pickerView.isHidden = true
     }
 
+    @IBAction func closeBtnPressed(_ sender: Any) {
+        nameTxtField.text = ""
+        amountTxtField.text = ""
+        dismiss(animated: true, completion: nil)
+    }
 
     @IBAction func donePressed(_ sender: Any) {
         

@@ -15,6 +15,7 @@ class PayViewController: UIViewController {
     
     @IBOutlet weak var totalPriceLbl: UILabel!
     @IBOutlet weak var amountOfItemsLbl: UILabel!
+    @IBOutlet weak var applePaybtn: UIButton!
     
     
 
@@ -23,6 +24,8 @@ class PayViewController: UIViewController {
         
         totalPriceLbl.text = finalTotalPrice
         amountOfItemsLbl.text = "\(amountOfItems!) Items"
+        
+        
 
         // Do any additional setup after loading the view.
     }

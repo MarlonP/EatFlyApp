@@ -82,29 +82,26 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! BeaconCell
         let item = usersShoppingListItems[indexPath.row]
         
         
         
-        
-        
-        
-        print(item.itemName)
-        cell.textLabel?.text = item.itemName
+        cell.itemNameLbl.text = item.itemName
+        cell.itemImageView.downloadImage(from: item.img)
         
         if let proximity = item.proximity, let accuracy = item.accuracy {
             
             if proximity == "Unknown"{
-                cell.detailTextLabel?.text = proximity
+                cell.accuracyLbl.text = proximity
                 
             }else{
                 if (accuracy < 1) {
-                    cell.detailTextLabel?.text = "Approx. > 1m"
+                    cell.accuracyLbl.text = "Approx. > 1m"
                 }else{
                     let accuracyString = (String(format: "%.0f", accuracy))
                     //print(accuracyString)
-                    cell.detailTextLabel?.text = "Approx. \(accuracyString)m"
+                    cell.accuracyLbl.text = "Approx. \(accuracyString)m"
                 }
                 
               handleReloadTable()
@@ -126,7 +123,7 @@ class BeaconViewController: UIViewController, ESTBeaconManagerDelegate, UITableV
         let indexPath = tableView.indexPathForSelectedRow!
         let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
         
-        valueToPass = currentCell.textLabel?.text
+        valueToPass = usersShoppingListItems[indexPath.row].itemName
         performSegue(withIdentifier: "mapViewSegue", sender: self)
         
         passedValue = valueToPass

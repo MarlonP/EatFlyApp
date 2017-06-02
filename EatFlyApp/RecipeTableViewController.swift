@@ -32,15 +32,7 @@ class RecipeTableViewController: UITableViewController {
 
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
-        let yourBackImage = UIImage(named: "back")
-        self.navigationController?.navigationBar.backIndicatorImage = yourBackImage
-        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = yourBackImage
-        self.navigationController?.navigationBar.backItem?.title = ""
-    }
+    
     
     func doThisWhenNotify1() {
         uploadRecipe = recipe

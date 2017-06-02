@@ -56,6 +56,40 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.navigationController?.navigationBar.backItem?.title = ""
     }
     
+    @IBAction func startNewShopPressed(_ sender: Any) {
+        
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        
+       
+            
+            let alert = UIAlertController(title: "Start a new shop",
+                                          message: "Are you sure you want to start a new shop?",
+                                          preferredStyle: .alert)
+            // Submit button
+            let submitAction = UIAlertAction(title: "Yes", style: .default, handler: { (action) -> Void in
+                self.currentShop.removeAll()
+                self.ref.child("users").child(uid!).child("currentShop").removeValue()
+                
+                self.tableView.reloadData()
+                
+                
+                
+            })
+        
+        // Cancel button
+        let cancel = UIAlertAction(title: "No", style: .destructive, handler: { (action) -> Void in })
+        
+        
+        // Add action buttons and present the Alert
+        alert.addAction(submitAction)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
+        
+    
+
+        
+    }
+    
     
     @IBAction func scanButtonPressed(_ sender: Any) {
         let controller = BarcodeScannerController()
@@ -318,6 +352,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 }
 
 extension ViewController: BarcodeScannerCodeDelegate, BarcodeScannerErrorDelegate, BarcodeScannerDismissalDelegate {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        BarcodeScanner.Title.color = UIColor.white
+        BarcodeScanner.CloseButton.color = UIColor.white
+        BarcodeScanner.SettingsButton.color = UIColor.white
+        BarcodeScanner.Info.textColor = UIColor.black
+        BarcodeScanner.Info.tint = UIColor.black
+        BarcodeScanner.Info.loadingTint = UIColor.marlonBlue()
+        BarcodeScanner.Info.notFoundTint = UIColor.red
+    }
     
     func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
         

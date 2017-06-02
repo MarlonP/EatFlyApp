@@ -34,15 +34,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     
                     switch (exItem){
                     case "Apple":
+                        appleImg.downloadImage(from: item.img)
                         appleImg.isHidden = false
                         
                     case "Carrots":
+                        carrotImg.downloadImage(from: item.img)
                         carrotImg.isHidden = false
                         
                     case "Chicken":
+                        chickenImg.downloadImage(from: item.img)
                         chickenImg.isHidden = false
                     
                     case "Donut":
+                        donuntImg.downloadImage(from: item.img)
                         donuntImg.isHidden = false
                         
                     default:

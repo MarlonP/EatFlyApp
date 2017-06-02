@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-let mySLNotificationKey = "com.mp.SLnotificationKey"
+
 
 class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     
@@ -21,7 +21,8 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     var refHandle: UInt!
     
     var shoppingList = [String]()
-    var resultSearchController = UISearchController()
+    let searchController = UISearchController(searchResultsController: nil)
+
     
     var BCfromDB = [String]()
     var recentSearches = [Item]()
@@ -33,19 +34,30 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         getItemDetails()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(doThisWhenNotifySL), name: NSNotification.Name(rawValue: mySLNotificationKey), object: nil)
+   
         
-        self.resultSearchController = UISearchController(searchResultsController: nil)
-        self.resultSearchController.searchResultsUpdater = self
+      
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
         
-        self.resultSearchController.dimsBackgroundDuringPresentation = false
-        self.resultSearchController.searchBar.sizeToFit()
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.searchBarStyle = UISearchBarStyle.prominent
+        self.tableView.tableHeaderView = searchController.searchBar
+        
+        searchController.searchBar.layer.borderColor = UIColor.marlonBlue().cgColor
+        searchController.searchBar.layer.borderWidth = 5
+        searchController.searchBar.isTranslucent = false
+        searchController.searchBar.tintColor = UIColor.white
+        searchController.searchBar.barTintColor = UIColor.marlonBlue()
+        
+        searchController.searchBar.placeholder = ""
+        
+ 
+        
         
         definesPresentationContext = true
         
-        self.tableView.tableHeaderView = self.resultSearchController.searchBar
-        
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
     }
     override func viewDidAppear(_ animated: Bool) {
         getItems()
@@ -71,10 +83,11 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
                
                 
                         let itemData = Item()
-                        if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String {
+                        if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String, let imgPath = value["img"] as? String {
                             itemData.itemName = itemName
                             itemData.barcode = barcode
                             itemData.price = price
+                            itemData.img = imgPath
                             
                             
                             self.items.append(itemData)
@@ -104,7 +117,7 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if self.resultSearchController.isActive
+        if self.searchController.isActive
         {
             return self.filteredData.count
         }
@@ -116,38 +129,37 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell?
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SearchCell
         
-        if self.resultSearchController.isActive
+        if self.searchController.isActive
         {
-            cell!.textLabel?.text = self.filteredData[indexPath.row]
+            cell.itemNameLbl.text = self.filteredData[indexPath.row]
             
-            //compares string filteredData array to the items array and appends all the filteredData into filteredItems
-            //THIS IS THE PROBLEM ONLY HAS 1 ITEM WHEN THERE IS 2
+
             
-            for i in 0...items.count-1{
-                if self.filteredData[indexPath.row]  == items[i].itemName{
-                    print(filteredData[indexPath.row])
-                    filteredItems.append(items[i])
-                    print(filteredItems.count)
-                    print(filteredItems)
-                }
-                
-            }
+            cell.itemTypeLbl.text = "£\(self.filteredItems[indexPath.row].price!)"
+            cell.itemImageView.downloadImage(from: self.filteredItems[indexPath.row].img)
+            
+            
         }
         else
         {
-            cell!.textLabel?.text = self.recentSearches[indexPath.row].itemName
+            cell.itemNameLbl.text = self.recentSearches[indexPath.row].itemName
+            cell.itemTypeLbl.text = "£\(self.recentSearches[indexPath.row].price!)"
+            cell.itemImageView.downloadImage(from: self.recentSearches[indexPath.row].img)
             
         }
         
         
-        return cell!
+    
+        
+        
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        if resultSearchController.isActive {
+        if searchController.isActive {
             return nil
         }
             return "Recent Searches"
@@ -156,7 +168,13 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         
+        
+        //compares string filteredData array to the items array and appends all the filteredData into filteredItems
+        //THIS IS THE PROBLEM ONLY HAS 1 ITEM WHEN THERE IS 2
+        
+        
         self.filteredData.removeAll(keepingCapacity: false)
+        filteredItems.removeAll(keepingCapacity: false)
         
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
         
@@ -166,11 +184,41 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         
         self.filteredData = array as! [String]
         
-        filteredItems.removeAll(keepingCapacity: false)
+        for item in items{
+            for filteredItem in filteredData{
+                if item.itemName == filteredItem {
+                    filteredItems.append(item)
+                }
+            }
+            
+        }
+        print(filteredItems)
+        
+        
         self.tableView.reloadData()
         
         
     }
+    
+    func checkForDuplicateItems(barcode:String) -> Bool {
+        
+        var duplicateItem = false
+        
+        
+        for item in userItems {
+            
+            if item.barcode == barcode {
+                
+                duplicateItem = true
+            }
+            
+            
+        }
+        
+        
+        return duplicateItem
+    }
+    
     
     
     
@@ -179,12 +227,20 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
         let uid = FIRAuth.auth()!.currentUser!.uid
         let ref = FIRDatabase.database().reference()
         let key = ref.child("users").child(uid).child("itemsList").childByAutoId().key
+        let timestamp = NSDate().timeIntervalSince1970
         
-        if self.resultSearchController.isActive {
+        if self.searchController.isActive {
+            if checkForDuplicateItems(barcode:self.filteredItems[indexPath.row].barcode) == true {
+                let alert = UIAlertController(title: "Item is already in your shopping list.", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                searchController.searchBar.endEditing(true)
+            
+            }else{
 
         print( self.filteredItems[indexPath.row])
         
-        let item: [String : Any] = ["barcode" : self.filteredItems[indexPath.row].barcode, "completion" : false, "listID" : key]
+        let item: [String : Any] = ["barcode" : self.filteredItems[indexPath.row].barcode, "completion" : false, "timestamp" : Int(timestamp), "listID" : key]
         let itemsList = ["\(key)" : item]
         
         ref.child("users").child(uid).child("itemsList").updateChildValues(itemsList)
@@ -208,17 +264,28 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
             
         }
 
-        resultSearchController.searchBar.endEditing(true)
-        resultSearchController.dismiss(animated: true, completion: nil)
-        
+        //searchController.searchBar.endEditing(true)
+        //searchController.dismiss(animated: true, completion: nil)
+            
+            }
         
         }else{
-            let item: [String : Any] = ["barcode" : self.recentSearches[indexPath.row].barcode, "completion" : false, "listID" : key]
+            if checkForDuplicateItems(barcode:self.recentSearches[indexPath.row].barcode) == true {
+                let alert = UIAlertController(title: "Item is already in your shopping list.", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                
+                
+            }else{
+            
+            
+            let item: [String : Any] = ["barcode" : self.recentSearches[indexPath.row].barcode, "completion" : false, "timestamp" : Int(timestamp), "listID" : key]
             let itemsList = ["\(key)" : item]
             
             ref.child("users").child(uid).child("itemsList").updateChildValues(itemsList)
+            }
         }
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: mySLNotificationKey), object: nil)
+
         navigationController?.popViewController(animated: true)
     }
     
@@ -235,10 +302,13 @@ class SListTableViewController: UITableViewController, UISearchResultsUpdating {
             for (_,value) in itemsSnap {
                 
                 let itemData = Item()
-                if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String {
+                if let itemName = value["itemName"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String, let imgPath = value["img"] as? String {
                     itemData.itemName = itemName
                     itemData.barcode = barcode
                     itemData.price = price
+                    itemData.img = imgPath
+                    
+                    
                     if self.BCfromDB.count != 0 {
                         for i in 0...self.BCfromDB.count-1 {
                             if (itemData.barcode == self.BCfromDB[i]){

@@ -100,5 +100,41 @@ class ShoppingListCell: UITableViewCell {
         }
         
         }
+    
+    func checkCompletion(){
+        
+        let uid = FIRAuth.auth()!.currentUser!.uid
+        let ref = FIRDatabase.database().reference()
+        
+        ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            
+            
+            if let completed = snapshot.value as? [String : AnyObject] {
+                for (_, value) in completed {
+                    let listID = value["listID"]
+                    if listID as! String == self.SLListID {
+                        
+                        let completion = value["completion"] as! Bool
+                        let id = value["listID"] as! String
+                        
+                        if completion == true {
+                            
+                            
+                            self.checkBox.checked = true
+                            
+                        }else if completion == false{
+                            
+                            self.checkBox.checked = false
+                        }
+                        
+                    }
+                }
+            }
+            
+        })
+        ref.removeAllObservers()
+    }
+    
+
 
 }

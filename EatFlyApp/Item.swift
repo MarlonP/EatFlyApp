@@ -21,6 +21,8 @@ class Item : NSObject {
     var minor: NSNumber!
     var accuracy: Double?
     var proximity: String?
+    var timestamp: NSNumber?
+    
     
     
     

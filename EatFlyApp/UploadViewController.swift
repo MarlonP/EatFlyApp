@@ -21,6 +21,9 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var previewImage: UIImageView!
     //@IBOutlet weak var selectBtn: UIButton!
     
+    var backBarBtn: UIButton!
+    var backBarBtnItem:UIBarButtonItem!
+    
     var picker = UIImagePickerController()
     var array = ["Recipe", "Instructions"]
     
@@ -38,8 +41,34 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                                                object: nil)
         
         
+        
+        backBarBtn = UIButton(type: .custom)
+        backBarBtn.setImage(UIImage(named: "back"), for: .normal)
+        backBarBtn.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        backBarBtn.addTarget(self, action: #selector(UploadViewController.back), for: .touchUpInside)
+        backBarBtnItem = UIBarButtonItem(customView: backBarBtn)
+        
+        self.navigationItem.leftBarButtonItem = backBarBtnItem
    
 
+    }
+    
+    func back(sender: UIBarButtonItem) {
+        if uploadRecipe.count != 0 {
+            uploadRecipe.removeAll()
+        }
+        
+        if recipe.count != 0 {
+            recipe.removeAll()
+        }
+        
+        titleTextField.text = ""
+        descriptionTextView.text = ""
+        
+        if previewImage.image != nil {
+            previewImage.image = nil
+        }
+        _ = navigationController?.popViewController(animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -53,6 +82,10 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+
+    }
+    
     func doSomethingAfterNotified1() {
         
         
@@ -60,6 +93,16 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func whenNotify(){
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        let yourBackImage = UIImage(named: "back")
+        self.navigationController?.navigationBar.backIndicatorImage = yourBackImage
+        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = yourBackImage
+        self.navigationController?.navigationBar.backItem?.title = ""
     }
     
    

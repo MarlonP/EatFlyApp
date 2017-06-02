@@ -10,15 +10,20 @@ import UIKit
 import Firebase
 
 var listDetail = [Item]()
-
+var userItems = [shoppingListItem]()
 
 class ShoppingListTableViewController: UITableViewController {
     @IBOutlet weak var input: UITextField!
     var userAddedItems = [ManualAddedItem]()
     var BCfromDB = [String]()
+    
     var shoppingList = [Item]()
+    
     var SLCompletion = [Bool]()
     var itemListIDs = [String]()
+    
+    
+    
     var ref: FIRDatabaseReference!
     
 
@@ -32,10 +37,7 @@ class ShoppingListTableViewController: UITableViewController {
         observeShoppingList()
         observeUsersManualItems()
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(doSomethingAfterNotifiedSL),
-                                               name: NSNotification.Name(rawValue: mySLNotificationKey),
-                                               object: nil)
+  
      
 
     }
@@ -57,11 +59,7 @@ class ShoppingListTableViewController: UITableViewController {
     
     
 
-    func doSomethingAfterNotifiedSL() {
-   
-    
-        
-    }
+
     
     @IBAction func locateItemsBtnPressed(_ sender: Any) {
         
@@ -95,15 +93,9 @@ class ShoppingListTableViewController: UITableViewController {
         
         if indexPath.section == 0 {
             cell.indexPath = indexPath as NSIndexPath
-             cell.SLListID = self.itemListIDs[indexPath.row]
+             cell.SLListID = userItems[indexPath.row].listID
             
-            if SLCompletion[indexPath.row] == true {
-            
-                cell.checkBox.checked = true
-            }else{
-            
-                cell.checkBox.checked = false
-            }
+            cell.checkCompletion()
             
             cell.itemName.text = shoppingList[indexPath.row].itemName
             cell.itemDesc.text = shoppingList[indexPath.row].itemType
@@ -177,14 +169,15 @@ class ShoppingListTableViewController: UITableViewController {
             //PROBLEM IS ARRAY IS CHANGING PLACES AND BECAUSE ID'S ARE IN DIFFERENT PLACES ITS DELETING THE WRONG ITEM
             if indexPath.section == 0 {
                 
-                let listID = self.itemListIDs[indexPath.row]
+                let listID = userItems[indexPath.row].listID
                 
-                self.ref.child("users").child(uid).child("itemsList").child(listID).removeValue()
+                self.ref.child("users").child(uid).child("itemsList").child(listID!).removeValue()
                 
                 self.shoppingList.remove(at: indexPath.row)
-                self.BCfromDB.remove(at: indexPath.row)
-                self.SLCompletion.remove(at: indexPath.row)
-                self.itemListIDs.remove(at: indexPath.row)
+                userItems.remove(at: indexPath.row)
+//                self.BCfromDB.remove(at: indexPath.row)
+//                self.SLCompletion.remove(at: indexPath.row)
+//                self.itemListIDs.remove(at: indexPath.row)
                 
                 tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
                   deletedRow.accessoryType = UITableViewCellAccessoryType.none
@@ -254,7 +247,7 @@ class ShoppingListTableViewController: UITableViewController {
         ref = FIRDatabase.database().reference()
         
         ref.child("users").child(uid).child("manuallyAddedItems").observe(.childAdded, with: { (snapshot) in
-            self.getItemDetails()
+            
             
             if let dictionary = snapshot.value as? [String : AnyObject] {
                 let manualItemData = ManualAddedItem()
@@ -267,10 +260,12 @@ class ShoppingListTableViewController: UITableViewController {
                 
                 
             }
+            self.tableView.reloadData()
+            
         })
         
         ref.child("users").child(uid).child("manuallyAddedItems").observe(.childRemoved, with: { (snapshot) in
-            self.getItemDetails()
+            
             
             var manualItemsIndex: Int!
             
@@ -286,6 +281,7 @@ class ShoppingListTableViewController: UITableViewController {
             }
             
             self.userAddedItems.remove(at: manualItemsIndex)
+            self.tableView.reloadData()
             
         })
 
@@ -305,21 +301,28 @@ class ShoppingListTableViewController: UITableViewController {
             for (_,value) in itemsSnap {
                 
                 let itemData = Item()
-                if let itemName = value["itemName"] as? String, let itemType = value["itemType"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String, let beaconID = value["beacon"] as? String{
+                if let itemName = value["itemName"] as? String, let itemType = value["itemType"] as? String, let barcode = value["barcode"] as? String, let price = value["price"] as? String, let beaconID = value["beacon"] as? String, let imgPath = value["img"] as? String{
                     itemData.itemName = itemName
                     itemData.itemType = itemType
                     itemData.barcode = barcode
                     itemData.price = price
                     itemData.beaconID = beaconID
+                    itemData.img = imgPath
                    
                     
-                    if self.BCfromDB.count != 0 {
-                        for i in 0...self.BCfromDB.count-1 {
-                            if (itemData.barcode == self.BCfromDB[i]){
-                                
+                    if userItems.count != 0 {
+                        for item in userItems {
+                            if (itemData.barcode == item.barcode){
+                                itemData.timestamp = item.timestamp
                                 self.shoppingList.append(itemData)
+                                
+                                
                             }
                         }
+                        self.shoppingList.sort(by: { (item1, item2) -> Bool in
+                            
+                            return (item1.timestamp?.intValue)! < (item2.timestamp?.intValue)!
+                        })
                         
                         self.tableView.reloadData()
                     }
@@ -334,7 +337,8 @@ class ShoppingListTableViewController: UITableViewController {
         ref.removeAllObservers()
         
     }
-
+// sort both arrays with timestamp
+    //Both arrays have same timestamps, so should be sorted in the same order
     
     func observeShoppingList(){
         
@@ -342,38 +346,55 @@ class ShoppingListTableViewController: UITableViewController {
         ref = FIRDatabase.database().reference()
         
         ref.child("users").child(uid).child("itemsList").observe(.childAdded, with: { (snapshot) in
-            self.getItemDetails()
+            
+            let itemData = shoppingListItem()
             
             if let dictionary = snapshot.value as? [String : AnyObject] {
                 
                 let barcode = dictionary["barcode"] as! String
                 let completion = dictionary["completion"] as! Bool
                 let listID = dictionary["listID"] as! String
+                let timeStamp = dictionary["timestamp"] as! NSNumber
                 
-                self.BCfromDB.append(barcode)
-                self.SLCompletion.append(completion)
-                self.itemListIDs.append(listID)
+//                self.BCfromDB.append(barcode)
+//                self.SLCompletion.append(completion)
+//                self.itemListIDs.append(listID)
                 
-                self.tableView.reloadData()
+                itemData.barcode = barcode
+                itemData.completion = completion
+                itemData.timestamp = timeStamp
+                itemData.listID = listID
+                
+                //self.tableView.reloadData()
+                
+                userItems.append(itemData)
+                
+                
             }
+            userItems.sort(by: { (item1, item2) -> Bool in
+                    
+                    return item1.timestamp.intValue < item2.timestamp.intValue
+                })
+            self.getItemDetails()
         }, withCancel: nil)
         
         ref.child("users").child(uid).child("itemsList").observe(.childRemoved, with: { (snapshot) in
-            self.getItemDetails()
+            //self.getItemDetails()
             
             var itemsIndex: Int!
             
-            for i in 0...self.itemListIDs.count-1{
+            for i in 0...userItems.count-1{
                
                 
-                if self.itemListIDs[i] == snapshot.key{
+                if userItems[i].listID == snapshot.key{
                    
                     itemsIndex = i
                     
                     self.shoppingList.remove(at: itemsIndex)
-                    self.BCfromDB.remove(at: itemsIndex)
-                    self.SLCompletion.remove(at: itemsIndex)
-                    self.itemListIDs.remove(at: itemsIndex)
+                    userItems.remove(at: itemsIndex)
+//                    self.BCfromDB.remove(at: itemsIndex)
+//                    self.SLCompletion.remove(at: itemsIndex)
+//                    self.itemListIDs.remove(at: itemsIndex)
                     
                     self.tableView.reloadData()
                 }
@@ -385,6 +406,7 @@ class ShoppingListTableViewController: UITableViewController {
         
     }
    
+
 
 
 

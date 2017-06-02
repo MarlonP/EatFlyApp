@@ -63,15 +63,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
             UIUserNotificationSettings(types: .alert, categories: nil))
         
 
-        
-  
-        
 
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
         
         
-        
+       
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = UIColor.marlonBlue()
         
         
         FIRApp.configure()
@@ -105,3 +103,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
 
 }
 
+extension UIColor {
+    static func marlonBlue() -> UIColor {
+        return UIColor(red: 3.0/255.0, green: 201.0/255.0, blue: 169.0/255.0, alpha: 1.0)
+    }
+}

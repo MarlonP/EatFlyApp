@@ -24,7 +24,7 @@ class InfoView: UIVisualEffectView {
   /// Border view.
   lazy var borderView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor.clear
+    view.backgroundColor = UIColor.white
     view.layer.borderWidth = 2
     view.layer.cornerRadius = 10
 
@@ -46,6 +46,7 @@ class InfoView: UIVisualEffectView {
       label.textAlignment = stateStyles.alignment
       imageView.tintColor = stateStyles.tint
       borderView.layer.borderColor = stateStyles.tint.cgColor
+      borderView.layer.backgroundColor = stateStyles.tint.cgColor
 
       if status.state != .processing {
         borderView.isHidden = true
