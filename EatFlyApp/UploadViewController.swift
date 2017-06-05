@@ -25,7 +25,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     var backBarBtnItem:UIBarButtonItem!
     
     var picker = UIImagePickerController()
-    var array = ["Recipe", "Instructions"]
+    var array = ["Recipe"]
     
     var recipeDone = false
 

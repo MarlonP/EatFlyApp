@@ -47,6 +47,7 @@
 		F2EB45171EE017610046105D /* BeaconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EB45161EE017600046105D /* BeaconCell.swift */; };
 		F2EB45191EE030BC0046105D /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EB45181EE030BB0046105D /* SearchCell.swift */; };
 		F2EB451B1EE19EBE0046105D /* shoppingListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EB451A1EE19EBE0046105D /* shoppingListItem.swift */; };
+		F2EB451D1EE58F1E0046105D /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EB451C1EE58F1D0046105D /* EmailViewController.swift */; };
 		F44C5C761E50B0AF00B52336 /* items.json in Resources */ = {isa = PBXBuildFile; fileRef = F44C5C751E50B0AF00B52336 /* items.json */; };
 		F44C5C781E50B0EF00B52336 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44C5C771E50B0EF00B52336 /* Item.swift */; };
 		F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F93B51E43A96100334F68 /* AppDelegate.swift */; };
@@ -135,6 +136,7 @@
 		F2EB45161EE017600046105D /* BeaconCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconCell.swift; sourceTree = "<group>"; };
 		F2EB45181EE030BB0046105D /* SearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		F2EB451A1EE19EBE0046105D /* shoppingListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shoppingListItem.swift; sourceTree = "<group>"; };
+		F2EB451C1EE58F1D0046105D /* EmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
 		F44C5C751E50B0AF00B52336 /* items.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = items.json; sourceTree = "<group>"; };
 		F44C5C771E50B0EF00B52336 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		F46F93B21E43A96100334F68 /* EatFlyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EatFlyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -242,6 +244,7 @@
 				F2B1559F1EC5C51F00204197 /* BeaconViewController.swift */,
 				F23361971ECC965D00F3909D /* MapViewController.swift */,
 				F240063E1ED5CAA70078E9B1 /* PayViewController.swift */,
+				F2EB451C1EE58F1D0046105D /* EmailViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				F216BB691E8D5B6300978D9A /* RecipeTableViewController.swift in Sources */,
 				F2EB45191EE030BC0046105D /* SearchCell.swift in Sources */,
 				F46F93B61E43A96100334F68 /* AppDelegate.swift in Sources */,
+				F2EB451D1EE58F1E0046105D /* EmailViewController.swift in Sources */,
 				F23361901EC89DEC00F3909D /* ShoppingListCell.swift in Sources */,
 				F2C214F51E68733A00A1D565 /* UserPageViewController.swift in Sources */,
 				F233619F1ED1BEDE00F3909D /* mapSite.swift in Sources */,

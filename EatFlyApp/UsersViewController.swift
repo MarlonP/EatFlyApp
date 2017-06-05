@@ -9,14 +9,43 @@
 import UIKit
 import Firebase
 
-class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating {
 
     @IBOutlet weak var tableView: UITableView!
     
     var user = [User]()
+    var usersNames = [String]()
+    var filteredData = [String]()
+    var filteredUsers = [User]()
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+    
+        
+        self.hideKeyboardWhenTappedAround()
+        
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.searchBarStyle = UISearchBarStyle.prominent
+        self.tableView.tableHeaderView = searchController.searchBar
+        
+        searchController.searchBar.layer.borderColor = UIColor.marlonBlue().cgColor
+        searchController.searchBar.layer.borderWidth = 5
+        searchController.searchBar.isTranslucent = false
+        searchController.searchBar.tintColor = UIColor.white
+        searchController.searchBar.barTintColor = UIColor.marlonBlue()
+        
+    
+        
+        searchController.searchBar.placeholder = ""
+        
+         definesPresentationContext = true
         
         
 
@@ -26,6 +55,37 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         retrieveUsers()
 
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        
+        
+        self.filteredData.removeAll(keepingCapacity: false)
+        filteredUsers.removeAll(keepingCapacity: false)
+        
+        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
+        
+        let array = (self.usersNames as NSArray).filtered(using: searchPredicate)
+        
+        print(array)
+        
+        self.filteredData = array as! [String]
+        
+        for users in user{
+            for filteredItem in filteredData{
+                if users.fullName == filteredItem {
+                    filteredUsers.append(users)
+                }
+            }
+            
+        }
+        print(filteredUsers)
+        
+        
+        self.tableView.reloadData()
+        
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -61,6 +121,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
                             userToShow.userID = uid
                                                         
                             self.user.append(userToShow)
+                            self.usersNames.append(fullName)
                         }
                     }
                 }
@@ -78,10 +139,20 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! UserCell
+        
         cell.selectionStyle = .none
-        cell.nameLbl.text = self.user[indexPath.row].fullName
-        cell.userID = self.user[indexPath.row].userID
-        cell.userImage.downloadImage(from: self.user[indexPath.row].imgPath!)
+        
+        if self.searchController.isActive{
+            cell.nameLbl.text = self.filteredUsers[indexPath.row].fullName
+            cell.userID = self.filteredUsers[indexPath.row].userID
+            cell.userImage.downloadImage(from: self.filteredUsers[indexPath.row].imgPath!)
+        }else{
+            cell.nameLbl.text = self.user[indexPath.row].fullName
+            cell.userID = self.user[indexPath.row].userID
+            cell.userImage.downloadImage(from: self.user[indexPath.row].imgPath!)
+            
+        }
+        
         cell.followBtn.setImage(UIImage(named: "follow"), for: .normal)
         cell.checkFollowing()
         
@@ -89,13 +160,22 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return user.count ?? 0
+        if self.searchController.isActive{
+            return filteredUsers.count
+        }else{
+            return user.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.searchController.isActive{
+            userPageID = self.filteredUsers[indexPath.row].userID
+            performSegue(withIdentifier: "goUserProfileSegue", sender: self)
+        }else{
+            userPageID = self.user[indexPath.row].userID
+            performSegue(withIdentifier: "goUserProfileSegue", sender: self)
+        }
         
-        userPageID = self.user[indexPath.row].userID
-        performSegue(withIdentifier: "goUserProfileSegue", sender: self)
         
 
     }

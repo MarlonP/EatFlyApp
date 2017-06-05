@@ -15,9 +15,14 @@ class ForgotPasswordViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+        
+
 
     }
+  
     @IBAction func backBtnPressed(_ sender: Any) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "loginVC")
         

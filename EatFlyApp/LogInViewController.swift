@@ -20,9 +20,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
         self.hideKeyboardWhenTappedAround()
         
-        emailField.text = "t@t.com"
-        pwField.text = "qwerty"
-        
   
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.jpg")!)
         

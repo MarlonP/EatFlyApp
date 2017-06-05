@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
@@ -18,6 +18,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var selectBtn: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     let picker = UIImagePickerController()
     var userStorage: FIRStorageReference!
@@ -29,6 +30,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.hideKeyboardWhenTappedAround()
         
         picker.delegate = self
+        
+     
         
         let storage = FIRStorage.storage().reference(forURL: "gs://eatfly-70803.appspot.com")
         
@@ -120,8 +123,23 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             print("Password does not match")
         }
         
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            
+            textField.resignFirstResponder()
+            
+            return true
+        }
         
         
+        func textFieldDidBeginEditing(textField: UITextField) {
+            print("begin")
+            scrollView.setContentOffset(CGPoint(x: 0, y: 200), animated: true)
+        }
+        
+        func textFieldDidEndEditing(textField: UITextField) {
+            print("end")
+            scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        }
         
         
         
