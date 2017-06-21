@@ -21,6 +21,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var chickenImg: UIImageView!
     @IBOutlet weak var donuntImg: UIImageView!
     @IBOutlet weak var carrotImg: UIImageView!
+    @IBOutlet weak var salmonImg: UIImageView!
+    @IBOutlet weak var ketchupImg: UIImageView!
+    @IBOutlet weak var onionImg: UIImageView!
+    @IBOutlet weak var crispImg: UIImageView!
+    @IBOutlet weak var saltImg: UIImageView!
+    @IBOutlet weak var pepperImg: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,11 +55,44 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                         donuntImg.downloadImage(from: item.img)
                         donuntImg.isHidden = false
                         
+                    case "Salmon":
+                        salmonImg.downloadImage(from: item.img)
+                        salmonImg.isHidden = false
+                        
+                        
+                    case "Ketchup":
+                        ketchupImg.downloadImage(from: item.img)
+                        ketchupImg.isHidden = false
+                        
+                    case "Onions":
+                        onionImg.downloadImage(from: item.img)
+                        onionImg.isHidden = false
+                        
+                    case "Crisp":
+                        crispImg.downloadImage(from: item.img)
+                        crispImg.isHidden = false
+                    
+                    case "Salt":
+                        saltImg.downloadImage(from: item.img)
+                        saltImg.isHidden = false
+                        
+                    case "Pepper":
+                        pepperImg.downloadImage(from: item.img)
+                        pepperImg.isHidden = false
+                        
                     default:
                         appleImg.isHidden = true
                         carrotImg.isHidden = true
                         chickenImg.isHidden = true
                         donuntImg.isHidden = true
+                        pepperImg.isHidden = true
+                        crispImg.isHidden = true
+                        onionImg.isHidden = true
+                        ketchupImg.isHidden = true
+                        salmonImg.isHidden = true
+                        saltImg.isHidden = true
+
+
                         
                     }
 
@@ -79,6 +118,24 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             scrollView.setContentOffset(CGPoint(x: 400.0, y: 0.0), animated: true)
             
         case "Donut":
+            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            
+        case "Salmon":
+            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            
+        case "Ketchup":
+            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            
+        case "Onions":
+            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            
+        case "Crisp":
+            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            
+        case "Salt":
+            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            
+        case "Pepper":
             scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
         default: break
             

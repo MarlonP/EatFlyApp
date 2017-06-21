@@ -369,7 +369,7 @@ extension ViewController: BarcodeScannerCodeDelegate, BarcodeScannerErrorDelegat
         let ref = FIRDatabase.database().reference()
         let key = ref.child("itemsList").childByAutoId().key
         
-        
+        print(code)
         
         ref.child("users").child(uid).child("itemsList").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
