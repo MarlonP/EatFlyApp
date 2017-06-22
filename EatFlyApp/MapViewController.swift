@@ -12,7 +12,7 @@ import MapKit
 var passedValue: String!
 class MapViewController: UIViewController, MKMapViewDelegate {
     
-    let exhibtionsItems = ["Apple","Carrots","Chicken","Donut"]
+    let exhibtionsItems = ["Apple","Carrots","Chicken","Donut", "Salmon", "Ketchup", "Onions", "Crisp", "Salt", "Pepper"]
     
     
 
@@ -50,6 +50,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     case "Chicken":
                         chickenImg.downloadImage(from: item.img)
                         chickenImg.isHidden = false
+                        print("chic")
                     
                     case "Donut":
                         donuntImg.downloadImage(from: item.img)
@@ -58,6 +59,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     case "Salmon":
                         salmonImg.downloadImage(from: item.img)
                         salmonImg.isHidden = false
+                        print("hi")
                         
                         
                     case "Ketchup":
