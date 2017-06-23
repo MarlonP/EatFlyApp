@@ -114,31 +114,31 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             scrollView.setContentOffset(CGPoint(x: 400.0, y: 0.0), animated: true)
             
         case "Carrots":
-            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            scrollView.setContentOffset(CGPoint(x: 200.0, y: 0.0), animated: true)
             
         case "Chicken":
             scrollView.setContentOffset(CGPoint(x: 400.0, y: 0.0), animated: true)
             
         case "Donut":
-            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            scrollView.setContentOffset(CGPoint(x: 200.0, y: 0.0), animated: true)
             
         case "Salmon":
-            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            scrollView.setContentOffset(CGPoint(x: 400.0, y: 0.0), animated: true)
             
         case "Ketchup":
-            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            scrollView.setContentOffset(CGPoint(x: 400.0, y: 0.0), animated: true)
             
         case "Onions":
-            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            scrollView.setContentOffset(CGPoint(x: 50.0, y: 0.0), animated: true)
             
         case "Crisp":
-            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            scrollView.setContentOffset(CGPoint(x: 50.0, y: 0.0), animated: true)
             
         case "Salt":
-            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            scrollView.setContentOffset(CGPoint(x: 600.0, y: 0.0), animated: true)
             
         case "Pepper":
-            scrollView.setContentOffset(CGPoint(x: 700.0, y: 0.0), animated: true)
+            scrollView.setContentOffset(CGPoint(x: 600.0, y: 0.0), animated: true)
         default: break
             
         }
